@@ -47,24 +47,20 @@ LIVEKIT_API_KEY = os.getenv("LIVEKIT_API_KEY")
 LIVEKIT_API_SECRET = os.getenv("LIVEKIT_API_SECRET")
 LIVEKIT_URL = os.getenv("LIVEKIT_URL", "wss://localhost:7880")
 
+from .config import (
+    CLAWD_TOKEN_MINT,
+    CLAWD_TOKEN_SYMBOL,
+    clawd_system_prompt,
+    resolve_avatar_assets_dir,
+)
+
 # HeyGen Knowledge Base Configuration
 KB_NAME = "Solana GR00T Trading Assistant"
-KB_OPENING = "Hello! I'm GR00T, your Solana trading assistant. How can I help you today?"
-KB_PROMPT = """You are GR00T, an advanced AI trading assistant for the Solana blockchain ecosystem.
-You are knowledgeable about:
-- Solana blockchain technology and DeFi protocols
-- Trading strategies and market analysis
-- Token analysis and portfolio management
-- Risk management and position sizing
-
-Your personality:
-- Professional but friendly and approachable
-- Concise and direct in your responses
-- Focused on helping users make informed trading decisions
-- Always emphasize risk management and security
-
-Keep responses brief (1-2 sentences) unless the user asks for detailed analysis.
-Always remind users about the risks involved in trading."""
+KB_OPENING = (
+    f"Hello! I'm GR00T, your Solana trading assistant powered by {CLAWD_TOKEN_SYMBOL}. "
+    "How can I help you today?"
+)
+KB_PROMPT = clawd_system_prompt()
 
 # Headers for HeyGen API
 HEADERS_HEYGEN = {
@@ -86,6 +82,40 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+class RealtimeAvatar:
+    """
+    Thin wrapper so `from src import RealtimeAvatar` works.
+
+    The FastAPI app is the primary surface; this class exposes start/config helpers.
+    """
+
+    def __init__(self, port: Optional[int] = None):
+        self.port = int(port or os.getenv("AVATAR_PORT", "5002"))
+        self.app = app
+        self.clawd_mint = CLAWD_TOKEN_MINT
+        self.clawd_symbol = CLAWD_TOKEN_SYMBOL
+
+    def start(self, host: str = "0.0.0.0") -> None:
+        import uvicorn
+
+        logger.info(f"🚀 Starting Solana GR00T Realtime Avatar on {host}:{self.port}")
+        logger.info(f"   $CLAWD mint: {self.clawd_mint}")
+        uvicorn.run(self.app, host=host, port=self.port)
+
+
+@app.get("/health")
+async def health():
+    return {
+        "ok": True,
+        "service": "solana-gr00t-avatar-realtime",
+        "clawd_mint": CLAWD_TOKEN_MINT,
+        "symbol": CLAWD_TOKEN_SYMBOL,
+        "deepgram": bool(DEEPGRAM_API_KEY),
+        "heygen": bool(HEYGEN_API_KEY),
+    }
+
 
 # Validate required environment variables
 if not DEEPGRAM_API_KEY:
@@ -400,27 +430,10 @@ async def ws_speech(websocket: WebSocket):
 
 
 # Serve static files (for client.js)
-static_dir = Path(__file__).parent / "Realtime_Avatar_AI_Companion-main" / "assets"
+static_dir = resolve_avatar_assets_dir()
 if static_dir.exists():
     app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 
 if __name__ == "__main__":
-    import uvicorn
-    port = int(os.getenv("AVATAR_PORT", "5002"))
-    logger.info(f"🚀 Starting Solana GR00T Realtime Avatar server on port {port}")
-    logger.info(f"   Deepgram: {'✅' if DEEPGRAM_API_KEY else '❌'}")
-    logger.info(f"   HeyGen: {'✅' if HEYGEN_API_KEY else '❌'}")
-    logger.info(f"   HeyGen Server: {HEYGEN_SERVER_URL}")
-    
-    # Check LiveKit configuration
-    livekit_configured = bool(LIVEKIT_API_KEY and LIVEKIT_API_SECRET)
-    logger.info(f"   LiveKit: {'✅' if livekit_configured else '❌'}")
-    if LIVEKIT_API_KEY:
-        logger.info(f"   LiveKit URL: {LIVEKIT_URL}")
-        if not LIVEKIT_API_SECRET:
-            logger.warning("   ⚠️  LIVEKIT_API_SECRET not set - LiveKit features will be limited")
-    elif LIVEKIT_API_SECRET:
-        logger.warning("   ⚠️  LIVEKIT_API_KEY not set - LiveKit features will be limited")
-    
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    RealtimeAvatar().start()

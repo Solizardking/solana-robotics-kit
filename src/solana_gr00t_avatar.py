@@ -15,11 +15,6 @@ import logging
 import asyncio
 from pathlib import Path
 from typing import Optional, Dict, Any
-from flask import Flask, request, jsonify, send_from_directory
-from flask_cors import CORS
-from waitress import serve
-from pydub import AudioSegment
-import torch
 
 # Configure logging
 logging.basicConfig(
@@ -32,57 +27,20 @@ logger = logging.getLogger(__name__)
 from dotenv import load_dotenv
 load_dotenv()
 
-# Solana GR00T Avatar Configuration
-class AvatarConfig:
-    """Configuration for Solana GR00T Avatar"""
-    
-    # API Keys
-    GOOGLE_API_KEY = os.getenv('GOOGLE_API_KEY', '')
-    NGROK_AUTHTOKEN = os.getenv('NGROK_AUTHTOKEN', '')
-    
-    # Avatar Personality - Solana GR00T focused
-    SYSTEM_PROMPT = """You are GR00T, an advanced AI trading assistant for the Solana blockchain ecosystem.
-You are knowledgeable about:
-- Solana blockchain technology and DeFi protocols
-- Trading strategies and market analysis
-- Token analysis and portfolio management
-- Risk management and position sizing
-
-Your personality:
-- Professional but friendly and approachable
-- Concise and direct in your responses
-- Focused on helping users make informed trading decisions
-- Always emphasize risk management and security
-
-Keep responses brief (1-2 sentences) unless the user asks for detailed analysis.
-Always remind users about the risks involved in trading."""
-    
-    # Language settings
-    TTS_LANGUAGE = "English"
-    LANGUAGE_CODE_MAP = {
-        "Spanish": "ES",
-        "English": "EN"
-    }
-    
-    # Paths
-    ROOT_DIR = Path(__file__).parent / "Realtime_Avatar_AI_Companion-main" / "assets"
-    OPENVOICE_DIR = Path(__file__).parent / "OpenVoice"
-    REFERENCE_VOICE = ROOT_DIR / "reference.mp3"
-    
-    # Animation files
-    ANIMATION_FILES = [f'anim_{i}.fbx' for i in range(1, 4)]
-    
-    # Server settings
-    PORT = 5001  # Different from main trading desktop (8765)
-    HOST = '0.0.0.0'
+# Shared light config (paths + $CLAWD)
+from .config import AvatarConfig, CLAWD_TOKEN_MINT, CLAWD_TOKEN_SYMBOL
 
 
 class SolanaGR00TAvatar:
     """Solana GR00T Realtime Avatar AI Assistant"""
     
-    def __init__(self, config: AvatarConfig):
-        self.config = config
-        self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
+    def __init__(self, config: Optional[AvatarConfig] = None):
+        self.config = config or AvatarConfig()
+        try:
+            import torch  # lazy — optional GPU stack
+            self.device = "cuda:0" if torch.cuda.is_available() else "cpu"
+        except ImportError:
+            self.device = "cpu"
         self.gemini_model = None
         self.chat = None
         self.tone_color_converter = None
@@ -91,9 +49,11 @@ class SolanaGR00TAvatar:
         self.speaker_ids = None
         self.target_se = None
         self.app = None
-        self.selected_language = config.LANGUAGE_CODE_MAP[config.TTS_LANGUAGE]
+        self.selected_language = self.config.LANGUAGE_CODE_MAP[self.config.TTS_LANGUAGE]
         
         logger.info(f"Initializing Solana GR00T Avatar on device: {self.device}")
+        logger.info(f"  $CLAWD mint: {CLAWD_TOKEN_MINT} ({CLAWD_TOKEN_SYMBOL})")
+        logger.info(f"  Assets dir: {self.config.ROOT_DIR}")
     
     def _check_dependencies(self):
         """Check if all required dependencies are installed"""
@@ -203,6 +163,7 @@ class SolanaGR00TAvatar:
         save_path = self.config.ROOT_DIR / output_filename
         
         try:
+            import torch
             # Load base speaker embedding
             embedding_path = self.config.OPENVOICE_DIR / f'checkpoints_v2/base_speakers/ses/{embedding_file}.pth'
             source_se = torch.load(str(embedding_path), map_location=self.device)
@@ -237,6 +198,10 @@ class SolanaGR00TAvatar:
     
     def _setup_flask_app(self):
         """Setup Flask application"""
+        from flask import Flask, request, jsonify, send_from_directory
+        from flask_cors import CORS
+        from pydub import AudioSegment
+
         self.app = Flask(__name__, static_folder=str(self.config.ROOT_DIR))
         CORS(self.app, resources={r"/*": {"origins": "*"}})
         
@@ -256,6 +221,15 @@ class SolanaGR00TAvatar:
                 filename,
                 mimetype='audio/wav' if filename.endswith('.wav') else None
             )
+
+        @self.app.route('/health')
+        def health():
+            return jsonify({
+                "ok": True,
+                "service": "solana-gr00t-avatar",
+                "clawd_mint": CLAWD_TOKEN_MINT,
+                "symbol": CLAWD_TOKEN_SYMBOL,
+            })
         
         @self.app.route('/process_audio', methods=['POST'])
         def process_audio_endpoint():
@@ -328,13 +302,19 @@ class SolanaGR00TAvatar:
             finally:
                 # Memory cleanup
                 gc.collect()
-                if torch.cuda.is_available():
-                    torch.cuda.empty_cache()
+                try:
+                    import torch
+                    if torch.cuda.is_available():
+                        torch.cuda.empty_cache()
+                except ImportError:
+                    pass
         
         logger.info("✅ Flask app configured")
     
     def start_server(self, use_ngrok: bool = False):
         """Start the avatar server"""
+        from waitress import serve
+
         if not self._check_dependencies():
             logger.error("Missing dependencies. Cannot start server.")
             return False
