@@ -1,0 +1,11 @@
+{
+  "name": "solana-robotics-kit-v0.4",
+  "version": "0.4.0",
+  "private": true,
+  "description": "Solana Robotics Kit v0.4 — operator console workspace",
+  "scripts": {
+    "dev": "npm run dev --prefix apps/operator_console",
+    "build": "npm run build --prefix apps/operator_console",
+    "start": "npm run start --prefix apps/operator_console"
+  }
+}

@@ -117,13 +117,11 @@ async def health():
     }
 
 
-# Validate required environment variables
+# Soft validation — full keys only required when starting the realtime server
 if not DEEPGRAM_API_KEY:
-    logger.warning("⚠️  DEEPGRAM_API_KEY not set - speech-to-text will not work")
+    logger.debug("DEEPGRAM_API_KEY not set - speech-to-text will not work until configured")
 if not HEYGEN_API_KEY:
-    logger.warning("⚠️  HEYGEN_API_KEY not set - avatar generation will not work")
-if not all([DEEPGRAM_API_KEY, HEYGEN_API_KEY]):
-    logger.error("❌ Missing required API keys. Please set DEEPGRAM_API_KEY and HEYGEN_API_KEY in .env file")
+    logger.debug("HEYGEN_API_KEY not set - avatar generation will not work until configured")
 
 
 def float_to_16bit_pcm(float32_array):

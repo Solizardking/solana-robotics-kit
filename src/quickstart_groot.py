@@ -1,30 +1,42 @@
 #!/usr/bin/env python3
 """
-Solana GR00T Quickstart Script
-Quick setup and launch for the complete robotics trading system
+Solana GR00T Quickstart — launch avatar / kit entrypoints.
+
+Usage:
+  python -m src.quickstart_groot --check
+  python -m src.quickstart_groot --avatar
+  python -m src.quickstart_groot --realtime
+  python -m src.quickstart_groot          # interactive menu
 """
 
+from __future__ import annotations
+
+import argparse
 import asyncio
-import os
-import sys
-import subprocess
-from pathlib import Path
 import logging
+import os
+import subprocess
+import sys
+from pathlib import Path
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(levelname)s - %(message)s'
+    format="%(asctime)s - %(levelname)s - %(message)s",
 )
-logger = logging.getLogger('quickstart')
+logger = logging.getLogger("quickstart")
+
+# Ensure repo root on path when run as script
+_REPO = Path(__file__).resolve().parent.parent
+if str(_REPO) not in sys.path:
+    sys.path.insert(0, str(_REPO))
 
 
-def print_banner():
-    """Print welcome banner."""
+def print_banner() -> None:
     banner = """
     ╔══════════════════════════════════════════════════════════════╗
     ║                                                              ║
     ║          🤖 SOLANA GR00T - AI TRADING ROBOTICS  🤖          ║
-    ║                                                              ║
+    ║                    powered by $CLAWD                         ║
     ║     Embodied AI + Vision + Voice + Blockchain Trading       ║
     ║                                                              ║
     ╚══════════════════════════════════════════════════════════════╝
@@ -32,337 +44,203 @@ def print_banner():
     print(banner)
 
 
-def check_requirements():
-    """Check if all requirements are met."""
+def check_requirements(*, strict: bool = False) -> bool:
+    """Validate Python + env bootstrap. Returns True if ok to continue."""
+    from src.config import CLAWD_TOKEN_MINT, CLAWD_TOKEN_SYMBOL, REPO_ROOT, resolve_avatar_assets_dir
+
     logger.info("Checking requirements...")
+    issues: list[str] = []
+    warnings: list[str] = []
 
-    issues = []
-
-    # Check Python version
     if sys.version_info < (3, 10):
         issues.append("Python 3.10+ required")
 
-    # Check .env file
-    if not Path(".env").exists():
-        issues.append(".env file not found - copy from .env.example")
+    env_file = REPO_ROOT / ".env"
+    if not env_file.exists() and not Path(".env").exists():
+        warnings.append(".env file not found — copy from .env.example")
 
-    # Check required environment variables
-    required_vars = [
-        "SOLANA_PRIVATE_KEY",
-        "SOLANA_RPC_URL"
-    ]
+    # Solana connectivity (optional for avatar-only; required for trading)
+    if not os.getenv("SOLANA_RPC_URL") and not os.getenv("RPC_URL"):
+        warnings.append("SOLANA_RPC_URL / RPC_URL not set (needed for chain calls)")
 
-    for var in required_vars:
-        if not os.getenv(var):
-            issues.append(f"Missing environment variable: {var}")
+    if not os.getenv("SOLANA_PRIVATE_KEY") and not os.getenv("PHANTOM_PRIVATE_KEY"):
+        warnings.append("No wallet key env (SOLANA_PRIVATE_KEY) — trading demos disabled")
 
-    # Check AI API keys (at least one required)
-    ai_keys = ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "XAI_API_KEY"]
-    has_ai_key = any(os.getenv(key) for key in ai_keys)
+    ai_keys = ["OPENAI_API_KEY", "ANTHROPIC_API_KEY", "XAI_API_KEY", "GOOGLE_API_KEY"]
+    if not any(os.getenv(k) for k in ai_keys):
+        warnings.append("No AI API key set (OpenAI / Anthropic / XAI / Google)")
 
-    if not has_ai_key:
-        issues.append("At least one AI API key required (OpenAI, Anthropic, or XAI)")
+    assets = resolve_avatar_assets_dir()
+    if not assets.is_dir():
+        warnings.append(f"Avatar assets dir missing: {assets}")
 
+    logger.info("  $CLAWD mint: %s (%s)", CLAWD_TOKEN_MINT, CLAWD_TOKEN_SYMBOL)
+    logger.info("  Repo root: %s", REPO_ROOT)
+    logger.info("  Assets: %s", assets)
+
+    for w in warnings:
+        logger.warning("  ⚠ %s", w)
     if issues:
         logger.error("Requirements check failed:")
         for issue in issues:
-            logger.error(f"  ❌ {issue}")
+            logger.error("  ❌ %s", issue)
         return False
 
-    logger.info("✅ All requirements met")
+    if strict and warnings:
+        logger.error("Strict mode: treat warnings as failures")
+        return False
+
+    logger.info("✅ Bootstrap check passed%s", " (with warnings)" if warnings else "")
     return True
 
 
-def show_menu():
-    """Show main menu."""
-    print("\n" + "="*60)
+def show_menu() -> None:
+    print("\n" + "=" * 60)
     print("LAUNCH OPTIONS")
-    print("="*60)
-    print("\n1. 🖥️  Desktop Trading Companion")
-    print("   Full desktop interface with E2B sandbox\n")
-    print("2. 🤖 GR00T Robot Agent")
-    print("   Embodied robot with vision, voice, and gestures\n")
-    print("3. 🌐 Desktop Server (for Chrome Extension)")
-    print("   WebSocket server for browser integration\n")
-    print("4. 💻 Vibe Coder Demo")
-    print("   Test natural language to code generation\n")
-    print("5. 🔊 Voice Control Demo")
-    print("   Test LiveKit voice commands\n")
-    print("6. 📚 View Documentation")
-    print("   Open robotics guide\n")
-    print("7. 🧪 Run Examples")
-    print("   Interactive examples\n")
-    print("8. 🔧 Install Chrome Extension")
-    print("   Build and install instructions\n")
-    print("0. ❌ Exit\n")
-    print("="*60)
+    print("=" * 60)
+    print("\n1. 🤖 GR00T Avatar (Flask + OpenVoice path)")
+    print("   src/solana_gr00t_avatar.py — local voice avatar server\n")
+    print("2. ⚡ GR00T Realtime Avatar (Deepgram / HeyGen / LiveKit)")
+    print("   src/solana_gr00t_avatar_realtime.py — WebRTC streaming\n")
+    print("3. 🖥️  Operator Console (kit v0.4 Next.js)")
+    print("   solana-robotics-kit-v0.4/apps/operator_console\n")
+    print("4. 📚 View documentation")
+    print("   docs/SOLANA_ROBOTICS_GUIDE.md or docs/GR00T_AVATAR_QUICKSTART.md\n")
+    print("5. 🔧 Print environment / CLAWD config")
+    print("\n0. ❌ Exit\n")
+    print("=" * 60)
 
 
-async def launch_trading_desktop():
-    """Launch trading desktop."""
-    logger.info("Launching Trading Desktop...")
-    logger.info("Press Ctrl+C to stop")
+def launch_avatar() -> None:
+    logger.info("Launching GR00T Avatar (Flask)...")
+    from src.config import AvatarConfig
+    from src.solana_gr00t_avatar import SolanaGR00TAvatar
 
-    try:
-        subprocess.run([sys.executable, "solana_trading_desktop.py"])
-    except KeyboardInterrupt:
-        logger.info("Trading desktop stopped")
-
-
-async def launch_groot_agent():
-    """Launch GR00T agent."""
-    logger.info("Launching GR00T Agent...")
-    logger.info("Press Ctrl+C to stop")
-
-    from solana_groot.agent.solana_gr00t_agent import SolanaGR00TAgent
-
-    try:
-        # Initialize agent
-        agent = SolanaGR00TAgent(
-            cosmos_model_path="cosmos-1.0-autoregressive-4b",
-            nemotron_model_path="nvidia/Nemotron-Mini-4B-Instruct",
-            parakeet_tts_path="nvidia/parakeet-tdt-1.1b",
-            parakeet_asr_path="nvidia/parakeet-ctc-1.1b",
-            hardware_enabled=False
-        )
-
-        # Welcome message
-        await agent.speak("Solana GR00T trading robot initialized and ready")
-
-        # Test chart analysis
-        logger.info("Running chart analysis demo...")
-        analysis = await agent.analyze_chart("SOL/USDC")
-
-        logger.info(f"Analysis Result:")
-        logger.info(f"  Signal: {analysis.signal}")
-        logger.info(f"  Confidence: {analysis.confidence}%")
-        logger.info(f"  Pattern: {analysis.pattern}")
-
-        await agent.speak(
-            f"Analysis complete. {analysis.signal} signal detected "
-            f"with {analysis.confidence} percent confidence"
-        )
-
-        # Start voice listener
-        logger.info("Starting voice command listener...")
-        logger.info("Say 'hey groot' followed by your command")
-        await agent.start_voice_listener()
-
-    except KeyboardInterrupt:
-        logger.info("GR00T agent stopped")
-    except Exception as e:
-        logger.error(f"Error running GR00T agent: {e}")
+    avatar = SolanaGR00TAvatar(AvatarConfig())
+    use_ngrok = bool(os.getenv("NGROK_AUTHTOKEN"))
+    avatar.start_server(use_ngrok=use_ngrok)
 
 
-async def launch_desktop_server():
-    """Launch desktop server for Chrome extension."""
-    logger.info("Launching Desktop Server...")
-    logger.info("Chrome extension can connect to: ws://localhost:8765")
-    logger.info("Press Ctrl+C to stop")
+def launch_realtime() -> None:
+    logger.info("Launching GR00T Realtime Avatar...")
+    from src.solana_gr00t_avatar_realtime import RealtimeAvatar
 
-    try:
-        subprocess.run([sys.executable, "solana-groot/desktop_server.py"])
-    except KeyboardInterrupt:
-        logger.info("Desktop server stopped")
+    RealtimeAvatar().start()
 
 
-async def vibe_coder_demo():
-    """Run vibe coder demo."""
-    logger.info("Vibe Coder Demo")
-    print("\n" + "="*60)
-
-    from solana_groot.vibe_coder import VibeCoder
-
-    coder = VibeCoder()
-
-    examples = [
-        "Buy SOL when RSI drops below 30 and sell when it goes above 70",
-        "MACD crossover strategy with default parameters",
-        "Multi-timeframe strategy requiring confluence across 1m, 5m, 15m"
-    ]
-
-    print("\nExample Prompts:\n")
-    for i, example in enumerate(examples, 1):
-        print(f"{i}. {example}")
-
-    print("\n0. Custom prompt")
-    print("="*60 + "\n")
-
-    choice = input("Select example (0-3): ").strip()
-
-    if choice == "0":
-        prompt = input("Enter your strategy description: ").strip()
-    elif choice in ["1", "2", "3"]:
-        prompt = examples[int(choice) - 1]
-    else:
-        print("Invalid choice")
+def launch_operator_console() -> None:
+    console = _REPO / "solana-robotics-kit-v0.4" / "apps" / "operator_console"
+    if not console.is_dir():
+        logger.error("Operator console not found at %s", console)
         return
-
-    logger.info(f"Generating code for: {prompt}")
-
-    strategy = await coder.generate(prompt)
-
-    print("\n" + "="*60)
-    print("GENERATED STRATEGY")
-    print("="*60)
-    print(f"\nDescription: {strategy.description}")
-    print(f"Confidence: {strategy.confidence:.1%}")
-    print(f"Risk Level: {strategy.estimated_risk}")
-    print(f"Requires Approval: {strategy.requires_approval}")
-    print(f"\nSafety Checks:")
-    for check in strategy.safety_checks:
-        print(f"  ✓ {check}")
-    print(f"\nGenerated Code:\n")
-    print(strategy.code)
-    print("="*60)
-
-    execute = input("\nExecute this strategy? (yes/no): ").strip().lower()
-
-    if execute == "yes":
-        logger.info("⚠️  Code execution requires a running agent")
-        logger.info("Run option 2 (GR00T Robot Agent) to enable execution")
-
-
-async def voice_control_demo():
-    """Run voice control demo."""
-    logger.info("Voice Control Demo")
-    print("\n" + "="*60)
-    print("VOICE CONTROL")
-    print("="*60)
-
-    if not os.getenv("LIVEKIT_API_KEY"):
-        logger.warning("LiveKit API key not configured")
-        logger.info("Set LIVEKIT_API_KEY in .env to enable voice control")
+    logger.info("Operator console: %s", console)
+    logger.info("Run: cd solana-robotics-kit-v0.4/apps/operator_console && npm install && npm run dev")
+    pkg = console / "package.json"
+    if not pkg.exists():
+        logger.error("package.json missing — kit v0.4 scaffold incomplete")
         return
-
-    from solana_groot.agent.voice_livekit import LiveKitVoiceModule
-
-    voice = LiveKitVoiceModule()
-
-    logger.info("Connecting to LiveKit...")
-    if await voice.connect():
-        logger.info("✅ Connected to LiveKit")
-
-        # Test TTS
-        await voice.speak("Voice control system online. Say hey groot to give a command.")
-
-        # Test commands
-        logger.info("Listening for commands...")
-        logger.info("Say: 'hey groot, what's my balance?'")
-
-        async def handle_command(command: str):
-            logger.info(f"Received command: {command}")
-
-            if "balance" in command.lower():
-                await voice.speak("Your balance is 10.5 SOL")
-            elif "stop" in command.lower():
-                await voice.speak("Stopping voice control")
-                await voice.stop_listening()
-
-        voice.set_command_callback(handle_command)
-
-        await voice.start_continuous_listening()
-
-        await voice.disconnect()
-    else:
-        logger.error("Failed to connect to LiveKit")
-
-
-def view_documentation():
-    """Open documentation."""
-    doc_path = Path("docs/SOLANA_ROBOTICS_GUIDE.md")
-
-    if doc_path.exists():
-        logger.info(f"Opening documentation: {doc_path}")
-
-        if sys.platform == "darwin":
-            subprocess.run(["open", str(doc_path)])
-        elif sys.platform == "win32":
-            subprocess.run(["start", str(doc_path)], shell=True)
-        else:
-            subprocess.run(["xdg-open", str(doc_path)])
-    else:
-        logger.error("Documentation not found")
-
-
-async def run_examples():
-    """Run interactive examples."""
-    logger.info("Running interactive examples...")
-
     try:
-        subprocess.run([sys.executable, "examples.py"])
-    except KeyboardInterrupt:
-        logger.info("Examples stopped")
+        subprocess.run(["npm", "run", "dev"], cwd=str(console), check=False)
+    except FileNotFoundError:
+        logger.error("npm not found — install Node.js 18+")
 
 
-def install_chrome_extension():
-    """Show Chrome extension installation instructions."""
-    print("\n" + "="*60)
-    print("CHROME EXTENSION INSTALLATION")
-    print("="*60)
-    print("\nStep 1: Build the extension")
-    print("  $ cd chrome-extension")
-    print("  $ npm install")
-    print("  $ npm run build")
-    print("\nStep 2: Load in Chrome")
-    print("  1. Open chrome://extensions/")
-    print("  2. Enable 'Developer mode'")
-    print("  3. Click 'Load unpacked'")
-    print("  4. Select the 'chrome-extension' folder")
-    print("\nStep 3: Connect to Desktop")
-    print("  1. Run option 3 (Desktop Server)")
-    print("  2. Click extension icon in Chrome")
-    print("  3. Enter: ws://localhost:8765")
-    print("  4. Click 'Connect to Desktop'")
-    print("\nStep 4: Start Trading")
-    print("  1. Navigate to Jupiter, Raydium, etc.")
-    print("  2. Use the floating GR00T button")
-    print("  3. Enable voice, vision, vibe coding")
-    print("\nFor details, see: chrome-extension/README.md")
-    print("="*60)
+def view_documentation() -> None:
+    for rel in (
+        "docs/GR00T_AVATAR_QUICKSTART.md",
+        "docs/SOLANA_ROBOTICS_GUIDE.md",
+        "docs/QUICK_START.md",
+        "README.md",
+    ):
+        path = _REPO / rel
+        if path.exists():
+            logger.info("Opening %s", path)
+            if sys.platform == "darwin":
+                subprocess.run(["open", str(path)], check=False)
+            elif sys.platform == "win32":
+                subprocess.run(["start", str(path)], shell=True, check=False)
+            else:
+                subprocess.run(["xdg-open", str(path)], check=False)
+            return
+    logger.error("No documentation file found")
 
 
-async def main():
-    """Main entry point."""
+def print_config() -> None:
+    from src.config import (
+        CLAWD_TOKEN_MINT,
+        CLAWD_TOKEN_SYMBOL,
+        REPO_ROOT,
+        resolve_avatar_assets_dir,
+        resolve_openvoice_dir,
+    )
+
+    print("\n=== Solana GR00T / $CLAWD config ===")
+    print(f"REPO_ROOT          {REPO_ROOT}")
+    print(f"CLAWD_TOKEN_MINT   {CLAWD_TOKEN_MINT}")
+    print(f"CLAWD_TOKEN_SYMBOL {CLAWD_TOKEN_SYMBOL}")
+    print(f"AVATAR_ASSETS      {resolve_avatar_assets_dir()}")
+    print(f"OPENVOICE_DIR      {resolve_openvoice_dir()}")
+    print(f"SOLANA_RPC_URL     {os.getenv('SOLANA_RPC_URL') or os.getenv('RPC_URL') or '(unset)'}")
+    print("====================================\n")
+
+
+async def main() -> None:
     from dotenv import load_dotenv
+
+    load_dotenv(_REPO / ".env")
     load_dotenv()
+
+    parser = argparse.ArgumentParser(description="Solana GR00T quickstart")
+    parser.add_argument("--check", action="store_true", help="Run bootstrap checks and exit")
+    parser.add_argument("--avatar", action="store_true", help="Start Flask GR00T avatar")
+    parser.add_argument("--realtime", action="store_true", help="Start realtime FastAPI avatar")
+    parser.add_argument("--config", action="store_true", help="Print CLAWD/path config")
+    args = parser.parse_args()
 
     print_banner()
 
-    # Check requirements
+    if args.config:
+        print_config()
+        return
+
+    if args.check:
+        ok = check_requirements(strict=False)
+        sys.exit(0 if ok else 1)
+
     if not check_requirements():
         logger.error("Please fix the issues above and try again")
         return
 
-    # Main loop
+    if args.avatar:
+        launch_avatar()
+        return
+    if args.realtime:
+        launch_realtime()
+        return
+
     while True:
         show_menu()
-
         choice = input("Select option: ").strip()
-
         if choice == "1":
-            await launch_trading_desktop()
+            launch_avatar()
         elif choice == "2":
-            await launch_groot_agent()
+            launch_realtime()
         elif choice == "3":
-            await launch_desktop_server()
+            launch_operator_console()
         elif choice == "4":
-            await vibe_coder_demo()
-        elif choice == "5":
-            await voice_control_demo()
-        elif choice == "6":
             view_documentation()
-        elif choice == "7":
-            await run_examples()
-        elif choice == "8":
-            install_chrome_extension()
+        elif choice == "5":
+            print_config()
         elif choice == "0":
             logger.info("Goodbye! 🤖")
             break
         else:
             logger.warning("Invalid choice")
-
-        input("\nPress Enter to continue...")
+        if choice != "0":
+            try:
+                input("\nPress Enter to continue...")
+            except EOFError:
+                break
 
 
 if __name__ == "__main__":
