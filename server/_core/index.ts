@@ -7,6 +7,13 @@ import { registerOAuthRoutes } from "./oauth";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import {
+  isMoonshotConfigured,
+  moonshotChat,
+  moonshotHealthSnapshot,
+  moonshotVision,
+} from "../lib/moonshot";
+import { solGptCatalogSummary } from "../lib/sol-gpt-catalog";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -36,8 +43,6 @@ async function startServer() {
 
   // Health for Render / load balancers (always available)
   // Moonshot snapshot reports configured=true|false only — never the API key.
-  const { moonshotHealthSnapshot } = await import("../lib/moonshot");
-  const { solGptCatalogSummary } = await import("../lib/sol-gpt-catalog");
   const healthPayload = () => ({
     ok: true,
     service: "solana-robotics-api",
@@ -54,8 +59,6 @@ async function startServer() {
   // Lightweight Kimi chat (requires MOONSHOT_API_KEY / KIMI_API_KEY)
   app.post("/api/sol-gpt/kimi", async (req, res) => {
     try {
-      const { moonshotChat, moonshotVision, isMoonshotConfigured } =
-        await import("../lib/moonshot");
       if (!isMoonshotConfigured()) {
         res.status(503).json({
           ok: false,
