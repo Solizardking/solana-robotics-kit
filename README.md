@@ -291,6 +291,10 @@ Built for **1,000+ developers** with:
 | [Voice Synthesis](docs/VOICE_SYNTHESIS.md) | OpenVoice + MeloTTS guide |
 | [API Reference](docs/API_REFERENCE.md) | Complete API documentation |
 | [SOL GPT / Kimi K3](docs/SOL_GPT.md) | **171-tool** non-custodial desk · Moonshot trading + vision |
+| [Asimov assembly flow](docs/ASIMOV_ASSEMBLY_FLOW.md) | ASV1 stage-by-stage build (legs → torso → compute) |
+| [$10k hardware plan](docs/PLAN_10K_HARDWARE.md) | Budget + phased hardware integration |
+| [Nemotron 3 Nano Omni](docs/NEMOTRON_OMNI.md) | Multimodal 31B A3B reasoning model testing |
+| [Asimov hub](asimov/README.md) | Python hub → `robotics/` + plan + Nemotron doctor |
 | [Eliza](eliza/README.md) | elizaOS agent runtime |
 | [Contributing](CONTRIBUTING.md) | Contribution guidelines |
 | [Security](SECURITY.md) | Vulnerability reporting |

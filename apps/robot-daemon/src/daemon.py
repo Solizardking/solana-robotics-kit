@@ -61,6 +61,15 @@ class RobotConfig:
     
     # NVIDIA
     nvidia_api_key: str = field(default_factory=lambda: os.getenv("NVIDIA_API_KEY", ""))
+
+    # Asimov / Menlo (ASIMOV_API_KEY or MENLO_API_KEY)
+    asimov_enabled: bool = field(
+        default_factory=lambda: os.getenv("ASIMOV_ENABLED", "true").lower() == "true"
+        and bool(os.getenv("ASIMOV_API_KEY") or os.getenv("MENLO_API_KEY"))
+    )
+    asimov_runtime: str = field(
+        default_factory=lambda: os.getenv("ASIMOV_RUNTIME", "simplesim")
+    )
     
     # Safety
     max_speed: float = field(default=0.5)  # m/s
@@ -122,6 +131,9 @@ class RobotDaemon:
         self._executor_module = None
         self._solana_client = None
         self._safety_monitor = None
+        self._asimov_client = None
+        self._asimov_session = None
+        self._hardware_fabric = None
         
         logger.info(f"🤖 Robot Daemon initialized: {self.config.robot_id}")
     
@@ -187,6 +199,32 @@ class RobotDaemon:
                 logger.warning("Solana client not available, using mock")
                 self._solana_client = MockSolanaClient()
         return self._solana_client
+
+    async def _init_asimov(self):
+        """Connect Menlo/Asimov control plane + optional Orin/RPi/Topion fabric."""
+        if not self.config.asimov_enabled:
+            logger.info("Asimov integration disabled (set ASIMOV_API_KEY to enable)")
+            return
+        try:
+            from packages.asimov import AsimovClient, load_config
+            from packages.asimov.hardware import HardwareFabric
+
+            cfg = load_config()
+            self._asimov_client = AsimovClient(cfg)
+            await self._asimov_client.open()
+            logger.info(
+                "🦾 Asimov client open (runtime=%s rcs=%s)",
+                cfg.runtime,
+                cfg.rcs_url,
+            )
+
+            if self.config.hardware_enabled or cfg.hardware_enabled:
+                self._hardware_fabric = HardwareFabric(cfg)
+                probe = await self._hardware_fabric.probe()
+                logger.info("Hardware fabric: %s", probe)
+        except Exception as e:
+            logger.warning("Asimov init skipped: %s", e)
+            self._asimov_client = None
     
     # ==================== Core Loop ====================
     
@@ -279,6 +317,12 @@ class RobotDaemon:
         self.state = RobotState.EXECUTING
         try:
             success = await self.executor.execute(self.current_plan)
+            # Optional: mirror velocity-like plans to Orin Nano fabric
+            if success and self._hardware_fabric and self.current_plan:
+                params = self.current_plan.parameters or {}
+                if self.current_plan.action in {"move_forward", "set_velocity", "navigate"}:
+                    vx = float(params.get("speed", params.get("vx", 0.2)))
+                    await self._hardware_fabric.apply_velocity(vx=vx)
             logger.info(f"Execution: {self.current_plan.action} -> {'✅' if success else '❌'}")
         except Exception as e:
             logger.error(f"Execution error: {e}")
@@ -301,12 +345,13 @@ class RobotDaemon:
         _ = self.planner
         _ = self.executor
         _ = self.solana
+        await self._init_asimov()
         
         # Register robot on-chain if not already
         try:
             await self.solana.register_robot(
                 robot_id=self.config.robot_id,
-                capabilities=["navigation", "vision", "manipulation"]
+                capabilities=["navigation", "vision", "manipulation", "asimov"]
             )
         except Exception as e:
             logger.warning(f"Could not register robot on-chain: {e}")
@@ -375,6 +420,22 @@ class RobotDaemon:
         # Stop all motion
         if self._executor_module:
             await self.executor.emergency_stop()
+        if self._hardware_fabric:
+            try:
+                await self._hardware_fabric.emergency_stop()
+                await self._hardware_fabric.aclose()
+            except Exception as e:
+                logger.warning("Hardware fabric shutdown: %s", e)
+        if self._asimov_session:
+            try:
+                await self._asimov_session.disconnect()
+            except Exception as e:
+                logger.warning("Asimov session disconnect: %s", e)
+        if self._asimov_client:
+            try:
+                await self._asimov_client.close()
+            except Exception as e:
+                logger.warning("Asimov client close: %s", e)
         
         # Log shutdown on-chain
         try:
@@ -424,7 +485,12 @@ class RobotDaemon:
             "current_task": self.current_task,
             "loop_count": self.loop_count,
             "uptime_seconds": uptime,
-            "hardware_enabled": self.config.hardware_enabled
+            "hardware_enabled": self.config.hardware_enabled,
+            "asimov_enabled": self.config.asimov_enabled,
+            "asimov_connected": self._asimov_client is not None,
+            "hardware_fabric": (
+                self._hardware_fabric.status() if self._hardware_fabric else None
+            ),
         }
 
 

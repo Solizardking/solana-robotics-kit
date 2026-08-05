@@ -10,8 +10,10 @@ Mechanical CAD + MuJoCo model from [Asimov / Menlo](https://asimov.inc), integra
 
 <p align="center">
   <a href="https://asimov.inc">Website</a> ·
-  <a href="https://manual.asimov.inc">Manual</a> ·
-  <a href="https://static.asimov.inc/asimov/v1/asimov-v1-20260420.html">3D Model</a> ·
+  <a href="https://docs.menlo.ai/asimov/1">Menlo docs</a> ·
+  <a href="../asimov/README.md">Kit Asimov hub</a> ·
+  <a href="../docs/ASIMOV_ASSEMBLY_FLOW.md">Assembly flow</a> ·
+  <a href="../docs/PLAN_10K_HARDWARE.md">$10k plan</a> ·
   <a href="DESIGN.md">Design system</a> ·
   <a href="https://forum.menlo.ai">Forum</a>
 </p>

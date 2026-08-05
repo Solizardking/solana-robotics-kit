@@ -15,9 +15,19 @@ const SPECS = [
   { icon: Ruler, label: 'Height', value: '1.2 m' },
   { icon: Weight, label: 'Weight', value: '35 kg' },
   { icon: Activity, label: 'Actuated DOF', value: '25 + 2 passive' },
-  { icon: Zap, label: 'Onboard Compute', value: 'Raspberry Pi 5 + Radxa CM5' },
+  { icon: Zap, label: 'Kit Compute', value: 'Orin Nano (motors) + Pi + Topion' },
   { icon: Cpu, label: 'CAN Bus', value: '5 × 1Mbps + 1 × 500kbps' },
   { icon: ShieldCheck, label: 'Materials', value: '7075 Al + MJF PA12' },
+];
+
+/** Working Menlo docs — deep paths often soft-404 on docs.menlo.ai */
+const MENLO_DOCS = [
+  { label: 'Asimov 1 overview', href: 'https://docs.menlo.ai/asimov/1' },
+  { label: 'Asimov API', href: 'https://docs.menlo.ai/asimov/1/api' },
+  { label: 'Robot control', href: 'https://docs.menlo.ai/asimov/1/api/robot-control' },
+  { label: 'Python SDK', href: 'https://docs.menlo.ai/platform/reference/python-sdk' },
+  { label: 'Platform intro', href: 'https://docs.menlo.ai/platform/get-started/introduction' },
+  { label: 'Kit integration guide', href: '/docs/ASIMOV_INTEGRATION.md' },
 ];
 
 const LOADS = [
@@ -97,7 +107,31 @@ export default function Asimov() {
                 MuJoCo XML <Download className="w-4 h-4 ml-2" />
               </a>
             </Button>
+            <Button asChild variant="outline">
+              <a href="https://docs.menlo.ai/platform/reference/python-sdk" target="_blank" rel="noreferrer">
+                Menlo Python SDK <ExternalLink className="w-4 h-4 ml-2" />
+              </a>
+            </Button>
           </div>
+          <div className="flex flex-wrap gap-2 pt-1">
+            {MENLO_DOCS.map(d => (
+              <a
+                key={d.href}
+                href={d.href}
+                target={d.href.startsWith('http') ? '_blank' : undefined}
+                rel={d.href.startsWith('http') ? 'noreferrer' : undefined}
+                className="text-xs text-cyan-400/90 hover:text-cyan-300 underline-offset-2 hover:underline"
+              >
+                {d.label}
+              </a>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground max-w-3xl">
+            Direct control uses <code className="text-cyan-300">ASIMOV_API_KEY</code> via{' '}
+            <code className="text-cyan-300">packages/asimov</code>. Hardware fabric: Orin Nano
+            motors (:9101), Raspberry Pi sensors (:9102), Topion expansion (:9103). Stock Asimov
+            is Pi 5 + Radxa CM5 — this kit overlays Orin for motor/AI policy.
+          </p>
         </header>
 
         {/* Viewer + Specs */}
