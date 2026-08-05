@@ -8,7 +8,7 @@ The first Solana Mobile dApp for controlling physical AI robots using NVIDIA Jet
 - **Robot Discovery** - Find robots on your network
 - **Real-time Control** - Control robot movement and voice
 - **NVIDIA AI Integration** - Perception and reasoning via Cosmos/Nemotron
-- **$KIT Token** - View balance and stake for robot access
+- **$CLAWD Token** - View balance and stake for robot access
 - **Vibe to Earn** - Track contributions and claim rewards
 - **Task Marketplace** - Browse and accept robot tasks
 
@@ -20,7 +20,7 @@ The first Solana Mobile dApp for controlling physical AI robots using NVIDIA Jet
 │    Control AI Robots with Your Wallet   │
 ├─────────────────────────────────────────┤
 │  ┌─────┐  ┌─────┐  ┌─────┐             │
-│  │ SOL │  │$KIT │  │Robot│             │
+│  │ SOL │  │$CLAWD │  │Robot│             │
 │  │4.32 │  │150  │  │ 🟢  │             │
 │  └─────┘  └─────┘  └─────┘             │
 ├─────────────────────────────────────────┤
@@ -245,7 +245,7 @@ solanaService.setNetwork('mainnet-beta');
 
 ## Contributing
 
-Contributions earn $KIT tokens via Vibe to Earn:
+Contributions earn $CLAWD tokens via Vibe to Earn:
 
 1. Fork the repository
 2. Create a feature branch
@@ -256,7 +256,7 @@ Contributions earn $KIT tokens via Vibe to Earn:
 
 | Property | Value |
 |----------|-------|
-| **Token** | $KIT |
+| **Token** | $CLAWD |
 | **Mint** | `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump` |
 | **Network** | Solana |
 | **Decimals** | 9 |

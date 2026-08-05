@@ -70,7 +70,7 @@ await client.register_robot(
 |:----------|:-----|:---------|:------------|
 | `robot_id` | `str` | Yes | Unique robot identifier |
 | `capabilities` | `List[str]` | Yes | Robot capabilities (e.g., "navigation", "delivery") |
-| `stake_amount` | `float` | Yes | $KIT tokens to stake |
+| `stake_amount` | `float` | Yes | $CLAWD tokens to stake |
 | `metadata_uri` | `str` | No | URI to robot metadata JSON |
 
 #### Returns
@@ -174,7 +174,7 @@ await client.create_task(
 |:----------|:-----|:---------|:------------|
 | `description` | `str` | Yes | Task description |
 | `requirements` | `List[str]` | Yes | Required capabilities |
-| `reward` | `float` | Yes | $KIT reward amount |
+| `reward` | `float` | Yes | $CLAWD reward amount |
 | `deadline` | `int` | No | Unix timestamp deadline |
 | `location` | `Dict` | No | Task location `{lat, lng}` |
 | `priority` | `TaskPriority` | No | Task priority level |
@@ -266,7 +266,7 @@ await client.list_tasks(
 
 ### `X402Client`
 
-Client for making HTTP requests with automatic $KIT micropayments.
+Client for making HTTP requests with automatic $CLAWD micropayments.
 
 ```python
 from packages.kit_token.x402 import X402Client
@@ -319,7 +319,7 @@ class X402Response:
 
 ### `X402Server`
 
-Server for monetizing robot APIs with $KIT payments.
+Server for monetizing robot APIs with $CLAWD payments.
 
 ```python
 from packages.kit_token.x402 import X402Server
@@ -587,7 +587,7 @@ ws.onopen = () => {
 
 | Code | Name | Description |
 |:-----|:-----|:------------|
-| `E001` | `InsufficientStake` | Insufficient $KIT staked |
+| `E001` | `InsufficientStake` | Insufficient $CLAWD staked |
 | `E002` | `RobotNotFound` | Robot ID not registered |
 | `E003` | `TaskNotFound` | Task ID not found |
 | `E004` | `Unauthorized` | Not authorized for operation |

@@ -1,16 +1,16 @@
 # Vibe to Earn Platform
 
-Developer reward system for the Solana Robotics Kit ecosystem. Earn **$KIT tokens** by contributing code to the repository.
+Developer reward system for the Solana Robotics Kit ecosystem. Earn **$CLAWD tokens** by contributing code to the repository.
 
 ## Overview
 
-The Vibe to Earn platform rewards developers who actively participate in the Solana Robotics Kit ecosystem. Every commit, pull request, code review, and issue resolution earns you $KIT tokens that are distributed directly to your verified Solana wallet.
+The Vibe to Earn platform rewards developers who actively participate in the Solana Robotics Kit ecosystem. Every commit, pull request, code review, and issue resolution earns you $CLAWD tokens that are distributed directly to your verified Solana wallet.
 
 ### Key Features
 
 - **Git Contribution Tracking**: Automatic tracking of commits, PRs, and code reviews
 - **GitHub Webhook Integration**: Real-time contribution detection
-- **$KIT Token Rewards**: Earn tokens for every contribution
+- **$CLAWD Token Rewards**: Earn tokens for every contribution
 - **Streak Bonuses**: Up to 2x rewards for consistent contributors
 - **Developer Tiers**: Progress from Newcomer to Legend
 - **Leaderboard**: Compete with other developers
@@ -20,7 +20,7 @@ The Vibe to Earn platform rewards developers who actively participate in the Sol
 
 | Property | Value |
 |----------|-------|
-| **Token** | $KIT |
+| **Token** | $CLAWD |
 | **Mint Address** | `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump` |
 | **Network** | Solana Mainnet |
 | **Decimals** | 9 |
@@ -30,7 +30,7 @@ The Vibe to Earn platform rewards developers who actively participate in the Sol
 
 ### Contribution Rewards
 
-| Contribution Type | Base Reward ($KIT) |
+| Contribution Type | Base Reward ($CLAWD) |
 |-------------------|-------------------|
 | Commit | 1.0 |
 | Pull Request (Merged) | 10.0 |
@@ -56,9 +56,9 @@ Consistent contributions earn bonus multipliers:
 
 ### Developer Tiers
 
-Progress through tiers based on total $KIT earned:
+Progress through tiers based on total $CLAWD earned:
 
-| Tier | Required $KIT | Benefits |
+| Tier | Required $CLAWD | Benefits |
 |------|--------------|----------|
 | Newcomer | 0 | Welcome to the ecosystem |
 | Contributor | 100 | Early contributor recognition |
@@ -165,7 +165,7 @@ https://api.solanarobotics.org/vibe
 |--------|----------|-------------|
 | GET | `/stats` | Get platform statistics |
 | GET | `/stats/partner-fees` | Get partner fee stats |
-| GET | `/stats/token-fees` | Get $KIT token fees |
+| GET | `/stats/token-fees` | Get $CLAWD token fees |
 
 #### Webhooks
 
@@ -259,11 +259,11 @@ print(f"Total accumulated: {config.accumulated_fees_sol} SOL")
 **Q: How long until my rewards appear?**
 A: Contributions are tracked in real-time via webhooks. Rewards appear within minutes of merge.
 
-**Q: Why is my contribution showing less $KIT than expected?**
+**Q: Why is my contribution showing less $CLAWD than expected?**
 A: Check if you're on a cooldown. Same-type contributions within the cooldown period may not earn rewards.
 
 **Q: How do I increase my tier?**
-A: Keep contributing! Total $KIT earned determines your tier level.
+A: Keep contributing! Total $CLAWD earned determines your tier level.
 
 **Q: Can I lose my streak?**
 A: Yes, if you don't contribute for more than 1 day, your streak resets.

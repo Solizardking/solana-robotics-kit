@@ -188,7 +188,7 @@ export default function Page() {
         </div>
         <div className="flex gap-3">
           <Link href="/kit" className="px-4 py-2 bg-solGreen hover:bg-solGreen/80 rounded-lg text-black text-sm font-medium transition-colors">
-            🪙 $KIT Token
+            🪙 $CLAWD Token
           </Link>
           <Link href="/tokens" className="px-4 py-2 bg-solPurple hover:bg-solPurple/80 rounded-lg text-white text-sm font-medium transition-colors">
             ✨ Create Token
@@ -200,11 +200,11 @@ export default function Page() {
         </div>
       </div>
 
-      {/* $KIT Token Banner */}
+      {/* $CLAWD Token Banner */}
       <Card className="mt-8 bg-gradient-to-r from-solGreen/20 to-solPurple/20 border-solGreen/50">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="font-semibold text-lg">🪙 $KIT Token - Official Robotics Currency</h2>
+            <h2 className="font-semibold text-lg">🪙 $CLAWD Token - Official Robotics Currency</h2>
             <p className="text-white/70 text-sm mt-1">
               Pay for robot tasks, stake for registration, and enable robot-to-robot commerce with x402 protocol.
             </p>
@@ -214,7 +214,7 @@ export default function Page() {
           </div>
           <Link href="/kit">
             <Button className="bg-solGreen text-black hover:bg-solGreen/80">
-              View $KIT →
+              View $CLAWD →
             </Button>
           </Link>
         </div>
@@ -225,7 +225,7 @@ export default function Page() {
           <div className="flex items-center justify-between">
             <h2 className="font-semibold">Create mission (escrow)</h2>
             <div className="flex gap-2">
-              <Button className={mode==="kit" ? "bg-solGreen text-black" : "bg-white/10 hover:bg-white/15"} onClick={() => { setMode("kit"); setMint(KIT_TOKEN_MINT_STRING); }}>$KIT</Button>
+              <Button className={mode==="kit" ? "bg-solGreen text-black" : "bg-white/10 hover:bg-white/15"} onClick={() => { setMode("kit"); setMint(KIT_TOKEN_MINT_STRING); }}>$CLAWD</Button>
               <Button className={mode==="sol" ? "" : "bg-white/10 hover:bg-white/15"} onClick={() => setMode("sol")}>SOL</Button>
               <Button className={mode==="spl" ? "" : "bg-white/10 hover:bg-white/15"} onClick={() => setMode("spl")}>SPL</Button>
             </div>
@@ -250,11 +250,11 @@ export default function Page() {
             ) : mode === "kit" ? (
               <>
                 <div>
-                  <div className="text-xs text-white/60 mb-1">$KIT Token (Official Currency)</div>
+                  <div className="text-xs text-white/60 mb-1">$CLAWD Token (Official Currency)</div>
                   <Input value={mint} disabled className="bg-solGreen/10 border-solGreen/30 text-solGreen" />
                 </div>
                 <div>
-                  <div className="text-xs text-white/60 mb-1">Reward ($KIT)</div>
+                  <div className="text-xs text-white/60 mb-1">Reward ($CLAWD)</div>
                   <Input value={amountTokens} onChange={(e) => setAmountTokens(e.target.value)} />
                 </div>
               </>

@@ -1,4 +1,4 @@
-# $KIT Token & x402 Protocol Integration
+# $CLAWD Token & x402 Protocol Integration
 
 Official currency for the Solana Robotics Kit ecosystem with x402 protocol support for robot-to-robot commerce.
 
@@ -6,7 +6,7 @@ Official currency for the Solana Robotics Kit ecosystem with x402 protocol suppo
 
 | Property | Value |
 |----------|-------|
-| **Name** | $KIT |
+| **Name** | $CLAWD |
 | **Symbol** | KIT |
 | **Contract** | `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump` |
 | **Network** | Solana |
@@ -25,20 +25,20 @@ Official currency for the Solana Robotics Kit ecosystem with x402 protocol suppo
 
 ### 1. Robot Registration Staking
 
-Robots must stake $KIT tokens to register on the network. Higher tiers unlock more capabilities:
+Robots must stake $CLAWD tokens to register on the network. Higher tiers unlock more capabilities:
 
 | Tier | Stake Amount | Benefits |
 |------|--------------|----------|
-| Basic | 100 $KIT | Standard robot registration |
-| Standard | 500 $KIT | Enhanced capabilities, priority matching |
-| Premium | 2,000 $KIT | Priority task access, reduced fees |
-| Enterprise | 10,000 $KIT | Full ecosystem access, governance rights |
+| Basic | 100 $CLAWD | Standard robot registration |
+| Standard | 500 $CLAWD | Enhanced capabilities, priority matching |
+| Premium | 2,000 $CLAWD | Priority task access, reduced fees |
+| Enterprise | 10,000 $CLAWD | Full ecosystem access, governance rights |
 
 ### 2. Task Marketplace Payments
 
-$KIT is the default currency for the task marketplace:
-- Create tasks with $KIT rewards
-- Robots earn $KIT for completing tasks
+$CLAWD is the default currency for the task marketplace:
+- Create tasks with $CLAWD rewards
+- Robots earn $CLAWD for completing tasks
 - Automatic escrow and release
 
 ### 3. Robot-to-Robot Commerce (x402)
@@ -50,19 +50,19 @@ Using the x402 HTTP payment protocol, robots can:
 
 ### 4. Action Log Credits
 
-Pay $KIT for logging robot actions on-chain:
+Pay $CLAWD for logging robot actions on-chain:
 
 | Action Type | Cost |
 |------------|------|
-| Navigation | 0.1 $KIT |
-| Manipulation | 0.2 $KIT |
-| Vision | 0.05 $KIT |
-| Communication | 0.02 $KIT |
-| Transaction | 0.5 $KIT |
+| Navigation | 0.1 $CLAWD |
+| Manipulation | 0.2 $CLAWD |
+| Vision | 0.05 $CLAWD |
+| Communication | 0.02 $CLAWD |
+| Transaction | 0.5 $CLAWD |
 
 ### 5. Governance
 
-$KIT holders can vote on:
+$CLAWD holders can vote on:
 - Protocol upgrades
 - Fee structures
 - New feature proposals
@@ -84,7 +84,7 @@ x402 is an HTTP-native payment protocol that enables autonomous micropayments be
                     X-Payment: <payment_terms>            │
        ◀──────────────────────────────────────────────────┘
        │
-       │  Pay 0.1 $KIT to Robot B
+       │  Pay 0.1 $CLAWD to Robot B
        │
        ▼
 ┌─────────────┐         GET /api/service          ┌─────────────┐
@@ -123,7 +123,7 @@ from packages.kit_token.x402 import X402Server, ServiceRequest, ServiceResponse
 server = X402Server(
     robot_id="ROBOT-001",
     recipient_address="YOUR_WALLET_ADDRESS",
-    default_price=0.1,  # 0.1 $KIT per request
+    default_price=0.1,  # 0.1 $CLAWD per request
 )
 
 async def navigation_handler(request: ServiceRequest) -> ServiceResponse:
@@ -141,7 +141,7 @@ server.register_service(
     name="Navigation Service",
     description="Calculate optimal paths",
     handler=navigation_handler,
-    price=0.1,  # $KIT
+    price=0.1,  # $CLAWD
     capabilities=["navigation", "mapping"]
 )
 ```
@@ -225,7 +225,7 @@ packages/kit-token/
 
 solana-robotics-kit-v0.4/apps/operator_console/
 ├── lib/kit-token.ts     # TypeScript integration
-└── app/kit/page.tsx     # $KIT token page
+└── app/kit/page.tsx     # $CLAWD token page
 ```
 
 ## Environment Variables

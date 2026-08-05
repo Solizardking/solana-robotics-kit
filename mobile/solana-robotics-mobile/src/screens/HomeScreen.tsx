@@ -30,7 +30,7 @@ const menuItems = [
   {
     id: 'wallet',
     title: 'Wallet',
-    subtitle: 'Connect & manage SOL + $KIT',
+    subtitle: 'Connect & manage SOL + $CLAWD',
     icon: '💎',
     screen: 'Wallet' as keyof RootStackParamList,
     color: '#9945FF',
@@ -54,7 +54,7 @@ const menuItems = [
   {
     id: 'vibe',
     title: 'Vibe to Earn',
-    subtitle: 'Earn $KIT for contributions',
+    subtitle: 'Earn $CLAWD for contributions',
     icon: '🎵',
     screen: 'VibeToEarn' as keyof RootStackParamList,
     color: '#FF6B6B',
@@ -100,7 +100,7 @@ export default function HomeScreen() {
             <Text style={styles.statValue}>
               {wallet.connected ? wallet.kitBalance.toFixed(2) : '--'}
             </Text>
-            <Text style={styles.statLabel}>$KIT</Text>
+            <Text style={styles.statLabel}>$CLAWD</Text>
           </View>
           <View style={styles.statCard}>
             <Text style={styles.statValue}>
@@ -161,7 +161,7 @@ export default function HomeScreen() {
             <View style={styles.developerStats}>
               <View style={styles.devStatItem}>
                 <Text style={styles.devStatValue}>{developer.totalRewards.toFixed(2)}</Text>
-                <Text style={styles.devStatLabel}>$KIT Earned</Text>
+                <Text style={styles.devStatLabel}>$CLAWD Earned</Text>
               </View>
               <View style={styles.devStatItem}>
                 <Text style={styles.devStatValue}>{developer.streakDays}</Text>
@@ -177,7 +177,7 @@ export default function HomeScreen() {
 
         {/* Token Info */}
         <View style={styles.tokenInfo}>
-          <Text style={styles.tokenTitle}>$KIT Token</Text>
+          <Text style={styles.tokenTitle}>$CLAWD Token</Text>
           <Text style={styles.tokenAddress}>{KIT_TOKEN.mint.toBase58().slice(0, 16)}...</Text>
         </View>
       </ScrollView>

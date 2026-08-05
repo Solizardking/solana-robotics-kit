@@ -15,7 +15,7 @@ Features:
 - Robot API monetization
 - Per-request micro-payments
 - Autonomous service discovery
-- $KIT token integration
+- $CLAWD token integration
 - Multi-token support (USDC, KIT)
 
 Reference: https://x402.org
@@ -231,7 +231,7 @@ class X402Client:
         token_client: Optional[KitTokenClient] = None,
         default_asset: PaymentAsset = PaymentAsset.KIT,
         auto_pay: bool = True,
-        max_auto_pay: float = 10.0,  # Max $KIT per request
+        max_auto_pay: float = 10.0,  # Max $CLAWD per request
     ):
         self.token_client = token_client or KitTokenClient()
         self.default_asset = default_asset
@@ -388,7 +388,7 @@ class X402Server:
 
     Enables robots to:
     - Monetize their capabilities
-    - Accept $KIT micropayments
+    - Accept $CLAWD micropayments
     - Serve other robots autonomously
     """
 

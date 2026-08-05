@@ -36,7 +36,7 @@ logger = logging.getLogger("BagsIntegration")
 BAGS_API_BASE = "https://api.bags.fm"
 BAGS_API_VERSION = "v1"
 
-# $KIT Token addresses
+# $CLAWD Token addresses
 KIT_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 FEE_WALLET = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 
@@ -653,7 +653,7 @@ def get_bags_sdk() -> BagsSDKClient:
 
 
 async def get_kit_token_fees() -> Optional[float]:
-    """Get lifetime fees for $KIT token"""
+    """Get lifetime fees for $CLAWD token"""
     sdk = get_bags_sdk()
     return await sdk.get_token_lifetime_fees(KIT_TOKEN_MINT)
 

@@ -125,7 +125,7 @@ export class SolanaService {
   }
 
   /**
-   * Get $KIT token balance
+   * Get $CLAWD token balance
    */
   async getKitTokenBalance(address: PublicKey | string): Promise<number> {
     const pubkey = typeof address === 'string' ? new PublicKey(address) : address;
@@ -187,7 +187,7 @@ export class SolanaService {
   }
 
   /**
-   * Build a $KIT token transfer transaction
+   * Build a $CLAWD token transfer transaction
    */
   async buildKitTransferTransaction(
     from: PublicKey,

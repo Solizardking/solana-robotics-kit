@@ -41,7 +41,7 @@ export default function TasksScreen() {
         </View>
       </View>
       <View style={styles.taskMeta}>
-        <Text style={styles.reward}>{item.reward} $KIT</Text>
+        <Text style={styles.reward}>{item.reward} $CLAWD</Text>
         <Text style={styles.capabilities}>
           {item.requiredCapabilities.join(', ')}
         </Text>

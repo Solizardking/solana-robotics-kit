@@ -98,7 +98,7 @@ All Solana blockchain integration code.
   - `task_marketplace/` - Task creation & matching
   - `action_log/` - Immutable audit trail
 - `clients/` - Python/TypeScript clients
-- `tokens/` - $KIT token & x402 protocol
+- `tokens/` - $CLAWD token & x402 protocol
 - `passport/` - Robot passport NFT generation
 
 ### AI (`ai/`)

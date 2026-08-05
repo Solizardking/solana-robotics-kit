@@ -96,7 +96,7 @@ export default function VibeToEarnScreen() {
       });
       const data = await response.json();
       if (data.success) {
-        Alert.alert('Success', `Claimed ${data.amount} $KIT!`);
+        Alert.alert('Success', `Claimed ${data.amount} $CLAWD!`);
       } else {
         Alert.alert('Claim Failed', data.error);
       }
@@ -113,7 +113,7 @@ export default function VibeToEarnScreen() {
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.headerTitle}>Vibe to Earn</Text>
-          <Text style={styles.headerSubtitle}>Earn $KIT by contributing to the repo</Text>
+          <Text style={styles.headerSubtitle}>Earn $CLAWD by contributing to the repo</Text>
         </View>
 
         {!developer ? (
@@ -151,7 +151,7 @@ export default function VibeToEarnScreen() {
               <View style={styles.statsRow}>
                 <View style={styles.statItem}>
                   <Text style={styles.statValue}>{developer.totalRewards.toFixed(2)}</Text>
-                  <Text style={styles.statLabel}>Total $KIT</Text>
+                  <Text style={styles.statLabel}>Total $CLAWD</Text>
                 </View>
                 <View style={styles.statItem}>
                   <Text style={[styles.statValue, { color: '#14F195' }]}>
@@ -174,7 +174,7 @@ export default function VibeToEarnScreen() {
                     <ActivityIndicator color="#FFFFFF" />
                   ) : (
                     <Text style={styles.claimButtonText}>
-                      Claim {developer.pendingRewards.toFixed(2)} $KIT
+                      Claim {developer.pendingRewards.toFixed(2)} $CLAWD
                     </Text>
                   )}
                 </TouchableOpacity>
@@ -190,7 +190,7 @@ export default function VibeToEarnScreen() {
                 contributions.map((c) => (
                   <View key={c.id} style={styles.contributionItem}>
                     <Text style={styles.contributionType}>{c.type}</Text>
-                    <Text style={styles.contributionReward}>+{c.rewardAmount} $KIT</Text>
+                    <Text style={styles.contributionReward}>+{c.rewardAmount} $CLAWD</Text>
                   </View>
                 ))
               )}
@@ -205,7 +205,7 @@ export default function VibeToEarnScreen() {
             <View key={idx} style={styles.leaderboardItem}>
               <Text style={styles.rank}>#{entry.rank}</Text>
               <Text style={styles.leaderName}>{entry.developer}</Text>
-              <Text style={styles.leaderReward}>{entry.totalRewards.toFixed(0)} $KIT</Text>
+              <Text style={styles.leaderReward}>{entry.totalRewards.toFixed(0)} $CLAWD</Text>
             </View>
           ))}
         </View>
@@ -216,23 +216,23 @@ export default function VibeToEarnScreen() {
           <View style={styles.rateCard}>
             <View style={styles.rateRow}>
               <Text style={styles.rateLabel}>Commit</Text>
-              <Text style={styles.rateValue}>1 $KIT</Text>
+              <Text style={styles.rateValue}>1 $CLAWD</Text>
             </View>
             <View style={styles.rateRow}>
               <Text style={styles.rateLabel}>Pull Request</Text>
-              <Text style={styles.rateValue}>10 $KIT</Text>
+              <Text style={styles.rateValue}>10 $CLAWD</Text>
             </View>
             <View style={styles.rateRow}>
               <Text style={styles.rateLabel}>Bug Fix</Text>
-              <Text style={styles.rateValue}>15 $KIT</Text>
+              <Text style={styles.rateValue}>15 $CLAWD</Text>
             </View>
             <View style={styles.rateRow}>
               <Text style={styles.rateLabel}>Feature</Text>
-              <Text style={styles.rateValue}>25 $KIT</Text>
+              <Text style={styles.rateValue}>25 $CLAWD</Text>
             </View>
             <View style={styles.rateRow}>
               <Text style={styles.rateLabel}>Security Fix</Text>
-              <Text style={styles.rateValue}>50 $KIT</Text>
+              <Text style={styles.rateValue}>50 $CLAWD</Text>
             </View>
           </View>
         </View>

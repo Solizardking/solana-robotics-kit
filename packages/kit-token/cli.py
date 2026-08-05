@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-$KIT Token CLI
+$CLAWD Token CLI
 ==============
 
-Command-line interface for $KIT token operations.
+Command-line interface for $CLAWD token operations.
 
 Usage:
     python -m packages.kit_token.cli info
@@ -234,14 +234,14 @@ def cmd_x402_info(args):
     print("  - Cryptographic payment proofs")
     print()
     print("Supported Payment Assets:")
-    print(f"  - $KIT  (Solana Robotics Kit native token)")
+    print(f"  - $CLAWD  (Solana Robotics Kit native token)")
     print(f"  - USDC  (Stablecoin)")
     print(f"  - SOL   (Native Solana)")
     print()
     print("How It Works:")
     print("  1. Robot A requests service from Robot B")
     print("  2. Robot B returns HTTP 402 with payment terms")
-    print("  3. Robot A pays with $KIT tokens")
+    print("  3. Robot A pays with $CLAWD tokens")
     print("  4. Robot A retries with payment proof")
     print("  5. Robot B verifies and provides service")
     print()

@@ -4,17 +4,17 @@ Vibe to Earn Platform
 =====================
 
 Developer reward system for the Solana Robotics Kit ecosystem.
-Rewards developers with $KIT tokens for contributing code to the repository.
+Rewards developers with $CLAWD tokens for contributing code to the repository.
 
 Features:
 - Git contribution tracking (commits, PRs, issues)
 - Wallet verification for reward distribution
 - Integration with Bags SDK for partner fees
 - Developer leaderboard and stats
-- Automated $KIT token rewards
+- Automated $CLAWD token rewards
 
 Token Details:
-- $KIT Token: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
+- $CLAWD Token: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 - Fee Wallet: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 """
 
@@ -41,18 +41,18 @@ KIT_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 FEE_WALLET = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 KIT_TOKEN_DECIMALS = 9
 
-# Reward multipliers (in $KIT tokens)
+# Reward multipliers (in $CLAWD tokens)
 CONTRIBUTION_REWARDS = {
-    "commit": 1.0,              # 1 $KIT per commit
-    "pull_request": 10.0,       # 10 $KIT per merged PR
-    "issue_created": 2.0,       # 2 $KIT per issue created
-    "issue_resolved": 5.0,      # 5 $KIT per issue resolved
-    "code_review": 3.0,         # 3 $KIT per code review
-    "documentation": 5.0,       # 5 $KIT per doc contribution
-    "bug_fix": 15.0,            # 15 $KIT per bug fix
-    "feature": 25.0,            # 25 $KIT per new feature
-    "security_fix": 50.0,       # 50 $KIT per security fix
-    "test_coverage": 2.0,       # 2 $KIT per test file added
+    "commit": 1.0,              # 1 $CLAWD per commit
+    "pull_request": 10.0,       # 10 $CLAWD per merged PR
+    "issue_created": 2.0,       # 2 $CLAWD per issue created
+    "issue_resolved": 5.0,      # 5 $CLAWD per issue resolved
+    "code_review": 3.0,         # 3 $CLAWD per code review
+    "documentation": 5.0,       # 5 $CLAWD per doc contribution
+    "bug_fix": 15.0,            # 15 $CLAWD per bug fix
+    "feature": 25.0,            # 25 $CLAWD per new feature
+    "security_fix": 50.0,       # 50 $CLAWD per security fix
+    "test_coverage": 2.0,       # 2 $CLAWD per test file added
 }
 
 # Bonus multipliers
@@ -66,11 +66,11 @@ STREAK_BONUS = {
 # Developer tiers based on total contributions
 DEVELOPER_TIERS = {
     "newcomer": 0,           # Just joined
-    "contributor": 100,      # 100 $KIT earned
-    "regular": 500,          # 500 $KIT earned
-    "core": 2000,            # 2000 $KIT earned
-    "maintainer": 5000,      # 5000 $KIT earned
-    "legend": 10000,         # 10000 $KIT earned
+    "contributor": 100,      # 100 $CLAWD earned
+    "regular": 500,          # 500 $CLAWD earned
+    "core": 2000,            # 2000 $CLAWD earned
+    "maintainer": 5000,      # 5000 $CLAWD earned
+    "legend": 10000,         # 10000 $CLAWD earned
 }
 
 # Cooldown periods (prevent reward farming)
@@ -405,7 +405,7 @@ class VibeToEarnEngine:
 
         logger.info(
             f"Contribution recorded: {github_username} - {contribution_type.value} "
-            f"(+{final_reward:.2f} $KIT, {bonus_multiplier:.2f}x bonus)"
+            f"(+{final_reward:.2f} $CLAWD, {bonus_multiplier:.2f}x bonus)"
         )
 
         return contribution
@@ -539,7 +539,7 @@ class VibeToEarnEngine:
             claim.status = "completed"
             claim.completed_at = datetime.now()
 
-            logger.info(f"Rewards claimed for {github_username}: {claim.amount:.2f} $KIT")
+            logger.info(f"Rewards claimed for {github_username}: {claim.amount:.2f} $CLAWD")
         else:
             claim.status = "failed"
             claim.error_message = "Transfer failed"
@@ -547,7 +547,7 @@ class VibeToEarnEngine:
         return claim
 
     async def _process_reward_transfer(self, claim: RewardClaim) -> bool:
-        """Process $KIT token transfer for reward claim"""
+        """Process $CLAWD token transfer for reward claim"""
         try:
             # Import kit token client
             from packages.kit_token import KitTokenClient
@@ -671,7 +671,7 @@ class VibeToEarnEngine:
         return None
 
     async def get_token_lifetime_fees(self) -> Optional[float]:
-        """Get lifetime fees for $KIT token"""
+        """Get lifetime fees for $CLAWD token"""
         sdk = await self.get_bags_sdk()
         if sdk:
             return await sdk.get_token_lifetime_fees(KIT_TOKEN_MINT)

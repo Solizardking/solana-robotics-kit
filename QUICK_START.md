@@ -165,7 +165,7 @@ async def register():
     result = await client.register_robot(
         robot_id="ROBOT-001",
         capabilities=["navigation", "delivery"],
-        stake_amount=100  # $KIT tokens
+        stake_amount=100  # $CLAWD tokens
     )
 
     print(f"Robot registered: {result.robot_pda}")
@@ -183,7 +183,7 @@ async def create_task():
     task = await client.create_task(
         description="Deliver package to Room 101",
         requirements=["delivery"],
-        reward=50  # $KIT tokens
+        reward=50  # $CLAWD tokens
     )
 
     print(f"Task created: {task.task_id}")
@@ -267,7 +267,7 @@ See [docs/ORIN_NANO_SETUP.md](docs/ORIN_NANO_SETUP.md) for detailed instructions
 |:-----|:------------|:-----|
 | **1** | Read the Architecture Guide | [ARCHITECTURE.md](docs/ARCHITECTURE.md) |
 | **2** | Explore the API Reference | [API_REFERENCE.md](docs/API_REFERENCE.md) |
-| **3** | Learn about $KIT Token | [KIT_TOKEN_X402.md](docs/KIT_TOKEN_X402.md) |
+| **3** | Learn about $CLAWD Token | [KIT_TOKEN_X402.md](docs/KIT_TOKEN_X402.md) |
 | **4** | Set up NVIDIA Integration | [NVIDIA_NIM_INTEGRATION.md](docs/NVIDIA_NIM_INTEGRATION.md) |
 | **5** | Contribute! | [CONTRIBUTING.md](CONTRIBUTING.md) |
 

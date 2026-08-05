@@ -726,7 +726,7 @@ const SolanaDesktopRobot: React.FC<SolanaDesktopRobotProps> = ({
           </div>
           <div>
             <span className="text-gray-500">Token:</span>
-            <span className="text-green-400 ml-2">$KIT Native</span>
+            <span className="text-green-400 ml-2">$CLAWD Native</span>
           </div>
           <div>
             <span className="text-gray-500">Blockchain:</span>
@@ -736,7 +736,7 @@ const SolanaDesktopRobot: React.FC<SolanaDesktopRobotProps> = ({
 
         {/* Contract */}
         <div className="mt-4 pt-3 border-t border-gray-800">
-          <span className="text-gray-500 text-xs">$KIT Contract:</span>
+          <span className="text-gray-500 text-xs">$CLAWD Contract:</span>
           <div 
             className="font-mono text-xs mt-1 break-all"
             style={{ color: currentVariant.trackColor }}

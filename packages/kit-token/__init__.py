@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """
-$KIT Token Integration Module
+$CLAWD Token Integration Module
 ==============================
 
 Official token for the Solana Robotics Kit ecosystem.
 
 Token Details:
-- Name: $KIT
+- Name: $CLAWD
 - Contract: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 - Network: Solana
 - Website: https://solanarobotics.org
@@ -32,30 +32,30 @@ import logging
 logger = logging.getLogger("KitToken")
 
 # =============================================================================
-# $KIT TOKEN CONSTANTS
+# $CLAWD TOKEN CONSTANTS
 # =============================================================================
 
 KIT_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
-KIT_TOKEN_NAME = "$KIT"
+KIT_TOKEN_NAME = "$CLAWD"
 KIT_TOKEN_SYMBOL = "KIT"
 KIT_TOKEN_DECIMALS = 9
 KIT_TOKEN_WEBSITE = "https://solanarobotics.org"
 
 # Staking tiers for robot registration
 STAKING_TIERS = {
-    "basic": 100,         # 100 $KIT - Basic robot registration
-    "standard": 500,      # 500 $KIT - Enhanced capabilities
-    "premium": 2000,      # 2000 $KIT - Priority task access
-    "enterprise": 10000,  # 10000 $KIT - Full ecosystem access
+    "basic": 100,         # 100 $CLAWD - Basic robot registration
+    "standard": 500,      # 500 $CLAWD - Enhanced capabilities
+    "premium": 2000,      # 2000 $CLAWD - Priority task access
+    "enterprise": 10000,  # 10000 $CLAWD - Full ecosystem access
 }
 
 # Action log credit costs
 ACTION_LOG_COSTS = {
-    "navigation": 0.1,    # 0.1 $KIT per navigation log
-    "manipulation": 0.2,  # 0.2 $KIT per manipulation action
-    "vision": 0.05,       # 0.05 $KIT per vision processing
-    "communication": 0.02,# 0.02 $KIT per message
-    "transaction": 0.5,   # 0.5 $KIT per blockchain transaction
+    "navigation": 0.1,    # 0.1 $CLAWD per navigation log
+    "manipulation": 0.2,  # 0.2 $CLAWD per manipulation action
+    "vision": 0.05,       # 0.05 $CLAWD per vision processing
+    "communication": 0.02,# 0.02 $CLAWD per message
+    "transaction": 0.5,   # 0.5 $CLAWD per blockchain transaction
 }
 
 
@@ -73,7 +73,7 @@ class StakingTier(Enum):
 
 @dataclass
 class KitTokenInfo:
-    """$KIT token information"""
+    """$CLAWD token information"""
     mint: str = KIT_TOKEN_MINT
     name: str = KIT_TOKEN_NAME
     symbol: str = KIT_TOKEN_SYMBOL
@@ -137,7 +137,7 @@ class TokenTransfer:
 
 class KitTokenClient:
     """
-    Client for $KIT token operations.
+    Client for $CLAWD token operations.
 
     Handles:
     - Token balance queries
@@ -208,7 +208,7 @@ class KitTokenClient:
 
     async def get_balance(self, owner: Optional[str] = None) -> TokenBalance:
         """
-        Get $KIT token balance for an address.
+        Get $CLAWD token balance for an address.
 
         Args:
             owner: Wallet address (defaults to client's keypair)
@@ -224,7 +224,7 @@ class KitTokenClient:
             # Query SPL token account
             # In production: use get_token_accounts_by_owner
             # For now: simulated balance
-            raw_amount = 10000 * (10 ** KIT_TOKEN_DECIMALS)  # 10,000 $KIT mock
+            raw_amount = 10000 * (10 ** KIT_TOKEN_DECIMALS)  # 10,000 $CLAWD mock
             balance = raw_amount / (10 ** KIT_TOKEN_DECIMALS)
 
             return TokenBalance(
@@ -252,17 +252,17 @@ class KitTokenClient:
         memo: Optional[str] = None,
     ) -> Optional[TokenTransfer]:
         """
-        Transfer $KIT tokens to another address.
+        Transfer $CLAWD tokens to another address.
 
         Args:
             to_address: Recipient wallet address
-            amount: Amount of $KIT to send
+            amount: Amount of $CLAWD to send
             memo: Optional transaction memo
 
         Returns:
             TokenTransfer record if successful
         """
-        logger.info(f"Transferring {amount} $KIT to {to_address[:16]}...")
+        logger.info(f"Transferring {amount} $CLAWD to {to_address[:16]}...")
 
         try:
             # In production: build and send SPL token transfer
@@ -294,7 +294,7 @@ class KitTokenClient:
         tier: StakingTier = StakingTier.BASIC,
     ) -> Optional[StakeInfo]:
         """
-        Stake $KIT tokens for robot registration.
+        Stake $CLAWD tokens for robot registration.
 
         Args:
             robot_id: Robot identifier
@@ -304,7 +304,7 @@ class KitTokenClient:
             StakeInfo if successful
         """
         amount = STAKING_TIERS[tier.value]
-        logger.info(f"Staking {amount} $KIT for robot {robot_id} (tier: {tier.value})")
+        logger.info(f"Staking {amount} $CLAWD for robot {robot_id} (tier: {tier.value})")
 
         try:
             # Check balance
@@ -323,7 +323,7 @@ class KitTokenClient:
             )
 
             self._stakes[robot_id] = stake
-            logger.info(f"✅ Staked {amount} $KIT for {robot_id}")
+            logger.info(f"✅ Staked {amount} $CLAWD for {robot_id}")
             return stake
 
         except Exception as e:
@@ -332,7 +332,7 @@ class KitTokenClient:
 
     async def unstake(self, robot_id: str) -> Optional[float]:
         """
-        Unstake $KIT tokens from a robot.
+        Unstake $CLAWD tokens from a robot.
 
         Args:
             robot_id: Robot identifier
@@ -354,7 +354,7 @@ class KitTokenClient:
         amount = stake.amount + stake.rewards_earned
         stake.is_active = False
 
-        logger.info(f"✅ Unstaked {amount} $KIT from {robot_id}")
+        logger.info(f"✅ Unstaked {amount} $CLAWD from {robot_id}")
         return amount
 
     async def get_stake(self, robot_id: str) -> Optional[StakeInfo]:
@@ -369,7 +369,7 @@ class KitTokenClient:
         action_type: str,
     ) -> Optional[TokenTransfer]:
         """
-        Pay $KIT for action log entry.
+        Pay $CLAWD for action log entry.
 
         Args:
             robot_id: Robot identifier
@@ -419,7 +419,7 @@ class MockClient:
 # =============================================================================
 
 def get_token_info() -> KitTokenInfo:
-    """Get $KIT token information"""
+    """Get $CLAWD token information"""
     return KitTokenInfo()
 
 

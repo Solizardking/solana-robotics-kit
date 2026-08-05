@@ -9,7 +9,7 @@
 #   ./scripts/setup.sh [--skip-node] [--skip-python] [--skip-solana]
 #
 # Website: https://solanarobotics.org
-# $KIT Token: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
+# $CLAWD Token: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 #
 
 set -e
@@ -215,7 +215,7 @@ ${GREEN}Next Steps:${NC}
    cd solana-robotics-kit-v0.4/apps/operator_console
    npm run dev
 
-3. ${BLUE}Check \$KIT token info:${NC}
+3. ${BLUE}Check \$CLAWD token info:${NC}
    python -m packages.kit_token.cli info
 
 4. ${BLUE}Run a robot daemon:${NC}
@@ -224,7 +224,7 @@ ${GREEN}Next Steps:${NC}
 ${YELLOW}Resources:${NC}
 - Website:     https://solanarobotics.org
 - GitHub:      https://github.com/8bitsats/Solana-Robotics-Kit
-- \$KIT Token:  8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
+- \$CLAWD Token:  8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 
 Happy building! 🤖
 "

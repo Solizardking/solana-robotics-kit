@@ -201,7 +201,7 @@ async def register_developer(request: DeveloperRegisterRequest):
     Register a new developer for the Vibe to Earn program.
 
     Developers must link their GitHub username to start earning rewards.
-    Optionally, provide a Solana wallet address for receiving $KIT tokens.
+    Optionally, provide a Solana wallet address for receiving $CLAWD tokens.
     """
     dev = await engine.register_developer(
         github_username=request.github_username,
@@ -375,7 +375,7 @@ async def claim_rewards(request: RewardClaimRequest):
     - A verified wallet address
     - Pending rewards > 0
 
-    Rewards are distributed as $KIT tokens to the verified wallet.
+    Rewards are distributed as $CLAWD tokens to the verified wallet.
     """
     claim = await engine.claim_rewards(request.github_username)
 
@@ -512,7 +512,7 @@ async def get_partner_fee_stats():
 
 @app.get("/stats/token-fees", tags=["Statistics"])
 async def get_token_fees():
-    """Get $KIT token lifetime fees."""
+    """Get $CLAWD token lifetime fees."""
     fees = await engine.get_token_lifetime_fees()
 
     return {

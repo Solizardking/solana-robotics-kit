@@ -3,7 +3,7 @@
 This document describes the architecture and design of the Solana Robotics Kit.
 
 **Website**: [solanarobotics.org](https://solanarobotics.org)
-**$KIT Token**: `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`
+**$CLAWD Token**: `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`
 
 ---
 
@@ -25,7 +25,7 @@ This document describes the architecture and design of the Solana Robotics Kit.
 │  ┌───────────────────────────────────────────────────────────────────────┐  │
 │  │                           PACKAGE LAYER                                │  │
 │  │  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐    │  │
-│  │  │$KIT Token│ │  Solana  │ │  Robot   │ │ Blender  │ │Perception│    │  │
+│  │  │$CLAWD Token│ │  Solana  │ │  Robot   │ │ Blender  │ │Perception│    │  │
 │  │  │  + x402  │ │  Client  │ │ Passport │ │  Assets  │ │  (AI)    │    │  │
 │  │  └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘    │  │
 │  └───────────────────────────────────────────────────────────────────────┘  │
@@ -33,7 +33,7 @@ This document describes the architecture and design of the Solana Robotics Kit.
 │  ┌───────────────────────────────────────────────────────────────────────┐  │
 │  │                         BLOCKCHAIN LAYER                               │  │
 │  │  ┌──────────────┐ ┌────────────────┐ ┌────────────┐ ┌────────────┐   │  │
-│  │  │   Robot      │ │     Task       │ │   Action   │ │    $KIT    │   │  │
+│  │  │   Robot      │ │     Task       │ │   Action   │ │    $CLAWD    │   │  │
 │  │  │  Registry    │ │  Marketplace   │ │    Log     │ │   Token    │   │  │
 │  │  └──────────────┘ └────────────────┘ └────────────┘ └────────────┘   │  │
 │  └───────────────────────────────────────────────────────────────────────┘  │
@@ -66,7 +66,7 @@ Reusable libraries and integrations.
 
 | Package | Language | Purpose |
 |---------|----------|---------|
-| **kit-token** | Python | $KIT token & x402 protocol |
+| **kit-token** | Python | $CLAWD token & x402 protocol |
 | **solana-client** | Python | Blockchain interaction |
 | **robot-passport** | Python | NFT identity generation |
 | **blender-assets** | Python | 3D asset creation |
@@ -82,7 +82,7 @@ On-chain Solana programs (Anchor).
 | **Robot Registry** | Robot identity management | Registration, capabilities, reputation |
 | **Task Marketplace** | Task creation & escrow | Create, accept, complete, dispute |
 | **Action Log** | Immutable audit trail | Log robot actions on-chain |
-| **$KIT Token** | Ecosystem currency | SPL token for payments |
+| **$CLAWD Token** | Ecosystem currency | SPL token for payments |
 
 ### 4. Commerce Layer (x402)
 
@@ -96,7 +96,7 @@ Robot A                              Robot B
    │◀─── 402 Payment Required ──────────│
    │     X-Payment: <terms>             │
    │                                    │
-   │──── Pay $KIT (on-chain) ──────────▶│
+   │──── Pay $CLAWD (on-chain) ──────────▶│
    │                                    │
    │──── GET /api/service ─────────────▶│
    │     X-Payment-Proof: <sig>         │
@@ -113,8 +113,8 @@ Robot A                              Robot B
 
 ```
 1. Operator creates wallet
-2. Operator acquires $KIT tokens
-3. Operator stakes $KIT (100-10,000 based on tier)
+2. Operator acquires $CLAWD tokens
+3. Operator stakes $CLAWD (100-10,000 based on tier)
 4. Robot registers on-chain with capabilities
 5. Robot receives unique ID and on-chain identity
 6. Robot can now accept tasks and earn rewards
@@ -123,14 +123,14 @@ Robot A                              Robot B
 ### Task Execution Flow
 
 ```
-1. Creator submits task with $KIT escrow
+1. Creator submits task with $CLAWD escrow
 2. Task published to marketplace
 3. Robot queries tasks matching capabilities
 4. Robot accepts task (reserved)
 5. Robot executes task
 6. Robot submits proof of completion
 7. Creator verifies (or timeout auto-approves)
-8. $KIT released from escrow to robot
+8. $CLAWD released from escrow to robot
 9. Reputation updated
 ```
 
@@ -140,7 +140,7 @@ Robot A                              Robot B
 1. Robot A needs service from Robot B
 2. Robot A sends HTTP request
 3. Robot B returns 402 with payment terms
-4. Robot A pays $KIT on-chain
+4. Robot A pays $CLAWD on-chain
 5. Robot A retries with payment proof
 6. Robot B verifies payment
 7. Robot B provides service
@@ -159,7 +159,7 @@ class Robot:
     pubkey: str             # Solana public key
     owner: str              # Owner wallet
     capabilities: List[str] # e.g., ["navigation", "delivery"]
-    stake_amount: float     # $KIT staked
+    stake_amount: float     # $CLAWD staked
     reputation: float       # 0.0 - 1.0
     tier: StakingTier       # basic, standard, premium, enterprise
     registered_at: datetime
@@ -174,7 +174,7 @@ class Task:
     task_id: str
     description: str
     requirements: List[str]  # Required capabilities
-    reward: float            # $KIT reward
+    reward: float            # $CLAWD reward
     creator: str             # Creator wallet
     assigned_robot: Optional[str]
     status: TaskStatus       # open, assigned, completed, disputed
@@ -202,7 +202,7 @@ class PaymentTerms:
 ### On-Chain Security
 
 - **Escrow**: All task payments held in escrow until completion
-- **Staking**: Robots stake $KIT to prevent spam
+- **Staking**: Robots stake $CLAWD to prevent spam
 - **Reputation**: Poor behavior reduces reputation score
 - **Timeouts**: Auto-release prevents stuck escrows
 
@@ -271,7 +271,7 @@ Solana-Robotics-Kit/
 │   ├── autonomous_launchpad/      # Token launcher
 │   └── trading_agent_server/      # Trading backend
 ├── packages/                      # Libraries
-│   ├── kit-token/                 # $KIT + x402
+│   ├── kit-token/                 # $CLAWD + x402
 │   ├── solana-client/             # Blockchain client
 │   ├── robot-passport/            # NFT passports
 │   ├── blender-assets/            # 3D assets
@@ -294,7 +294,7 @@ Solana-Robotics-Kit/
 See individual package documentation:
 
 - [Solana Client API](./API_REFERENCE.md#solana-client)
-- [$KIT Token API](./KIT_TOKEN_X402.md)
+- [$CLAWD Token API](./KIT_TOKEN_X402.md)
 - [Robot Passport API](./ROBOT_PASSPORT_GENERATOR.md)
 - [Blender Assets API](./BLENDER_ROBOTICS_ASSETS.md)
 

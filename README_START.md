@@ -9,7 +9,7 @@ Run the startup script to set up everything automatically:
 ```
 
 This script will:
-- ✅ Display $KIT ASCII art
+- ✅ Display $CLAWD ASCII art
 - ✅ Check Python, Node.js, and Solana CLI
 - ✅ Create Python virtual environment
 - ✅ Install all Python dependencies

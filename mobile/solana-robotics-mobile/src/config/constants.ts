@@ -36,7 +36,7 @@ export const DEFAULT_NETWORK: NetworkType = 'devnet';
 
 export const KIT_TOKEN = {
   mint: new PublicKey('8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump'),
-  symbol: '$KIT',
+  symbol: '$CLAWD',
   name: 'Solana Robotics Kit Token',
   decimals: 9,
   logoUri: 'https://raw.githubusercontent.com/8bitsats/Solana-Robotics-Kit/main/assets/kit-token.png',

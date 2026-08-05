@@ -1,9 +1,9 @@
-# $KIT Token
+# $CLAWD Token
 
 > **The Official Token of Solana Automation Kit & Solana Robotics Kit**
 
 <p align="center">
-  <img src="https://solanarobotics.org/kit-logo.png" alt="$KIT Token" width="200"/>
+  <img src="https://solanarobotics.org/kit-logo.png" alt="$CLAWD Token" width="200"/>
 </p>
 
 [![Solana](https://img.shields.io/badge/Solana-SPL_Token-purple)](https://solana.com)
@@ -13,14 +13,14 @@
 
 ## 🎯 Overview
 
-**$KIT** is the native utility token powering the Solana Robotics Kit ecosystem — enabling autonomous robots to register, accept tasks, earn rewards, and participate in decentralized robotic workflows on the Solana blockchain.
+**$CLAWD** is the native utility token powering the Solana Robotics Kit ecosystem — enabling autonomous robots to register, accept tasks, earn rewards, and participate in decentralized robotic workflows on the Solana blockchain.
 
 ### Token Details
 
 | Property | Value |
 |----------|-------|
 | **Name** | KIT Token |
-| **Symbol** | $KIT |
+| **Symbol** | $CLAWD |
 | **Network** | Solana (SPL Token) |
 | **Decimals** | 9 |
 | **Total Supply** | 1,000,000,000 (1 Billion) |
@@ -32,49 +32,49 @@
 
 ### 1. Task Payments & Escrow
 
-$KIT is the primary currency for the **Task Marketplace Escrow** program:
+$CLAWD is the primary currency for the **Task Marketplace Escrow** program:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                     TASK LIFECYCLE                          │
 ├─────────────────────────────────────────────────────────────┤
-│  1. Creator deposits $KIT → Escrow                          │
+│  1. Creator deposits $CLAWD → Escrow                          │
 │  2. Robot bids on task                                      │
 │  3. Robot completes task                                    │
-│  4. Escrow releases $KIT → Robot owner                      │
+│  4. Escrow releases $CLAWD → Robot owner                      │
 │  5. Platform fee (2.5%) → Treasury                          │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 **Example Task Rewards:**
-- Delivery task (warehouse): 10-50 $KIT
-- Navigation task (patrol): 5-20 $KIT
-- Inspection task (camera): 15-30 $KIT
-- Custom automation: Variable $KIT
+- Delivery task (warehouse): 10-50 $CLAWD
+- Navigation task (patrol): 5-20 $CLAWD
+- Inspection task (camera): 15-30 $CLAWD
+- Custom automation: Variable $CLAWD
 
 ### 2. Robot Registration Staking
 
-Robots stake $KIT to register on-chain:
+Robots stake $CLAWD to register on-chain:
 
 | Tier | Stake Required | Benefits |
 |------|----------------|----------|
-| **Basic** | 100 $KIT | Registration, basic tasks |
-| **Standard** | 500 $KIT | Priority task matching, reputation boost |
-| **Premium** | 2,000 $KIT | Exclusive tasks, governance voting, reduced fees |
-| **Enterprise** | 10,000 $KIT | Fleet management, custom integrations, VIP support |
+| **Basic** | 100 $CLAWD | Registration, basic tasks |
+| **Standard** | 500 $CLAWD | Priority task matching, reputation boost |
+| **Premium** | 2,000 $CLAWD | Exclusive tasks, governance voting, reduced fees |
+| **Enterprise** | 10,000 $CLAWD | Fleet management, custom integrations, VIP support |
 
 ### 3. Reputation & Governance
 
-- **Reputation Rewards**: Earn $KIT bonus for maintaining high task completion rates
+- **Reputation Rewards**: Earn $CLAWD bonus for maintaining high task completion rates
 - **Governance**: Vote on protocol upgrades, fee structures, and treasury allocation
 - **Slashing**: Stake slashed for malicious behavior or repeated task failures
 
 ### 4. Action Log Credits
 
-Log robot actions on-chain with $KIT:
-- Log perception: 0.01 $KIT per entry
-- Log execution: 0.01 $KIT per entry
-- Log commit: 0.005 $KIT per entry
+Log robot actions on-chain with $CLAWD:
+- Log perception: 0.01 $CLAWD per entry
+- Log execution: 0.01 $CLAWD per entry
+- Log commit: 0.005 $CLAWD per entry
 - Bulk logging discounts available
 
 ---
@@ -85,7 +85,7 @@ Log robot actions on-chain with $KIT:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                  $KIT ALLOCATION (1B TOTAL)                 │
+│                  $CLAWD ALLOCATION (1B TOTAL)                 │
 ├─────────────────────────────────────────────────────────────┤
 │  Ecosystem & Rewards    ████████████████████    40%        │
 │  Team & Development     ██████████              20%        │
@@ -98,16 +98,16 @@ Log robot actions on-chain with $KIT:
 
 | Category | Allocation | Amount | Vesting |
 |----------|------------|--------|---------|
-| **Ecosystem & Rewards** | 40% | 400M $KIT | Released via tasks, staking rewards |
-| **Team & Development** | 20% | 200M $KIT | 4-year vest, 1-year cliff |
-| **Community & Airdrops** | 15% | 150M $KIT | Genesis + ongoing programs |
-| **Liquidity** | 10% | 100M $KIT | DEX pools (Raydium, Orca) |
-| **Treasury** | 10% | 100M $KIT | DAO-controlled |
-| **Advisors** | 5% | 50M $KIT | 2-year vest, 6-month cliff |
+| **Ecosystem & Rewards** | 40% | 400M $CLAWD | Released via tasks, staking rewards |
+| **Team & Development** | 20% | 200M $CLAWD | 4-year vest, 1-year cliff |
+| **Community & Airdrops** | 15% | 150M $CLAWD | Genesis + ongoing programs |
+| **Liquidity** | 10% | 100M $CLAWD | DEX pools (Raydium, Orca) |
+| **Treasury** | 10% | 100M $CLAWD | DAO-controlled |
+| **Advisors** | 5% | 50M $CLAWD | 2-year vest, 6-month cliff |
 
 ### Revenue Model
 
-Platform fees flow to $KIT stakers and treasury:
+Platform fees flow to $CLAWD stakers and treasury:
 
 ```
 Task Fee (2.5%)
@@ -128,13 +128,13 @@ Task Fee (2.5%)
 **Program ID:** `8RHcLMMNvbCKsXBQn1pLa9n6L1dheMtz8n9B83REr94i`
 
 ```typescript
-// Create task with $KIT escrow
+// Create task with $CLAWD escrow
 await program.methods
   .createTaskSpl(
     taskId,
     "Deliver package to dock B",
     ["navigation", "delivery"],
-    new anchor.BN(25_000_000_000), // 25 $KIT (9 decimals)
+    new anchor.BN(25_000_000_000), // 25 $CLAWD (9 decimals)
     new anchor.BN(deadline)
   )
   .accounts({
@@ -156,14 +156,14 @@ await program.methods
 **Program ID:** `Hr7zfhDMTcpKJErxL6ejSp5Bskj389KBfbwVZp3te8jj`
 
 ```typescript
-// Register robot with $KIT stake
+// Register robot with $CLAWD stake
 await program.methods
   .registerRobotWithStake(
     robotId,
     "Delivery Bot",
     ["navigation", "delivery"],
     hardwareSpec,
-    new anchor.BN(500_000_000_000) // 500 $KIT stake (Standard tier)
+    new anchor.BN(500_000_000_000) // 500 $CLAWD stake (Standard tier)
   )
   .accounts({
     registry: registryPda,
@@ -192,7 +192,7 @@ await program.methods
 - Mainnet program deployment
 - CEX listings (Tier 2-3)
 - Staking platform launch
-- First robotic task completions with $KIT
+- First robotic task completions with $CLAWD
 
 ### Phase 3: Expansion (Q4 2026+)
 - DAO governance activation
@@ -240,10 +240,10 @@ await program.methods
 
 ## ⚠️ Disclaimer
 
-$KIT is a utility token for the Solana Robotics Kit ecosystem. It is not intended as an investment vehicle. Token value may fluctuate. Always conduct your own research before participating in any token ecosystem.
+$CLAWD is a utility token for the Solana Robotics Kit ecosystem. It is not intended as an investment vehicle. Token value may fluctuate. Always conduct your own research before participating in any token ecosystem.
 
 ---
 
 *Powering the future of autonomous robotics on Solana.*
 
-**🤖 Build Robots. Earn $KIT. Automate Everything.**
+**🤖 Build Robots. Earn $CLAWD. Automate Everything.**

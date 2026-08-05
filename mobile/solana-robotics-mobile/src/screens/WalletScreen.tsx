@@ -160,7 +160,7 @@ export default function WalletScreen() {
                   <Text style={[styles.balanceValue, { color: '#14F195' }]}>
                     {wallet.kitBalance.toFixed(2)}
                   </Text>
-                  <Text style={styles.balanceLabel}>$KIT</Text>
+                  <Text style={styles.balanceLabel}>$CLAWD</Text>
                 </View>
               </View>
 
@@ -185,7 +185,7 @@ export default function WalletScreen() {
                 >
                   <View style={styles.tierHeader}>
                     <Text style={styles.tierName}>{info.name}</Text>
-                    <Text style={styles.tierStake}>{info.stake} $KIT</Text>
+                    <Text style={styles.tierStake}>{info.stake} $CLAWD</Text>
                   </View>
                   <Text style={styles.tierCapabilities}>
                     {info.capabilities.join(' • ')}
@@ -196,7 +196,7 @@ export default function WalletScreen() {
 
             {/* Token Info */}
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>$KIT Token</Text>
+              <Text style={styles.sectionTitle}>$CLAWD Token</Text>
               <View style={styles.tokenCard}>
                 <Text style={styles.tokenLabel}>Mint Address</Text>
                 <Text style={styles.tokenValue}>{KIT_TOKEN.mint.toBase58()}</Text>

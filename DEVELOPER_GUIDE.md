@@ -71,7 +71,7 @@ All Solana blockchain code.
 **Subdirectories:**
 - `programs/` - Anchor programs (Rust)
 - `clients/` - Python/TypeScript clients
-- `tokens/` - $KIT token & x402 protocol
+- `tokens/` - $CLAWD token & x402 protocol
 - `passport/` - Robot passport NFTs
 
 **Example:**

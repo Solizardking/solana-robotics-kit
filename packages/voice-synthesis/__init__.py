@@ -27,7 +27,7 @@ Usage:
     await voice.speak("Bonjour, je suis votre assistant.", language="FR")
 
 Website: https://solanarobotics.org
-$KIT Token: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
+$CLAWD Token: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 
 Based on:
 - OpenVoice: https://github.com/myshell-ai/OpenVoice (MIT License)

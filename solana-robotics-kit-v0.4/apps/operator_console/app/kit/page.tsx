@@ -96,7 +96,7 @@ export default function KitTokenPage() {
       <div className="flex items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold">
-            <span className="text-solGreen">$KIT</span> Token
+            <span className="text-solGreen">$CLAWD</span> Token
           </h1>
           <p className="text-white/70 text-sm mt-1">
             Official currency for the Solana Robotics Kit ecosystem
@@ -226,7 +226,7 @@ export default function KitTokenPage() {
                   <span className="text-solGreen">🤖</span>
                   <div>
                     <div className="font-medium">Robot Registration</div>
-                    <div className="text-white/60">Stake $KIT to register robots</div>
+                    <div className="text-white/60">Stake $CLAWD to register robots</div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -276,7 +276,7 @@ export default function KitTokenPage() {
         {/* Transfer Tab */}
         {tab === "transfer" && (
           <Card className="max-w-lg">
-            <h3 className="font-semibold text-lg mb-4">Transfer $KIT</h3>
+            <h3 className="font-semibold text-lg mb-4">Transfer $CLAWD</h3>
             <div className="space-y-4">
               <div>
                 <label className="text-white/60 text-xs block mb-1">
@@ -374,25 +374,25 @@ export default function KitTokenPage() {
               <h3 className="font-semibold text-lg mb-4">Tier Benefits</h3>
               <div className="space-y-4 text-sm">
                 <div className="p-3 bg-white/5 rounded-lg">
-                  <div className="font-medium text-white/80">Basic (100 $KIT)</div>
+                  <div className="font-medium text-white/80">Basic (100 $CLAWD)</div>
                   <div className="text-white/50 mt-1">
                     Standard robot registration and task access
                   </div>
                 </div>
                 <div className="p-3 bg-white/5 rounded-lg">
-                  <div className="font-medium text-white/80">Standard (500 $KIT)</div>
+                  <div className="font-medium text-white/80">Standard (500 $CLAWD)</div>
                   <div className="text-white/50 mt-1">
                     Enhanced capabilities, priority matching
                   </div>
                 </div>
                 <div className="p-3 bg-white/5 rounded-lg">
-                  <div className="font-medium text-solPurple">Premium (2,000 $KIT)</div>
+                  <div className="font-medium text-solPurple">Premium (2,000 $CLAWD)</div>
                   <div className="text-white/50 mt-1">
                     Priority task access, reduced fees, reputation boost
                   </div>
                 </div>
                 <div className="p-3 bg-white/5 rounded-lg border border-solGreen/30">
-                  <div className="font-medium text-solGreen">Enterprise (10,000 $KIT)</div>
+                  <div className="font-medium text-solGreen">Enterprise (10,000 $CLAWD)</div>
                   <div className="text-white/50 mt-1">
                     Full ecosystem access, governance rights, premium support
                   </div>
@@ -412,7 +412,7 @@ export default function KitTokenPage() {
                   <h3 className="font-semibold text-lg">x402 Protocol</h3>
                   <p className="text-white/70 mt-1">
                     HTTP-native payment protocol for robot-to-robot commerce.
-                    Enable autonomous micropayments between robots using $KIT.
+                    Enable autonomous micropayments between robots using $CLAWD.
                   </p>
                   <div className="flex gap-3 mt-4">
                     <a
@@ -467,7 +467,7 @@ export default function KitTokenPage() {
                       3
                     </div>
                     <div>
-                      <div className="font-medium">Robot A pays in $KIT</div>
+                      <div className="font-medium">Robot A pays in $CLAWD</div>
                       <div className="text-white/50">
                         Automatic on-chain micropayment
                       </div>
@@ -555,7 +555,7 @@ res.status(402).json({ error: "payment_required" });`}</pre>
 
       {/* Footer */}
       <footer className="mt-10 text-xs text-white/40 text-center">
-        $KIT Token · Contract: {short(KIT_TOKEN_MINT_STRING)} · Launched on bags.fm
+        $CLAWD Token · Contract: {short(KIT_TOKEN_MINT_STRING)} · Launched on bags.fm
       </footer>
     </main>
   );
