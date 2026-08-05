@@ -19,7 +19,7 @@ MIGRATION_MAP: Dict[str, str] = {
     "packages/solana-client": "blockchain/clients/solana-client",
     "packages/solana_client": "blockchain/clients/solana-client",
     "packages/token_creator": "blockchain/tokens/token-creator",
-    "packages/kit-token": "blockchain/tokens/kit-token",
+    "packages/clawd_token": "blockchain/tokens/clawd-token",
     "packages/robot-passport": "blockchain/passport",
     
     # AI

@@ -37,9 +37,9 @@ logger = logging.getLogger("VibeToEarn")
 # CONSTANTS
 # =============================================================================
 
-KIT_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
+CLAWD_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 FEE_WALLET = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
-KIT_TOKEN_DECIMALS = 9
+CLAWD_TOKEN_DECIMALS = 9
 
 # Reward multipliers (in $CLAWD tokens)
 CONTRIBUTION_REWARDS = {
@@ -549,10 +549,10 @@ class VibeToEarnEngine:
     async def _process_reward_transfer(self, claim: RewardClaim) -> bool:
         """Process $CLAWD token transfer for reward claim"""
         try:
-            # Import kit token client
-            from packages.kit_token import KitTokenClient
+            # Import clawd token client
+            from packages.clawd_token import ClawdTokenClient
 
-            kit_client = KitTokenClient(rpc_url=self.rpc_url)
+            kit_client = ClawdTokenClient(rpc_url=self.rpc_url)
 
             # Transfer rewards
             transfer = await kit_client.transfer(
@@ -569,7 +569,7 @@ class VibeToEarnEngine:
             await kit_client.close()
 
         except ImportError:
-            logger.warning("kit_token package not available, simulating transfer")
+            logger.warning("clawd_token package not available, simulating transfer")
             # Simulate successful transfer
             claim.transaction_signature = f"sim_tx_{claim.id}"
             return True
@@ -635,7 +635,7 @@ class VibeToEarnEngine:
             "total_contributions": total_contributions,
             "total_rewards_distributed": total_rewards_distributed,
             "total_pending_rewards": total_pending_rewards,
-            "kit_token_mint": KIT_TOKEN_MINT,
+            "clawd_token_mint": CLAWD_TOKEN_MINT,
             "fee_wallet": FEE_WALLET,
             "tier_distribution": tier_counts,
             "contribution_types": {k: v for k, v in CONTRIBUTION_REWARDS.items()},
@@ -674,7 +674,7 @@ class VibeToEarnEngine:
         """Get lifetime fees for $CLAWD token"""
         sdk = await self.get_bags_sdk()
         if sdk:
-            return await sdk.get_token_lifetime_fees(KIT_TOKEN_MINT)
+            return await sdk.get_token_lifetime_fees(CLAWD_TOKEN_MINT)
         return None
 
 
@@ -732,7 +732,7 @@ async def get_leaderboard(limit: int = 100) -> List[LeaderboardEntry]:
 
 __all__ = [
     # Constants
-    "KIT_TOKEN_MINT",
+    "CLAWD_TOKEN_MINT",
     "FEE_WALLET",
     "CONTRIBUTION_REWARDS",
     "STREAK_BONUS",

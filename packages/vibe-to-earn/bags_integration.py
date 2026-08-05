@@ -37,7 +37,7 @@ BAGS_API_BASE = "https://api.bags.fm"
 BAGS_API_VERSION = "v1"
 
 # $CLAWD Token addresses
-KIT_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
+CLAWD_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 FEE_WALLET = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 
 # Solana constants
@@ -652,10 +652,10 @@ def get_bags_sdk() -> BagsSDKClient:
     return _sdk_instance
 
 
-async def get_kit_token_fees() -> Optional[float]:
+async def get_clawd_token_fees() -> Optional[float]:
     """Get lifetime fees for $CLAWD token"""
     sdk = get_bags_sdk()
-    return await sdk.get_token_lifetime_fees(KIT_TOKEN_MINT)
+    return await sdk.get_token_lifetime_fees(CLAWD_TOKEN_MINT)
 
 
 async def claim_partner_fees() -> Optional[str]:
@@ -671,7 +671,7 @@ async def claim_partner_fees() -> Optional[str]:
 __all__ = [
     # Constants
     "BAGS_API_BASE",
-    "KIT_TOKEN_MINT",
+    "CLAWD_TOKEN_MINT",
     "FEE_WALLET",
     "LAMPORTS_PER_SOL",
     # Data Classes
@@ -684,6 +684,6 @@ __all__ = [
     "BagsSDKClient",
     # Convenience Functions
     "get_bags_sdk",
-    "get_kit_token_fees",
+    "get_clawd_token_fees",
     "claim_partner_fees",
 ]

@@ -16,7 +16,7 @@ Features:
 - Per-request micro-payments
 - Autonomous service discovery
 - $CLAWD token integration
-- Multi-token support (USDC, KIT)
+- Multi-token support (USDC, CLAWD)
 
 Reference: https://x402.org
 """
@@ -38,10 +38,10 @@ except ImportError:
     httpx = None
 
 from . import (
-    KIT_TOKEN_MINT,
-    KIT_TOKEN_SYMBOL,
-    KIT_TOKEN_DECIMALS,
-    KitTokenClient,
+    CLAWD_TOKEN_MINT,
+    CLAWD_TOKEN_SYMBOL,
+    CLAWD_TOKEN_DECIMALS,
+    ClawdTokenClient,
 )
 
 logger = logging.getLogger("x402")
@@ -52,9 +52,9 @@ logger = logging.getLogger("x402")
 
 # Supported tokens for x402 payments
 SUPPORTED_TOKENS = {
-    "KIT": {
-        "mint": KIT_TOKEN_MINT,
-        "decimals": KIT_TOKEN_DECIMALS,
+    "CLAWD": {
+        "mint": CLAWD_TOKEN_MINT,
+        "decimals": CLAWD_TOKEN_DECIMALS,
         "network": "solana",
     },
     "USDC": {
@@ -83,7 +83,7 @@ X402_PAYMENT_PROOF_HEADER = "X-Payment-Proof"
 
 class PaymentAsset(Enum):
     """Supported payment assets"""
-    KIT = "KIT"
+    CLAWD = "CLAWD"
     USDC = "USDC"
     SOL = "SOL"
 
@@ -186,7 +186,7 @@ class RobotService:
     description: str
     endpoint: str
     price_per_request: float
-    asset: PaymentAsset = PaymentAsset.KIT
+    asset: PaymentAsset = PaymentAsset.CLAWD
     capabilities: List[str] = field(default_factory=list)
     rate_limit: Optional[int] = None  # requests per minute
     is_active: bool = True
@@ -228,12 +228,12 @@ class X402Client:
 
     def __init__(
         self,
-        token_client: Optional[KitTokenClient] = None,
-        default_asset: PaymentAsset = PaymentAsset.KIT,
+        token_client: Optional[ClawdTokenClient] = None,
+        default_asset: PaymentAsset = PaymentAsset.CLAWD,
         auto_pay: bool = True,
         max_auto_pay: float = 10.0,  # Max $CLAWD per request
     ):
-        self.token_client = token_client or KitTokenClient()
+        self.token_client = token_client or ClawdTokenClient()
         self.default_asset = default_asset
         self.auto_pay = auto_pay
         self.max_auto_pay = max_auto_pay
@@ -397,7 +397,7 @@ class X402Server:
         robot_id: str,
         recipient_address: str,
         default_price: float = 0.1,
-        default_asset: PaymentAsset = PaymentAsset.KIT,
+        default_asset: PaymentAsset = PaymentAsset.CLAWD,
     ):
         self.robot_id = robot_id
         self.recipient = recipient_address
@@ -644,7 +644,7 @@ async def make_paid_request(
 def create_payment_terms(
     amount: float,
     recipient: str,
-    asset: PaymentAsset = PaymentAsset.KIT,
+    asset: PaymentAsset = PaymentAsset.CLAWD,
     description: Optional[str] = None,
 ) -> PaymentTerms:
     """Create payment terms for a 402 response"""

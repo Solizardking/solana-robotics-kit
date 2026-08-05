@@ -194,7 +194,7 @@ asyncio.run(create_task())
 ### Check Token Balance
 
 ```bash
-python -m packages.kit_token.cli balance
+python -m packages.clawd_token.cli balance
 ```
 
 ---

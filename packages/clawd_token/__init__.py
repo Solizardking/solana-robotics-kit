@@ -29,17 +29,18 @@ from typing import Any, Dict, List, Optional, Tuple
 from enum import Enum
 import logging
 
-logger = logging.getLogger("KitToken")
+logger = logging.getLogger("ClawdToken")
 
 # =============================================================================
 # $CLAWD TOKEN CONSTANTS
 # =============================================================================
 
-KIT_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
-KIT_TOKEN_NAME = "$CLAWD"
-KIT_TOKEN_SYMBOL = "KIT"
-KIT_TOKEN_DECIMALS = 9
-KIT_TOKEN_WEBSITE = "https://solanarobotics.org"
+CLAWD_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
+CLAWD_TOKEN_NAME = "$CLAWD"
+CLAWD_TOKEN_SYMBOL = "CLAWD"
+CLAWD_TOKEN_DECIMALS = 9
+CLAWD_TOKEN_WEBSITE = "https://solanarobotics.org"
+CLAWD_TOKEN_LAUNCH_PLATFORM = "pump.fun"
 
 # Staking tiers for robot registration
 STAKING_TIERS = {
@@ -72,13 +73,13 @@ class StakingTier(Enum):
 
 
 @dataclass
-class KitTokenInfo:
+class ClawdTokenInfo:
     """$CLAWD token information"""
-    mint: str = KIT_TOKEN_MINT
-    name: str = KIT_TOKEN_NAME
-    symbol: str = KIT_TOKEN_SYMBOL
-    decimals: int = KIT_TOKEN_DECIMALS
-    launch_platform: str = KIT_TOKEN_LAUNCH_PLATFORM
+    mint: str = CLAWD_TOKEN_MINT
+    name: str = CLAWD_TOKEN_NAME
+    symbol: str = CLAWD_TOKEN_SYMBOL
+    decimals: int = CLAWD_TOKEN_DECIMALS
+    launch_platform: str = CLAWD_TOKEN_LAUNCH_PLATFORM
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -102,7 +103,7 @@ class TokenBalance:
 
     @property
     def formatted(self) -> str:
-        return f"{self.balance:,.{self.decimals}f} {KIT_TOKEN_SYMBOL}"
+        return f"{self.balance:,.{self.decimals}f} {CLAWD_TOKEN_SYMBOL}"
 
 
 @dataclass
@@ -132,10 +133,10 @@ class TokenTransfer:
 
 
 # =============================================================================
-# KIT TOKEN CLIENT
+# CLAWD TOKEN CLIENT
 # =============================================================================
 
-class KitTokenClient:
+class ClawdTokenClient:
     """
     Client for $CLAWD token operations.
 
@@ -162,8 +163,8 @@ class KitTokenClient:
         self._stakes: Dict[str, StakeInfo] = {}
         self._transfers: List[TokenTransfer] = []
 
-        self.token_info = KitTokenInfo()
-        logger.info(f"🪙 KitTokenClient initialized (mint: {KIT_TOKEN_MINT[:16]}...)")
+        self.token_info = ClawdTokenInfo()
+        logger.info(f"🪙 ClawdTokenClient initialized (mint: {CLAWD_TOKEN_MINT[:16]}...)")
 
     # ==================== Connection ====================
 
@@ -195,7 +196,7 @@ class KitTokenClient:
                     self._keypair = Keypair()
                     self._pubkey = str(self._keypair.pubkey())
             except ImportError:
-                self._pubkey = f"mock_{hashlib.sha256(b'kit').hexdigest()[:20]}"
+                self._pubkey = f"mock_{hashlib.sha256(b'clawd').hexdigest()[:20]}"
         return self._keypair
 
     @property
@@ -224,25 +225,25 @@ class KitTokenClient:
             # Query SPL token account
             # In production: use get_token_accounts_by_owner
             # For now: simulated balance
-            raw_amount = 10000 * (10 ** KIT_TOKEN_DECIMALS)  # 10,000 $CLAWD mock
-            balance = raw_amount / (10 ** KIT_TOKEN_DECIMALS)
+            raw_amount = 10000 * (10 ** CLAWD_TOKEN_DECIMALS)  # 10,000 $CLAWD mock
+            balance = raw_amount / (10 ** CLAWD_TOKEN_DECIMALS)
 
             return TokenBalance(
                 owner=owner,
-                mint=KIT_TOKEN_MINT,
+                mint=CLAWD_TOKEN_MINT,
                 balance=balance,
                 raw_amount=raw_amount,
-                decimals=KIT_TOKEN_DECIMALS,
+                decimals=CLAWD_TOKEN_DECIMALS,
             )
 
         except Exception as e:
             logger.error(f"Balance query error: {e}")
             return TokenBalance(
                 owner=owner,
-                mint=KIT_TOKEN_MINT,
+                mint=CLAWD_TOKEN_MINT,
                 balance=0.0,
                 raw_amount=0,
-                decimals=KIT_TOKEN_DECIMALS,
+                decimals=CLAWD_TOKEN_DECIMALS,
             )
 
     async def transfer(
@@ -273,7 +274,7 @@ class KitTokenClient:
                 from_address=self.pubkey,
                 to_address=to_address,
                 amount=amount,
-                mint=KIT_TOKEN_MINT,
+                mint=CLAWD_TOKEN_MINT,
                 timestamp=datetime.now(),
                 memo=memo,
             )
@@ -418,22 +419,22 @@ class MockClient:
 # CONVENIENCE FUNCTIONS
 # =============================================================================
 
-def get_token_info() -> KitTokenInfo:
+def get_token_info() -> ClawdTokenInfo:
     """Get $CLAWD token information"""
-    return KitTokenInfo()
+    return ClawdTokenInfo()
 
 
-async def get_kit_balance(owner: str) -> float:
+async def get_clawd_balance(owner: str) -> float:
     """Quick balance check"""
-    client = KitTokenClient()
+    client = ClawdTokenClient()
     balance = await client.get_balance(owner)
     await client.close()
     return balance.balance
 
 
-async def transfer_kit(to_address: str, amount: float, memo: Optional[str] = None) -> Optional[str]:
+async def transfer_clawd(to_address: str, amount: float, memo: Optional[str] = None) -> Optional[str]:
     """Quick transfer"""
-    client = KitTokenClient()
+    client = ClawdTokenClient()
     transfer = await client.transfer(to_address, amount, memo)
     await client.close()
     return transfer.signature if transfer else None
@@ -443,23 +444,33 @@ async def transfer_kit(to_address: str, amount: float, memo: Optional[str] = Non
 # EXPORTS
 # =============================================================================
 
+# Back-compat aliases (deprecated names)
+KitTokenClient = ClawdTokenClient
+KitTokenInfo = ClawdTokenInfo
+KIT_TOKEN_MINT = CLAWD_TOKEN_MINT
+KIT_TOKEN_NAME = CLAWD_TOKEN_NAME
+KIT_TOKEN_SYMBOL = CLAWD_TOKEN_SYMBOL
+KIT_TOKEN_DECIMALS = CLAWD_TOKEN_DECIMALS
+get_kit_balance = get_clawd_balance
+transfer_kit = transfer_clawd
+
 __all__ = [
     # Constants
-    "KIT_TOKEN_MINT",
-    "KIT_TOKEN_NAME",
-    "KIT_TOKEN_SYMBOL",
-    "KIT_TOKEN_DECIMALS",
+    "CLAWD_TOKEN_MINT",
+    "CLAWD_TOKEN_NAME",
+    "CLAWD_TOKEN_SYMBOL",
+    "CLAWD_TOKEN_DECIMALS",
     "STAKING_TIERS",
     "ACTION_LOG_COSTS",
     # Classes
-    "KitTokenInfo",
+    "ClawdTokenInfo",
     "TokenBalance",
     "StakeInfo",
     "TokenTransfer",
     "StakingTier",
-    "KitTokenClient",
+    "ClawdTokenClient",
     # Functions
     "get_token_info",
-    "get_kit_balance",
-    "transfer_kit",
+    "get_clawd_balance",
+    "transfer_clawd",
 ]

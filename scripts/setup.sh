@@ -216,7 +216,7 @@ ${GREEN}Next Steps:${NC}
    npm run dev
 
 3. ${BLUE}Check \$CLAWD token info:${NC}
-   python -m packages.kit_token.cli info
+   python -m packages.clawd_token.cli info
 
 4. ${BLUE}Run a robot daemon:${NC}
    python -m apps.robot_daemon.main --task-runner

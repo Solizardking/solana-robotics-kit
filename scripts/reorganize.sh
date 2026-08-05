@@ -88,7 +88,7 @@ move_dir "programs" "blockchain/programs"
 move_dir "packages/solana-client" "blockchain/clients/solana-client"
 move_dir "packages/solana_client" "blockchain/clients/solana-client"  # Merge duplicate
 move_dir "packages/token_creator" "blockchain/tokens/token-creator"
-move_dir "packages/kit-token" "blockchain/tokens/kit-token"
+move_dir "packages/clawd_token" "blockchain/tokens/clawd-token"
 move_dir "packages/robot-passport" "blockchain/passport"
 
 # AI components

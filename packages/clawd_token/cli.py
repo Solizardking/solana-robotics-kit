@@ -6,11 +6,11 @@ $CLAWD Token CLI
 Command-line interface for $CLAWD token operations.
 
 Usage:
-    python -m packages.kit_token.cli info
-    python -m packages.kit_token.cli balance [ADDRESS]
-    python -m packages.kit_token.cli transfer TO_ADDRESS AMOUNT
-    python -m packages.kit_token.cli stake ROBOT_ID --tier premium
-    python -m packages.kit_token.cli x402 request URL
+    python -m packages.clawd_token.cli info
+    python -m packages.clawd_token.cli balance [ADDRESS]
+    python -m packages.clawd_token.cli transfer TO_ADDRESS AMOUNT
+    python -m packages.clawd_token.cli stake ROBOT_ID --tier premium
+    python -m packages.clawd_token.cli x402 request URL
 """
 
 import asyncio
@@ -20,13 +20,13 @@ import sys
 from datetime import datetime
 
 from . import (
-    KIT_TOKEN_MINT,
-    KIT_TOKEN_NAME,
-    KIT_TOKEN_SYMBOL,
-    KIT_TOKEN_DECIMALS,
+    CLAWD_TOKEN_MINT,
+    CLAWD_TOKEN_NAME,
+    CLAWD_TOKEN_SYMBOL,
+    CLAWD_TOKEN_DECIMALS,
     STAKING_TIERS,
     ACTION_LOG_COSTS,
-    KitTokenClient,
+    ClawdTokenClient,
     StakingTier,
     get_token_info,
 )
@@ -42,8 +42,8 @@ def print_header():
     """Print CLI header"""
     print()
     print("=" * 60)
-    print(f"  🪙 {KIT_TOKEN_NAME} Token CLI")
-    print(f"  Contract: {KIT_TOKEN_MINT}")
+    print(f"  🪙 {CLAWD_TOKEN_NAME} Token CLI")
+    print(f"  Contract: {CLAWD_TOKEN_MINT}")
     print("=" * 60)
     print()
 
@@ -63,22 +63,22 @@ def cmd_info(args):
 
     print("\nStaking Tiers:")
     for tier, amount in STAKING_TIERS.items():
-        print(f"  {tier.capitalize():12} {amount:,} {KIT_TOKEN_SYMBOL}")
+        print(f"  {tier.capitalize():12} {amount:,} {CLAWD_TOKEN_SYMBOL}")
 
     print("\nAction Log Costs:")
     for action, cost in ACTION_LOG_COSTS.items():
-        print(f"  {action:15} {cost} {KIT_TOKEN_SYMBOL}")
+        print(f"  {action:15} {cost} {CLAWD_TOKEN_SYMBOL}")
 
     print("\nUseful Links:")
-    print(f"  bags.fm:    https://bags.fm/token/{KIT_TOKEN_MINT}")
-    print(f"  Solscan:    https://solscan.io/token/{KIT_TOKEN_MINT}")
+    print(f"  bags.fm:    https://bags.fm/token/{CLAWD_TOKEN_MINT}")
+    print(f"  Solscan:    https://solscan.io/token/{CLAWD_TOKEN_MINT}")
     print(f"  x402 Docs:  https://x402.org")
 
 
 def cmd_balance(args):
     """Check token balance"""
     async def _balance():
-        client = KitTokenClient()
+        client = ClawdTokenClient()
         address = args.address or client.pubkey
         balance = await client.get_balance(address)
         await client.close()
@@ -94,10 +94,10 @@ def cmd_balance(args):
 def cmd_transfer(args):
     """Transfer tokens"""
     async def _transfer():
-        client = KitTokenClient()
+        client = ClawdTokenClient()
 
         print_header()
-        print(f"Transferring {args.amount} {KIT_TOKEN_SYMBOL}")
+        print(f"Transferring {args.amount} {CLAWD_TOKEN_SYMBOL}")
         print(f"  To: {args.to_address}")
 
         transfer = await client.transfer(
@@ -110,7 +110,7 @@ def cmd_transfer(args):
         if transfer:
             print(f"\n✅ Transfer Successful!")
             print(f"  Signature: {transfer.signature}")
-            print(f"  Amount:    {transfer.amount} {KIT_TOKEN_SYMBOL}")
+            print(f"  Amount:    {transfer.amount} {CLAWD_TOKEN_SYMBOL}")
         else:
             print("\n❌ Transfer Failed")
             sys.exit(1)
@@ -121,7 +121,7 @@ def cmd_transfer(args):
 def cmd_stake(args):
     """Stake tokens for robot"""
     async def _stake():
-        client = KitTokenClient()
+        client = ClawdTokenClient()
 
         tier = StakingTier(args.tier)
         amount = STAKING_TIERS[tier.value]
@@ -129,7 +129,7 @@ def cmd_stake(args):
         print_header()
         print(f"Staking for Robot: {args.robot_id}")
         print(f"  Tier:   {tier.value.capitalize()}")
-        print(f"  Amount: {amount} {KIT_TOKEN_SYMBOL}")
+        print(f"  Amount: {amount} {CLAWD_TOKEN_SYMBOL}")
 
         stake = await client.stake_for_robot(args.robot_id, tier)
         await client.close()
@@ -137,7 +137,7 @@ def cmd_stake(args):
         if stake:
             print(f"\n✅ Stake Successful!")
             print(f"  Robot:    {stake.robot_id}")
-            print(f"  Amount:   {stake.amount} {KIT_TOKEN_SYMBOL}")
+            print(f"  Amount:   {stake.amount} {CLAWD_TOKEN_SYMBOL}")
             print(f"  Tier:     {stake.tier.value}")
             print(f"  Staked:   {stake.staked_at}")
         else:
@@ -150,7 +150,7 @@ def cmd_stake(args):
 def cmd_unstake(args):
     """Unstake tokens from robot"""
     async def _unstake():
-        client = KitTokenClient()
+        client = ClawdTokenClient()
 
         print_header()
         print(f"Unstaking from Robot: {args.robot_id}")
@@ -160,7 +160,7 @@ def cmd_unstake(args):
 
         if amount:
             print(f"\n✅ Unstake Successful!")
-            print(f"  Amount Returned: {amount} {KIT_TOKEN_SYMBOL}")
+            print(f"  Amount Returned: {amount} {CLAWD_TOKEN_SYMBOL}")
         else:
             print("\n❌ Unstake Failed")
             sys.exit(1)
@@ -174,7 +174,7 @@ def cmd_x402_request(args):
         print_header()
         print(f"x402 Request: {args.url}")
         print(f"  Method:    {args.method}")
-        print(f"  Max Pay:   {args.max_pay} {KIT_TOKEN_SYMBOL}")
+        print(f"  Max Pay:   {args.max_pay} {CLAWD_TOKEN_SYMBOL}")
 
         result = await make_paid_request(
             url=args.url,
@@ -196,7 +196,7 @@ def cmd_x402_serve(args):
     print("To integrate x402 in your robot:")
     print()
     print("```python")
-    print("from packages.kit_token.x402 import X402Server, ServiceRequest, ServiceResponse")
+    print("from packages.clawd_token.x402 import X402Server, ServiceRequest, ServiceResponse")
     print()
     print("server = X402Server(")
     print('    robot_id="YOUR-ROBOT-ID",')
@@ -251,7 +251,7 @@ def cmd_x402_info(args):
 
 def main():
     parser = argparse.ArgumentParser(
-        description=f"{KIT_TOKEN_NAME} Token CLI",
+        description=f"{CLAWD_TOKEN_NAME} Token CLI",
         formatter_class=argparse.RawDescriptionHelpFormatter,
     )
 

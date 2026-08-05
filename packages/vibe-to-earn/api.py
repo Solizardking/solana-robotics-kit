@@ -134,7 +134,7 @@ class PlatformStatsResponse(BaseModel):
     total_contributions: int
     total_rewards_distributed: float
     total_pending_rewards: float
-    kit_token_mint: str
+    clawd_token_mint: str
     fee_wallet: str
     tier_distribution: Dict[str, int]
     contribution_types: Dict[str, float]
@@ -601,7 +601,7 @@ async def root():
         "service": "Vibe to Earn API",
         "version": "1.0.0",
         "description": "Developer reward system for Solana Robotics Kit",
-        "kit_token": "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump",
+        "clawd_token": "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump",
         "docs": "/docs",
     }
 

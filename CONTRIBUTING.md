@@ -279,11 +279,11 @@ cd solana-robotics-kit-v0.4 && anchor test
 
 ```python
 import pytest
-from packages.kit_token import KitTokenClient
+from packages.clawd_token import ClawdTokenClient
 
 @pytest.mark.asyncio
 async def test_get_balance():
-    client = KitTokenClient()
+    client = ClawdTokenClient()
     balance = await client.get_balance()
     assert balance.balance >= 0
     await client.close()
