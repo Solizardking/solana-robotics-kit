@@ -35,11 +35,63 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
   // Health for Render / load balancers (always available)
+  // Moonshot snapshot reports configured=true|false only — never the API key.
+  const { moonshotHealthSnapshot } = await import("../lib/moonshot");
+  const { solGptCatalogSummary } = await import("../lib/sol-gpt-catalog");
+  const healthPayload = () => ({
+    ok: true,
+    service: "solana-robotics-api",
+    clawd: "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump",
+    moonshot: moonshotHealthSnapshot(),
+    solGpt: solGptCatalogSummary(),
+  });
   app.get("/health", (_req, res) => {
-    res.status(200).json({ ok: true, service: "solana-robotics-api" });
+    res.status(200).json(healthPayload());
   });
   app.get("/api/health", (_req, res) => {
-    res.status(200).json({ ok: true, service: "solana-robotics-api" });
+    res.status(200).json(healthPayload());
+  });
+  // Lightweight Kimi chat (requires MOONSHOT_API_KEY / KIMI_API_KEY)
+  app.post("/api/sol-gpt/kimi", async (req, res) => {
+    try {
+      const { moonshotChat, moonshotVision, isMoonshotConfigured } =
+        await import("../lib/moonshot");
+      if (!isMoonshotConfigured()) {
+        res.status(503).json({
+          ok: false,
+          error:
+            "Moonshot/Kimi not configured. Set MOONSHOT_API_KEY or KIMI_API_KEY.",
+        });
+        return;
+      }
+      const body = req.body ?? {};
+      const prompt = typeof body.prompt === "string" ? body.prompt : body.message;
+      if (!prompt || typeof prompt !== "string") {
+        res.status(400).json({ ok: false, error: "prompt (string) required" });
+        return;
+      }
+      if (typeof body.imageUrl === "string" && body.imageUrl) {
+        const result = await moonshotVision({
+          prompt,
+          imageUrl: body.imageUrl,
+          model: body.model,
+        });
+        res.status(result.ok ? 200 : 502).json(result);
+        return;
+      }
+      const result = await moonshotChat({
+        tradingSystem: body.trading !== false,
+        model: body.model,
+        temperature: body.temperature,
+        messages: [{ role: "user", content: prompt }],
+      });
+      res.status(result.ok ? 200 : 502).json(result);
+    } catch (e) {
+      res.status(500).json({
+        ok: false,
+        error: e instanceof Error ? e.message : String(e),
+      });
+    }
   });
 
   // OAuth callback under /api/oauth/callback

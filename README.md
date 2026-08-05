@@ -290,6 +290,7 @@ Built for **1,000+ developers** with:
 | [Robot Passport](docs/ROBOT_PASSPORT_GENERATOR.md) | NFT identity system |
 | [Voice Synthesis](docs/VOICE_SYNTHESIS.md) | OpenVoice + MeloTTS guide |
 | [API Reference](docs/API_REFERENCE.md) | Complete API documentation |
+| [SOL GPT / Kimi K3](docs/SOL_GPT.md) | **171-tool** non-custodial desk · Moonshot trading + vision |
 | [Eliza](eliza/README.md) | elizaOS agent runtime |
 | [Contributing](CONTRIBUTING.md) | Contribution guidelines |
 | [Security](SECURITY.md) | Vulnerability reporting |
