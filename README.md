@@ -1,272 +1,524 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/8bitsats/Solana-Robotics-Kit/main/assets/banner-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/8bitsats/Solana-Robotics-Kit/main/assets/banner-light.svg">
+    <img alt="Solana Robotics" src="https://raw.githubusercontent.com/8bitsats/Solana-Robotics-Kit/main/assets/banner-dark.svg" width="100%">
+  </picture>
+</p>
+
 <div align="center">
 
-# Solana Robotics
+```
+███████╗ ██████╗ ██╗      █████╗ ███╗   ██╗ █████╗
+██╔════╝██╔═══██╗██║     ██╔══██╗████╗  ██║██╔══██╗
+███████╗██║   ██║██║     ███████║██╔██╗ ██║███████║
+╚════██║██║   ██║██║     ██╔══██║██║╚██╗██║██╔══██║
+███████║╚██████╔╝███████╗██║  ██║██║ ╚████║██║  ██║
+╚══════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝
 
-### Brain → Solana → Humanoid → **$CLAWD** · powered by Eliza
+██████╗  ██████╗ ██████╗  ██████╗ ████████╗██╗ ██████╗███████╗
+██╔══██╗██╔═══██╗██╔══██╗██╔═══██╗╚══██╔══╝██║██╔════╝██╔════╝
+██████╔╝██║   ██║██████╔╝██║   ██║   ██║   ██║██║     ███████╗
+██╔══██╗██║   ██║██╔══██╗██║   ██║   ██║   ██║██║     ╚════██║
+██║  ██║╚██████╔╝██████╔╝╚██████╔╝   ██║   ██║╚██████╗███████║
+╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝ ╚═════╝╚══════╝
+```
+
+<h3>Building Autonomous Economic Agents on NVIDIA Jetson + Solana Blockchain</h3>
+<p><strong>Powered by $CLAWD · Eliza · Brain2Qwerty · Asimov</strong></p>
 
 <br/>
 
-[![Solana](https://img.shields.io/badge/Solana-9945FF?style=for-the-badge&logo=solana&logoColor=white)](https://solana.com)
-[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
-[![elizaOS](https://img.shields.io/badge/elizaOS-Agent%20Runtime-111111?style=for-the-badge)](https://github.com/elizaOS/eliza)
-[![License: MIT](https://img.shields.io/badge/Software-MIT-green?style=for-the-badge)](LICENSE)
-[![Hardware: CERN-OHL-S-2.0](https://img.shields.io/badge/Hardware-CERN--OHL--S--2.0-blueviolet?style=for-the-badge)](robotics/HARDWARE-LICENSE.txt)
-
-<br/>
-
+[![Website](https://img.shields.io/badge/WEBSITE-solanarobotics.org-9945FF?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bS0xIDE3LjkzYy0zLjk1LS40OS03LTMuODUtNy03LjkzIDAtLjYyLjA4LTEuMjEuMjEtMS43OUw5IDE1djFjMCAxLjEuOSAyIDIgMnYxLjkzem02LjktMi41NGMtLjI2LS44MS0xLTEuMzktMS45LTEuMzloLTFWMTFjMC0uNTUtLjQ1LTEtMS0xSDhjLS41NSAwLTEgLjQ1LTEgMXYzYzAgLjU1LjQ1IDEgMSAxaDNjLjU1IDAgMSAuNDUgMSAxdjFoMWMuNTUgMCAxIC40NSAxIDF2LjM1YzEuNjgtLjc0IDMtMi4yIDMuOS0zLjk2eiIgZmlsbD0iI2ZmZiIvPjwvc3ZnPg==)](https://solanarobotics.org)
 [![$CLAWD Token](https://img.shields.io/badge/$CLAWD-8cHzQHUS...pump-14F195?style=for-the-badge&logo=solana)](https://solscan.io/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
-[![Buy on Jupiter](https://img.shields.io/badge/Jupiter-Swap%20$CLAWD-00D18C?style=for-the-badge)](https://jup.ag/swap/SOL-8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
+[![Vibe to Earn](https://img.shields.io/badge/VIBE%20TO%20EARN-Rewards-FF6B6B?style=for-the-badge)](docs/VIBE_TO_EARN.md)
+[![Buy $CLAWD](https://img.shields.io/badge/Jupiter-Swap%20$CLAWD-00D18C?style=for-the-badge)](https://jup.ag/swap/SOL-8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
+
+<br/>
+
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Bun](https://img.shields.io/badge/Bun-elizaOS-000000?style=flat-square)](https://bun.sh)
+[![Rust](https://img.shields.io/badge/Rust-Anchor-000000?style=flat-square&logo=rust&logoColor=white)](https://anchor-lang.com)
+[![NVIDIA](https://img.shields.io/badge/NVIDIA-Isaac%20%7C%20Cosmos-76B900?style=flat-square&logo=nvidia&logoColor=white)](https://developer.nvidia.com/isaac)
+[![OpenVoice](https://img.shields.io/badge/OpenVoice-V2-FF6B6B?style=flat-square&logo=audiomack&logoColor=white)](https://github.com/myshell-ai/OpenVoice)
+[![Solana](https://img.shields.io/badge/Solana-Devnet%20%7C%20Mainnet-9945FF?style=flat-square&logo=solana&logoColor=white)](https://solana.com)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen?style=flat-square)](CONTRIBUTING.md)
+
+<br/>
+
+[**Getting Started**](#-quick-start) · [**$CLAWD**](#-clawd-token) · [**Vibe to Earn**](#-vibe-to-earn---developer-rewards) · [**Eliza Robot**](#-eliza-robot) · [**Architecture**](#-architecture) · [**Documentation**](#-documentation) · [**Contributing**](CONTRIBUTING.md) · [**Discord**](https://discord.gg/solanarobotics)
 
 </div>
 
 ---
 
-## What is this?
+## What is Solana Robotics?
 
-**Solana Robotics** is an open-source full stack that bridges:
+**Solana Robotics** is an open-source platform combining AI agents, blockchain automation, and physical robotics—all powered by the Solana blockchain and the **$CLAWD** token. Built for **1,000+ developers** with a modular, scalable architecture.
 
-| Layer | Stack | Role |
-|-------|--------|------|
-| 🧠 Neural | Brain2Qwerty (PyTorch) | MEG/EEG → text |
-| 🤖 Agent harness | Python FastAPI + tools | Safety-gated Solana missions |
-| 🧬 Eliza robot | **elizaOS** monorepo (`eliza/`) | Persistent agent runtime + plugins |
-| 🌐 Dashboard | React + tRPC + Vite | Trading, voice, 3D, launchpad |
-| 🔗 Chain | Solana (Jupiter, Phoenix, Pump, Helius) | Swaps, perps, NFTs, gates |
-| 🦾 Body | Asimov v1 (MuJoCo + CAD) | 25 DOF humanoid |
-| 💰 Token | **$CLAWD** | Gating, DePIN rewards, ecosystem utility |
+```
+┌──────────────────────────────────────────────────────────────────────────────────────┐
+│                           SOLANA ROBOTICS ECOSYSTEM                                   │
+├──────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                       │
+│    ┌─────────────────┐         ┌─────────────────┐         ┌─────────────────┐       │
+│    │   NVIDIA ISAAC  │────────▶│  SOLANA CHAIN   │◀────────│  $CLAWD TOKEN   │       │
+│    │   Jetson Orin   │         │  Robot Registry │         │   x402 Protocol │       │
+│    └────────┬────────┘         └────────┬────────┘         └────────┬────────┘       │
+│             │                           │                           │                │
+│             ▼                           ▼                           ▼                │
+│    ┌─────────────────┐         ┌─────────────────┐         ┌─────────────────┐       │
+│    │     COSMOS      │         │      TASK       │         │  VIBE TO EARN   │       │
+│    │   World Model   │────────▶│   MARKETPLACE   │◀────────│    Developer    │       │
+│    │  (Perception)   │         │    (Escrow)     │         │    Rewards      │       │
+│    └────────┬────────┘         └────────┬────────┘         └────────┬────────┘       │
+│             │                           │                           │                │
+│             ▼                           ▼                           ▼                │
+│    ┌─────────────────┐         ┌─────────────────┐         ┌─────────────────┐       │
+│    │    NEMOTRON     │         │     ELIZA       │         │     ROBOT       │       │
+│    │   (Reasoning)   │────────▶│     ROBOT       │◀────────│    PASSPORT     │       │
+│    │     340B LLM    │         │   (elizaOS)     │         │   (NFT ID)      │       │
+│    └─────────────────┘         └─────────────────┘         └─────────────────┘       │
+│                                                                                       │
+└──────────────────────────────────────────────────────────────────────────────────────┘
+```
 
-**Native token is `$CLAWD` — not `$KIT`.**
+### Core Capabilities
+
+| Capability | Description |
+|:-----------|:------------|
+| **On-Chain Robot Identity** | Register robots with verifiable blockchain identities and staking |
+| **Task Marketplace** | Decentralized task creation with escrow-based payments |
+| **x402 Protocol** | Autonomous micropayments between robots |
+| **NVIDIA AI Stack** | Cosmos perception + Nemotron reasoning on Jetson hardware |
+| **Voice Synthesis** | OpenVoice cloning + MeloTTS multi-lingual speech |
+| **Eliza Robot** | Full elizaOS agent runtime under `eliza/` |
+| **Vibe to Earn** | Developer rewards platform — earn **$CLAWD** by contributing |
+| **Asimov's Laws** | Blockchain-enforced safety policies |
+| **Action Logging** | Immutable on-chain audit trails |
+
+---
+
+## $CLAWD Token
+
+<div align="center">
 
 | Property | Value |
-|----------|--------|
-| **Mint** | [`8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`](https://solscan.io/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump) |
-| **Network** | Solana mainnet |
+|:---------|:------|
 | **Symbol** | `$CLAWD` |
-| **Site** | [cheshireterminal.ai](https://cheshireterminal.ai) |
+| **Contract** | [`8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`](https://solscan.io/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump) |
+| **Network** | Solana (Mainnet) |
+| **Decimals** | 9 |
+| **Standard** | SPL Token |
+| **Swap** | [Jupiter](https://jup.ag/swap/SOL-8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump) |
 | **Docs** | [CLAWD_TOKEN.md](./CLAWD_TOKEN.md) |
 
+</div>
+
+### Token Utility
+
 ```
-┌─────────────────────────────────────────────┐
-│  Brain2Qwerty / Voice / Operator UI         │
-└──────────────────┬──────────────────────────┘
-                   ▼
-┌─────────────────────────────────────────────┐
-│  Eliza robot (eliza/) + Solana robot harness│
-│  Skills · Plugins · Permission gates        │
-└──────────────────┬──────────────────────────┘
-                   ▼
-┌─────────────────────────────────────────────┐
-│  tRPC server · Helius · Jupiter · Phoenix   │
-│  Token gate on $CLAWD                       │
-└──────────────────┬──────────────────────────┘
-                   ▼
-┌─────────────────────────────────────────────┐
-│  Asimov v1 sim/hardware · Robot passport    │
-│  DePIN rewards in $CLAWD                    │
-└─────────────────────────────────────────────┘
+┌────────────────┐    ┌────────────────┐    ┌────────────────┐    ┌────────────────┐
+│    REGISTER    │    │      PAY       │    │    GOVERN      │    │     EARN       │
+│                │    │                │    │                │    │                │
+│  Stake $CLAWD  │    │  Task rewards  │    │  Vote on       │    │  Vibe to Earn  │
+│  to register   │───▶│  and x402      │───▶│  protocol      │───▶│  developer     │
+│  your robot    │    │  micropayments │    │  decisions     │    │  rewards       │
+└────────────────┘    └────────────────┘    └────────────────┘    └────────────────┘
 ```
+
+### Staking Tiers
+
+| Tier | Stake Required | Capabilities |
+|:-----|:---------------|:-------------|
+| **Basic** | 100 $CLAWD | Standard robot registration |
+| **Standard** | 500 $CLAWD | Enhanced matching, priority support |
+| **Premium** | 2,000 $CLAWD | Premium task access, reduced fees |
+| **Enterprise** | 10,000 $CLAWD | Full access, governance, custom SLAs |
 
 ---
 
-## Monorepo layout
+## Vibe to Earn - Developer Rewards
+
+**Contribute code, earn $CLAWD tokens!** The Vibe to Earn platform rewards developers who actively participate in the Solana Robotics ecosystem.
 
 ```
-.
-├── api/                 # Vercel serverless entry
-├── brain/               # Brain2Qwerty + Solana robot harness (Python)
-├── client/              # React dashboard (Vite + shadcn)
-├── server/              # tRPC / Express backend
-├── shared/              # Shared types
-├── drizzle/             # Postgres schema + migrations
-├── robotics/            # Asimov v1 CAD + MuJoCo
-├── eliza/               # elizaOS — Eliza robot runtime (Bun monorepo)
-│   ├── packages/        # core, agent, app, plugins surface
-│   ├── plugins/         # wallet, discord, workflow, …
-│   ├── skills/          # Solana / CLAWD / trading skills
-│   └── my-project/      # local agent project scaffold
-├── agents/              # Python agents (launchpad, hedge fund, …)
-├── packages/            # Python packages (passport, voice, vibe-to-earn, …)
-├── external/            # Optional NVIDIA GR00T tree
-├── CLAWD_TOKEN.md       # $CLAWD reference
-├── CONTRIBUTING.md
-├── SECURITY.md
-└── package.json         # pnpm app (client + server)
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                              VIBE TO EARN PLATFORM                                  │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  ┌──────────────┐      ┌──────────────┐      ┌──────────────┐      ┌─────────────┐│
+│  │   CONTRIBUTE │      │    TRACK     │      │    EARN      │      │   CLAIM     ││
+│  │              │      │              │      │              │      │             ││
+│  │  Commits     │─────▶│  GitHub      │─────▶│  $CLAWD      │─────▶│  Wallet     ││
+│  │  PRs, Issues │      │  Webhooks    │      │  Tokens      │      │  Transfer   ││
+│  └──────────────┘      └──────────────┘      └──────────────┘      └─────────────┘│
+│                                                                                     │
+└────────────────────────────────────────────────────────────────────────────────────┘
 ```
+
+### Reward Structure
+
+| Contribution Type | Base Reward ($CLAWD) | With 90-day Streak (2x) |
+|:------------------|:---------------------|:------------------------|
+| Commit | 1.0 | 2.0 |
+| Pull Request (Merged) | 10.0 | 20.0 |
+| Bug Fix | 15.0 | 30.0 |
+| New Feature | 25.0 | 50.0 |
+| Security Fix | 50.0 | 100.0 |
+
+### Getting Started with Vibe to Earn
+
+```bash
+# 1. Register as a developer
+curl -X POST https://api.solanarobotics.org/vibe/developers/register \
+  -H "Content-Type: application/json" \
+  -d '{"github_username": "your-username", "wallet_address": "YourSolanaWallet"}'
+
+# 2. Start contributing to the repo!
+
+# 3. Claim your rewards
+curl -X POST https://api.solanarobotics.org/vibe/rewards/claim \
+  -d '{"github_username": "your-username"}'
+```
+
+**[Read the full Vibe to Earn guide](docs/VIBE_TO_EARN.md)**
 
 ---
 
-## Quick start (open source)
+## Quick Start
 
 ### Prerequisites
 
-- **Node.js 20+** and **pnpm 9+**
-- **Python 3.11+** (brain / harness)
-- **Bun** (Eliza robot) — see `eliza/package.json` for pinned version
-- Solana wallet (Phantom) for client-side signing
-- Optional: Rust, Docker, Postgres
+| Requirement | Version | Purpose |
+|:------------|:--------|:--------|
+| Python | 3.10+ | Robot daemon, brain harness, AI |
+| Node.js | 20+ | Web dashboard, TypeScript server |
+| pnpm | 9+ | JS monorepo install |
+| Bun | latest | Eliza robot (`eliza/`) |
+| Rust | 1.70+ | Anchor programs (optional) |
+| Solana CLI | Latest | Blockchain interaction |
 
-### 1. Clone & configure
+### Installation
 
 ```bash
-git clone https://github.com/YOUR_ORG/solana-robotics.git
-cd solana-robotics
+# Clone the repository
+git clone https://github.com/8bitsats/Solana-Robotics-Kit.git
+cd Solana-Robotics-Kit
 
+# Configure environment (never commit .env)
 cp .env.example .env
-# Fill HELIUS_API_KEY, BIRDEYE_API_KEY, DATABASE_URL, etc.
-# Never commit .env or keypair files.
-```
 
-### 2. Web dashboard + API
-
-```bash
+# Install JS dependencies
 pnpm install
-pnpm dev          # server (tsx watch) — see package.json
-# In another terminal after install:
-# pnpm build && pnpm start   # production-style
+
+# Or use the helper
+./start.sh install
+./start.sh web
 ```
 
-Operator UI is served via Vite (`client/`) through the server integration.
-
-### 3. Brain / robot harness
+### Start the Operator Console / Dashboard
 
 ```bash
-cd brain
-cp .env.example .env   # if not using root .env
-# uv sync   # or: pip install -r requirements.lock
-python -m solana_robot_harness.cli --help
+pnpm dev
+# Opens the tRPC server + Vite client integration
 ```
 
-### 4. Eliza robot
+Open **http://localhost:3000** (or the port printed by Vite) to access the dashboard.
+
+### Run a Robot Daemon
 
 ```bash
-cd eliza
-bun install          # or: bun run install:light
-bun run dev          # full elizaOS stack
+python -m apps.robot_daemon.main \
+  --task-runner \
+  --capabilities navigation,delivery \
+  --poll-s 5
 ```
 
-Eliza character / CLAWD-oriented env example: `eliza/.env.clawd` (no secrets — paths only).  
-See [eliza/README.md](./eliza/README.md), [eliza/AGENTS.md](./eliza/AGENTS.md), and [eliza/CONTRIBUTING.md](./eliza/CONTRIBUTING.md).
-
-### 5. One-shot helper
+### Token Operations ($CLAWD)
 
 ```bash
-./start.sh            # prints status + common commands
-./start.sh web        # pnpm dev
-./start.sh eliza      # cd eliza && bun run dev
+# Gate / balance checks use mint:
+# 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
+# Override with CLAWD_TOKEN_ADDRESS or TOKEN_ADDRESS in .env
+
+# Jupiter swap (browser)
+# https://jup.ag/swap/SOL-8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 ```
 
 ---
 
-## $CLAWD utility
+## Eliza Robot
 
-| Use | Description |
-|-----|-------------|
-| **Token gate** | Dashboard / voice / agent surfaces verify holders via Helius DAS |
-| **DePIN** | Earn `$CLAWD` for verifiable robot / training contributions |
-| **Trading** | Jupiter routes; voice intents accept `CLAWD` (legacy `KIT` alias maps to same mint) |
-| **Governance / staking** | Ecosystem staking tiers (see CLAWD_TOKEN.md) |
+Full **elizaOS** monorepo lives under [`eliza/`](./eliza/). Character:
 
-Default mint in code:
-
-```ts
-// server/jupiter-trade.ts, server/helius.ts, client TokenGate
-'8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump'
-```
-
-Override with `TOKEN_ADDRESS` or `CLAWD_TOKEN_ADDRESS` in `.env`.
-
----
-
-## Development
+- [`eliza/characters/solana-robotics-clawd.json`](./eliza/characters/solana-robotics-clawd.json)
+- Bridge notes: [`agents/eliza_robot/README.md`](./agents/eliza_robot/README.md)
 
 ```bash
-pnpm check            # tsc --noEmit
-pnpm test             # vitest
-pnpm format           # prettier
-pnpm db:push          # drizzle generate + migrate
-
-cd brain && python -m pytest tests/
-cd eliza && bun run test
+./start.sh eliza-install
+./start.sh eliza
+# or:
+cd eliza && bun install && bun run dev
 ```
 
-### Environment (minimum)
-
-| Variable | Required | Purpose |
-|----------|----------|---------|
-| `HELIUS_API_KEY` | ✅ | RPC + DAS token gate |
-| `BIRDEYE_API_KEY` | Recommended | Prices / overview |
-| `DATABASE_URL` | For persistence | Postgres (Drizzle) |
-| `TOKEN_ADDRESS` / `CLAWD_TOKEN_ADDRESS` | Optional | Defaults to official `$CLAWD` mint |
-| `XAI_API_KEY` / `OPENROUTER_API_KEY` | Optional | LLM agents |
-| `ADMIN_WALLET` | Optional | Token-gate admin bypass |
-
-Full template: [`.env.example`](./.env.example).
+Skills under `eliza/skills/` include `clawd-token-ops`, Solana, Helius, trading, and more.
 
 ---
 
-## Open-source checklist
+## Architecture
 
-This repo is structured for public contribution:
+### Scalable Design
 
-- [x] MIT software license (+ CERN-OHL-S-2.0 hardware under `robotics/`)
-- [x] Root [`.gitignore`](./.gitignore) — secrets, `node_modules`, models, wallets
-- [x] [`.env.example`](./.env.example) with empty secrets
-- [x] [CONTRIBUTING.md](./CONTRIBUTING.md) / [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md) / [SECURITY.md](./SECURITY.md)
-- [x] No committed private keys / live `.env` (report if you find one)
-- [x] `$CLAWD` mint documented and wired in gate + trade paths
-- [x] Eliza monorepo vendored under `eliza/` (install deps locally; do not commit `node_modules`)
+Built for **1,000+ developers** with:
+- **Modular packages** — clear separation of concerns
+- **Clear navigation** — easy to find components
+- **Developer-friendly** — clear entry points and docs
+- **Professional structure** — industry-standard organization
 
-**Never** commit:
+### System Layers
 
-- Wallet JSON / keypairs  
-- `.env`, API keys, service account credentials  
-- `node_modules/`, large model weights (`.pt`, `.safetensors`)
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                              APPLICATION LAYER                                       │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐                   │
+│  │  Operator        │  │  Robot           │  │  Vibe to Earn    │                   │
+│  │  Console (Vite)  │  │  Daemon (Python) │  │  API (FastAPI)   │                   │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘                   │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│                                AI / AGENT LAYER                                      │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐                   │
+│  │  NVIDIA Cosmos   │  │  NVIDIA Nemotron │  │  Eliza Robot     │                   │
+│  │  (Perception)    │  │  (Reasoning)     │  │  (elizaOS)       │                   │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘                   │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│                             BLOCKCHAIN LAYER                                         │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐  ┌─────────────┐  │
+│  │  Robot           │  │  Task            │  │  Action          │  │  $CLAWD     │  │
+│  │  Registry        │  │  Marketplace     │  │  Log             │  │  Token      │  │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘  └─────────────┘  │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│                              HARDWARE LAYER                                          │
+│  ┌──────────────────┐  ┌──────────────────┐  ┌──────────────────┐                   │
+│  │  NVIDIA Jetson   │  │  Sensors         │  │  Asimov v1       │                   │
+│  │  Orin Nano       │  │  (LiDAR, Camera) │  │  (25 DOF)        │                   │
+│  └──────────────────┘  └──────────────────┘  └──────────────────┘                   │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Monorepo Layout
+
+| Path | Description |
+|:-----|:------------|
+| `server/` | tRPC + Express backend |
+| `client/` | React dashboard (Vite + shadcn) |
+| `brain/` | Brain2Qwerty + Solana robot harness |
+| `eliza/` | elizaOS — Eliza robot runtime |
+| `robotics/` | Asimov v1 CAD + MuJoCo |
+| `packages/` | Python packages (passport, voice, vibe-to-earn, …) |
+| `agents/` | Python agents + Eliza robot bridge |
+| `shared/` | Shared TypeScript types |
+| `drizzle/` | Postgres schema + migrations |
 
 ---
 
-## Building Asimov v1
+## Documentation
 
-```bash
-python3 -m mujoco.viewer --mjcf=robotics/sim-model/xmls/asimov.xml
+| Document | Description |
+|:---------|:------------|
+| [Quick Start](docs/QUICK_START.md) | Get running in 5 minutes |
+| [Vibe to Earn](docs/VIBE_TO_EARN.md) | Developer rewards guide |
+| [CLAWD Token](CLAWD_TOKEN.md) | Mint, utility, staking |
+| [Architecture](docs/ARCHITECTURE.md) | System design deep dive |
+| [Developer Guide](DEVELOPER_GUIDE.md) | Onboarding for contributors |
+| [NVIDIA Integration](docs/NVIDIA_NIM_INTEGRATION.md) | Isaac, Cosmos, Nemotron setup |
+| [Jetson Setup](docs/ORIN_NANO_SETUP.md) | Hardware configuration |
+| [Robot Passport](docs/ROBOT_PASSPORT_GENERATOR.md) | NFT identity system |
+| [Voice Synthesis](docs/VOICE_SYNTHESIS.md) | OpenVoice + MeloTTS guide |
+| [API Reference](docs/API_REFERENCE.md) | Complete API documentation |
+| [Eliza](eliza/README.md) | elizaOS agent runtime |
+| [Contributing](CONTRIBUTING.md) | Contribution guidelines |
+| [Security](SECURITY.md) | Vulnerability reporting |
+
+---
+
+## Bags SDK Integration
+
+The platform integrates with the [Bags SDK](https://dev.bags.fm) for partner fee management and token operations.
+
+```python
+from packages.vibe_to_earn.bags_integration import BagsSDKClient
+
+# Initialize client
+client = BagsSDKClient(api_key="your_bags_api_key")
+
+# Get partner fee stats
+stats = await client.get_partner_claim_stats()
+print(f"Unclaimed fees: {stats.unclaimed_sol} SOL")
+
+# Claim partner fees
+signature = await client.claim_partner_fees()
+print(f"Claimed! Transaction: {signature}")
+
+# Get $CLAWD token lifetime fees
+fees = await client.get_token_lifetime_fees("8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump")
+print(f"Lifetime fees: {fees} SOL")
 ```
 
-CAD: `robotics/mechanical/` · licenses: `robotics/HARDWARE-LICENSE.txt`, `robotics/SOFTWARE-LICENSE.txt`.
+---
+
+## NVIDIA Integration
+
+### Supported Hardware
+
+| Device | CUDA Cores | Memory | Recommended Use |
+|:-------|:-----------|:-------|:----------------|
+| **Jetson Orin Nano** | 1024 | 8GB | Development, light workloads |
+| **Jetson Orin NX** | 2048 | 16GB | Production robots |
+| **Jetson AGX Orin** | 2048 | 64GB | Multi-robot coordination |
+
+### AI Models
+
+```python
+from packages.nim_client import NIMClient
+
+# Initialize NVIDIA NIM client
+nim = NIMClient()
+
+# Cosmos - World model for perception
+perception = await nim.cosmos.perceive(camera_frame)
+
+# Nemotron - 340B reasoning model
+reasoning = await nim.nemotron.reason(
+    context=perception,
+    task="Navigate to delivery point while avoiding obstacles"
+)
+
+# Isaac - Robot control
+await nim.isaac.execute(reasoning.actions)
+```
+
+See [docs/ORIN_NANO_SETUP.md](docs/ORIN_NANO_SETUP.md) for detailed setup instructions.
+
+---
+
+## Roadmap
+
+### Phase 1: Foundation
+- [x] Robot Registry on-chain program
+- [x] Task Marketplace with escrow
+- [x] **$CLAWD** token integration
+- [x] x402 protocol support
+- [x] Operator Console web app
+- [x] Robot Passport NFTs
+- [x] Blender MCP integration
+- [x] NVIDIA NIM client
+- [x] Voice synthesis (OpenVoice + MeloTTS)
+- [x] **Vibe to Earn platform**
+- [x] **Eliza robot (elizaOS) monorepo**
+
+### Phase 2: Intelligence (Current)
+- [ ] Multi-robot coordination
+- [ ] NVIDIA Cosmos perception
+- [ ] Nemotron 340B reasoning
+- [ ] Fleet management dashboard
+- [ ] Autonomous task discovery
+
+### Phase 3: Ecosystem
+- [ ] DAO governance with **$CLAWD**
+- [ ] Third-party integrations
+- [ ] Hardware partnerships (NVIDIA, Boston Dynamics)
+- [ ] Mainnet deployment
+- [ ] Enterprise SLAs
 
 ---
 
 ## Contributing
 
-1. Fork → branch (`feat/…`, `fix/…`)  
-2. Keep secrets out of git  
-3. Prefer `$CLAWD` naming (not `$KIT`) in new UI/docs  
-4. Open a PR with a clear description and test notes  
+We welcome contributions! **Earn $CLAWD tokens** through the Vibe to Earn program.
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md).
+```bash
+# Fork, clone, and create a branch
+git clone https://github.com/YOUR_USERNAME/Solana-Robotics-Kit.git
+git checkout -b feature/your-feature
+
+# Make changes and test
+pnpm test
+python -m pytest tests/   # if applicable
+
+# Submit PR with conventional commits
+git commit -m "feat: add new robot capability"
+git push origin feature/your-feature
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+### Contribution Rewards
+
+| Contribution | Reward |
+|:-------------|:-------|
+| Bug report | 2 $CLAWD |
+| Bug fix PR | 15 $CLAWD |
+| Feature PR | 25 $CLAWD |
+| Documentation | 5 $CLAWD |
+| Security fix | 50 $CLAWD |
+
+---
+
+## Enterprise Support
+
+For enterprise deployments, we offer:
+
+| Service | Description |
+|:--------|:------------|
+| **Custom Integration** | Tailored integration with existing systems |
+| **Hardware Consulting** | NVIDIA Jetson fleet deployment |
+| **SLA Agreements** | Guaranteed uptime and support |
+| **Training** | On-site or remote team training |
+
+Contact: **enterprise@solanarobotics.org**
+
+---
+
+## Community
+
+| Channel | Link |
+|:--------|:-----|
+| **Website** | [solanarobotics.org](https://solanarobotics.org) |
+| **GitHub** | [github.com/8bitsats/Solana-Robotics-Kit](https://github.com/8bitsats/Solana-Robotics-Kit) |
+| **Discord** | [discord.gg/solanarobotics](https://discord.gg/solanarobotics) |
+| **Twitter** | [@SolanaRobotics](https://twitter.com/SolanaRobotics) |
+| **$CLAWD** | [Solscan](https://solscan.io/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump) |
 
 ---
 
 ## License
 
 | Component | License |
-|-----------|---------|
-| Application software | [MIT](./LICENSE) |
-| Hardware (CAD / mechanical) | [CERN-OHL-S-2.0](./robotics/HARDWARE-LICENSE.txt) |
-| Eliza subtree | [eliza/LICENSE](./eliza/LICENSE) (upstream elizaOS terms) |
-| Third-party | Per package |
-
----
-
-## Acknowledgments
-
-Meta FAIR (Brain2Qwerty) · NVIDIA · Solana · elizaOS · Clawd / Cheshire · Rig · Asimov open hardware
+|:----------|:--------|
+| Software | [MIT](LICENSE) |
+| Hardware (CAD) | [CERN-OHL-S-2.0](robotics/HARDWARE-LICENSE.txt) |
+| Eliza subtree | [eliza/LICENSE](eliza/LICENSE) |
 
 ---
 
 <div align="center">
 
+**Powered by**
+
+[![NVIDIA](https://img.shields.io/badge/NVIDIA-Isaac%20%7C%20Cosmos%20%7C%20Nemotron-76B900?style=for-the-badge&logo=nvidia&logoColor=white)](https://developer.nvidia.com)
+[![Solana](https://img.shields.io/badge/Solana-Blockchain-9945FF?style=for-the-badge&logo=solana&logoColor=white)](https://solana.com)
+[![Bags](https://img.shields.io/badge/Bags-Partner%20Fees-FF6B6B?style=for-the-badge)](https://dev.bags.fm)
+[![elizaOS](https://img.shields.io/badge/elizaOS-Agent%20Runtime-111111?style=for-the-badge)](https://github.com/elizaOS/eliza)
+
+<br/>
+
+**Version 1.0.0** · Built with care by the Solana Robotics community
+
 **$CLAWD** · [`8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`](https://solscan.io/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
 
-From neural decoding → DeFi → humanoid robots — on Solana.
+[Website](https://solanarobotics.org) · [Vibe to Earn](docs/VIBE_TO_EARN.md) · [Documentation](docs/) · [Discord](https://discord.gg/solanarobotics)
 
 </div>
