@@ -48,7 +48,7 @@
 
 <br/>
 
-[**Getting Started**](#-quick-start) · [**$CLAWD**](#-clawd-token) · [**Vibe to Earn**](#-vibe-to-earn---developer-rewards) · [**Eliza Robot**](#-eliza-robot) · [**Architecture**](#-architecture) · [**Documentation**](#-documentation) · [**Contributing**](CONTRIBUTING.md) · [**Discord**](https://discord.gg/solanarobotics)
+[**Getting Started**](#-quick-start) · [**$CLAWD**](#-clawd-token) · [**Eliza Robot**](#-eliza-robot) · [**Architecture**](#-architecture) · [**Documentation**](#-documentation) · [**Contributing**](CONTRIBUTING.md) · [**Discord**](https://discord.gg/solanarobotics) · [**Vibe to Earn**](#-vibe-to-earn---developer-rewards)
 
 </div>
 
@@ -137,54 +137,6 @@
 | **Standard** | 500 $CLAWD | Enhanced matching, priority support |
 | **Premium** | 2,000 $CLAWD | Premium task access, reduced fees |
 | **Enterprise** | 10,000 $CLAWD | Full access, governance, custom SLAs |
-
----
-
-## Vibe to Earn - Developer Rewards
-
-**Contribute code, earn $CLAWD tokens!** The Vibe to Earn platform rewards developers who actively participate in the Solana Robotics ecosystem.
-
-```
-┌────────────────────────────────────────────────────────────────────────────────────┐
-│                              VIBE TO EARN PLATFORM                                  │
-├────────────────────────────────────────────────────────────────────────────────────┤
-│                                                                                     │
-│  ┌──────────────┐      ┌──────────────┐      ┌──────────────┐      ┌─────────────┐│
-│  │   CONTRIBUTE │      │    TRACK     │      │    EARN      │      │   CLAIM     ││
-│  │              │      │              │      │              │      │             ││
-│  │  Commits     │─────▶│  GitHub      │─────▶│  $CLAWD      │─────▶│  Wallet     ││
-│  │  PRs, Issues │      │  Webhooks    │      │  Tokens      │      │  Transfer   ││
-│  └──────────────┘      └──────────────┘      └──────────────┘      └─────────────┘│
-│                                                                                     │
-└────────────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Reward Structure
-
-| Contribution Type | Base Reward ($CLAWD) | With 90-day Streak (2x) |
-|:------------------|:---------------------|:------------------------|
-| Commit | 1.0 | 2.0 |
-| Pull Request (Merged) | 10.0 | 20.0 |
-| Bug Fix | 15.0 | 30.0 |
-| New Feature | 25.0 | 50.0 |
-| Security Fix | 50.0 | 100.0 |
-
-### Getting Started with Vibe to Earn
-
-```bash
-# 1. Register as a developer
-curl -X POST https://api.solanarobotics.org/vibe/developers/register \
-  -H "Content-Type: application/json" \
-  -d '{"github_username": "your-username", "wallet_address": "YourSolanaWallet"}'
-
-# 2. Start contributing to the repo!
-
-# 3. Claim your rewards
-curl -X POST https://api.solanarobotics.org/vibe/rewards/claim \
-  -d '{"github_username": "your-username"}'
-```
-
-**[Read the full Vibe to Earn guide](docs/VIBE_TO_EARN.md)**
 
 ---
 
@@ -501,6 +453,54 @@ Contact: **enterprise@solanarobotics.org**
 | Software | [MIT](LICENSE) |
 | Hardware (CAD) | [CERN-OHL-S-2.0](robotics/HARDWARE-LICENSE.txt) |
 | Eliza subtree | [eliza/LICENSE](eliza/LICENSE) |
+
+---
+
+## Vibe to Earn - Developer Rewards
+
+**Contribute code, earn $CLAWD tokens!** The Vibe to Earn platform rewards developers who actively participate in the Solana Robotics ecosystem.
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────┐
+│                              VIBE TO EARN PLATFORM                                  │
+├────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│  ┌──────────────┐      ┌──────────────┐      ┌──────────────┐      ┌─────────────┐│
+│  │   CONTRIBUTE │      │    TRACK     │      │    EARN      │      │   CLAIM     ││
+│  │              │      │              │      │              │      │             ││
+│  │  Commits     │─────▶│  GitHub      │─────▶│  $CLAWD      │─────▶│  Wallet     ││
+│  │  PRs, Issues │      │  Webhooks    │      │  Tokens      │      │  Transfer   ││
+│  └──────────────┘      └──────────────┘      └──────────────┘      └─────────────┘│
+│                                                                                     │
+└────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Reward Structure
+
+| Contribution Type | Base Reward ($CLAWD) | With 90-day Streak (2x) |
+|:------------------|:---------------------|:------------------------|
+| Commit | 1.0 | 2.0 |
+| Pull Request (Merged) | 10.0 | 20.0 |
+| Bug Fix | 15.0 | 30.0 |
+| New Feature | 25.0 | 50.0 |
+| Security Fix | 50.0 | 100.0 |
+
+### Getting Started with Vibe to Earn
+
+```bash
+# 1. Register as a developer
+curl -X POST https://api.solanarobotics.org/vibe/developers/register \
+  -H "Content-Type: application/json" \
+  -d '{"github_username": "your-username", "wallet_address": "YourSolanaWallet"}'
+
+# 2. Start contributing to the repo!
+
+# 3. Claim your rewards
+curl -X POST https://api.solanarobotics.org/vibe/rewards/claim \
+  -d '{"github_username": "your-username"}'
+```
+
+**[Read the full Vibe to Earn guide](docs/VIBE_TO_EARN.md)**
 
 ---
 
