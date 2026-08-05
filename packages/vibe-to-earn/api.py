@@ -516,7 +516,7 @@ async def get_token_fees():
     fees = await engine.get_token_lifetime_fees()
 
     return {
-        "token_mint": "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS",
+        "token_mint": "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump",
         "lifetime_fees_sol": fees,
     }
 
@@ -601,7 +601,7 @@ async def root():
         "service": "Vibe to Earn API",
         "version": "1.0.0",
         "description": "Developer reward system for Solana Robotics Kit",
-        "kit_token": "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS",
+        "kit_token": "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump",
         "docs": "/docs",
     }
 

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const BIRDEYE_API_URL = "https://public-api.birdeye.so";
-// Use TOKEN_ADDRESS from environment or fallback to default $KIT address
-const KIT_TOKEN_ADDRESS = process.env.TOKEN_ADDRESS || "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS";
+// Use TOKEN_ADDRESS from environment or fallback to default $CLAWD address
+const CLAWD_TOKEN_ADDRESS = process.env.TOKEN_ADDRESS || "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump";
 
 interface TokenPrice {
   value: number;
@@ -66,7 +66,7 @@ interface TokenSecurity {
 /**
  * Get token price from Birdeye
  */
-export async function getTokenPrice(tokenAddress: string = KIT_TOKEN_ADDRESS): Promise<TokenPrice | null> {
+export async function getTokenPrice(tokenAddress: string = CLAWD_TOKEN_ADDRESS): Promise<TokenPrice | null> {
   const apiKey = process.env.BIRDEYE_API_KEY;
   
   if (!apiKey) {
@@ -106,22 +106,22 @@ export async function getTokenPrice(tokenAddress: string = KIT_TOKEN_ADDRESS): P
 /**
  * Get token overview from Birdeye
  */
-export async function getTokenOverview(tokenAddress: string = KIT_TOKEN_ADDRESS): Promise<TokenOverview | null> {
+export async function getTokenOverview(tokenAddress: string = CLAWD_TOKEN_ADDRESS): Promise<TokenOverview | null> {
   const apiKey = process.env.BIRDEYE_API_KEY;
   
   if (!apiKey) {
     console.warn("[Birdeye] API key not configured, returning mock overview");
     return {
-      address: KIT_TOKEN_ADDRESS,
+      address: CLAWD_TOKEN_ADDRESS,
       decimals: 9,
-      symbol: "$KIT",
-      name: "Solana Robotics Kit",
+      symbol: '$CLAWD',
+      name: "CLAWD",
       extensions: {
-        website: "https://solanarobotics.org",
+        website: "https://cheshireterminal.ai",
         twitter: "https://x.com/solanarobotics",
-        description: "The native token of the Solana Robotics Kit ecosystem"
+        description: "The native utility token of the Solana Robotics / CLAWD ecosystem"
       },
-      logoURI: "/kit-token.png",
+      logoURI: "/clawd-token.png",
       liquidity: 125000,
       price: 0.00042069,
       priceChange24hPercent: 12.5,
@@ -162,7 +162,7 @@ export async function getTokenOverview(tokenAddress: string = KIT_TOKEN_ADDRESS)
 /**
  * Get token security info from Birdeye
  */
-export async function getTokenSecurity(tokenAddress: string = KIT_TOKEN_ADDRESS): Promise<TokenSecurity | null> {
+export async function getTokenSecurity(tokenAddress: string = CLAWD_TOKEN_ADDRESS): Promise<TokenSecurity | null> {
   const apiKey = process.env.BIRDEYE_API_KEY;
   
   if (!apiKey) {
@@ -204,7 +204,7 @@ export async function getTokenSecurity(tokenAddress: string = KIT_TOKEN_ADDRESS)
  * Get token price history from Birdeye
  */
 export async function getTokenPriceHistory(
-  tokenAddress: string = KIT_TOKEN_ADDRESS,
+  tokenAddress: string = CLAWD_TOKEN_ADDRESS,
   type: "1m" | "3m" | "15m" | "30m" | "1H" | "2H" | "4H" | "6H" | "8H" | "12H" | "1D" | "3D" | "1W" | "1M" = "1H",
   timeFrom?: number,
   timeTo?: number
@@ -253,7 +253,7 @@ export async function getTokenPriceHistory(
  * Get OHLCV data from Birdeye
  */
 export async function getTokenOHLCV(
-  tokenAddress: string = KIT_TOKEN_ADDRESS,
+  tokenAddress: string = CLAWD_TOKEN_ADDRESS,
   type: "1m" | "3m" | "5m" | "15m" | "30m" | "1H" | "2H" | "4H" | "6H" | "8H" | "12H" | "1D" | "3D" | "1W" | "1M" = "1H",
   timeFrom?: number,
   timeTo?: number
@@ -315,18 +315,18 @@ export async function getTokenOHLCV(
   }
 }
 
-export const KIT_TOKEN = {
-  address: KIT_TOKEN_ADDRESS,
-  symbol: "$KIT",
-  name: "Solana Robotics Kit",
+export const CLAWD_TOKEN = {
+  address: CLAWD_TOKEN_ADDRESS,
+  symbol: '$CLAWD',
+  name: "CLAWD",
   decimals: 9,
   links: {
     twitter: "https://x.com/solanarobotics",
     github: "https://github.com/8bitsats/solana-robotics-kit",
-    jupiter: `https://jup.ag/swap/SOL-${KIT_TOKEN_ADDRESS}`,
-    raydium: `https://raydium.io/swap/?inputCurrency=sol&outputCurrency=${KIT_TOKEN_ADDRESS}`,
-    birdeye: `https://birdeye.so/token/${KIT_TOKEN_ADDRESS}?chain=solana`,
-    solscan: `https://solscan.io/token/${KIT_TOKEN_ADDRESS}`
+    jupiter: `https://jup.ag/swap/SOL-${CLAWD_TOKEN_ADDRESS}`,
+    raydium: `https://raydium.io/swap/?inputCurrency=sol&outputCurrency=${CLAWD_TOKEN_ADDRESS}`,
+    birdeye: `https://birdeye.so/token/${CLAWD_TOKEN_ADDRESS}?chain=solana`,
+    solscan: `https://solscan.io/token/${CLAWD_TOKEN_ADDRESS}`
   }
 };
 
@@ -353,9 +353,9 @@ export async function getTrendingTokens(limit: number = 10): Promise<TrendingTok
     // Return mock trending tokens
     return [
       {
-        address: KIT_TOKEN_ADDRESS,
-        symbol: "$KIT",
-        name: "Solana Robotics Kit",
+        address: CLAWD_TOKEN_ADDRESS,
+        symbol: '$CLAWD',
+        name: "CLAWD",
         price: 0.00042069,
         priceChange24h: 5.23,
         volume24h: 125000,
@@ -462,15 +462,15 @@ export interface MemeTokenDetail {
   progressPercent?: number;
 }
 
-export async function getMemeTokenDetail(tokenAddress: string = KIT_TOKEN_ADDRESS): Promise<MemeTokenDetail | null> {
+export async function getMemeTokenDetail(tokenAddress: string = CLAWD_TOKEN_ADDRESS): Promise<MemeTokenDetail | null> {
   const apiKey = process.env.BIRDEYE_API_KEY;
   
   if (!apiKey) {
     console.warn("[Birdeye] API key not configured, returning mock meme token detail");
     return {
       address: tokenAddress,
-      name: "Solana Robotics Kit",
-      symbol: "KIT",
+      name: "CLAWD",
+      symbol: 'CLAWD',
       decimals: 9,
       logoUri: "https://ipfs.io/ipfs/QmXuZwv5qfnAJm3LTodfebBmj7x9pH3nJ663g8R2oHp6s5",
       description: "Robotics is evolving. AI is accelerating. Now it's all coming on-chain.",
@@ -552,7 +552,7 @@ export interface RealTimePrice {
   isScaledUiToken: boolean;
 }
 
-export async function getRealTimePrice(tokenAddress: string = KIT_TOKEN_ADDRESS): Promise<RealTimePrice | null> {
+export async function getRealTimePrice(tokenAddress: string = CLAWD_TOKEN_ADDRESS): Promise<RealTimePrice | null> {
   const apiKey = process.env.BIRDEYE_API_KEY;
   
   if (!apiKey) {
@@ -607,4 +607,4 @@ export async function getRealTimePrice(tokenAddress: string = KIT_TOKEN_ADDRESS)
 }
 
 // Export the token address for use in other modules
-export { KIT_TOKEN_ADDRESS };
+export { CLAWD_TOKEN_ADDRESS };

@@ -1,12 +1,12 @@
 /**
  * Token Gate Module
- * Handles $KIT token verification and admin wallet access control
+ * Handles $CLAWD token verification and admin wallet access control
  */
 
 import { verifyTokenHolder, TokenVerificationResult } from "./helius-das";
 
 // Environment variables
-const TOKEN_ADDRESS = process.env.TOKEN_ADDRESS || "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS";
+const TOKEN_ADDRESS = process.env.TOKEN_ADDRESS || "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump";
 const ADMIN_WALLET = process.env.ADMIN_WALLET || "9juYSPJ59hP1dFFSMHft7ajmZ9rfVpibHXPR4VFdADMm";
 
 // Minimum token balance required for access (0 = any amount)
@@ -48,7 +48,7 @@ export function getGateTokenAddress(): string {
  * Check if a wallet has access through the token gate
  * Access is granted if:
  * 1. Wallet is the admin wallet, OR
- * 2. Wallet holds $KIT tokens above the minimum balance
+ * 2. Wallet holds $CLAWD tokens above the minimum balance
  */
 export async function checkTokenGate(
   walletAddress: string,
@@ -79,7 +79,7 @@ export async function checkTokenGate(
         walletAddress,
         tokenBalance: verification.balance,
         tokenValueUsd: verification.valueUsd,
-        reason: `$KIT holder verified - ${verification.balance.toLocaleString()} tokens`,
+        reason: `$CLAWD holder verified - ${verification.balance.toLocaleString()} tokens`,
         verification,
       };
     }
@@ -92,8 +92,8 @@ export async function checkTokenGate(
       tokenBalance: verification.balance,
       tokenValueUsd: verification.valueUsd,
       reason: minBalance > 0 
-        ? `Insufficient $KIT balance. Required: ${minBalance}, Found: ${verification.balance}`
-        : "No $KIT tokens found in wallet",
+        ? `Insufficient $CLAWD balance. Required: ${minBalance}, Found: ${verification.balance}`
+        : "No $CLAWD tokens found in wallet",
       verification,
     };
   } catch (error) {

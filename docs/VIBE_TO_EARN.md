@@ -21,10 +21,10 @@ The Vibe to Earn platform rewards developers who actively participate in the Sol
 | Property | Value |
 |----------|-------|
 | **Token** | $KIT |
-| **Mint Address** | `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS` |
+| **Mint Address** | `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump` |
 | **Network** | Solana Mainnet |
 | **Decimals** | 9 |
-| **Fee Wallet** | `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS` |
+| **Fee Wallet** | `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump` |
 
 ## Reward Structure
 

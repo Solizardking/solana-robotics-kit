@@ -400,6 +400,6 @@ This package integrates:
 
 **Part of the [Solana Robotics Kit](https://github.com/8bitsats/Solana-Robotics-Kit)**
 
-$KIT Token: `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS`
+$KIT Token: `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`
 
 </div>

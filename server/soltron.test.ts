@@ -67,7 +67,7 @@ describe('SOLtron AI Companion', () => {
       const ctx = createTestContext();
       const caller = appRouter.createCaller(ctx);
       const result = await caller.soltron.voiceResponse({
-        message: 'Tell me about $KIT token',
+        message: 'Tell me about $CLAWD token',
         emotion: 'excited',
       });
       

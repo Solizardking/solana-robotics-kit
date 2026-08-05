@@ -8,7 +8,7 @@ Official currency for the Solana Robotics Kit ecosystem with x402 protocol suppo
 |----------|-------|
 | **Name** | $KIT |
 | **Symbol** | KIT |
-| **Contract** | `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS` |
+| **Contract** | `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump` |
 | **Network** | Solana |
 | **Decimals** | 9 |
 | **Website** | [solanarobotics.org](https://solanarobotics.org) |
@@ -16,7 +16,7 @@ Official currency for the Solana Robotics Kit ecosystem with x402 protocol suppo
 ## Links
 
 - **Website**: https://solanarobotics.org
-- **Solscan**: https://solscan.io/token/DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+- **Solscan**: https://solscan.io/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 - **GitHub**: https://github.com/8bitsats/Solana-Robotics-Kit
 - **x402 Protocol**: https://x402.org
 - **Solana x402 Guide**: https://solana.com/developers/guides/getstarted/intro-to-x402
@@ -252,4 +252,4 @@ NETWORK=devnet
 - [x402 Protocol Specification](https://x402.org)
 - [Solana x402 Integration Guide](https://solana.com/developers/guides/getstarted/intro-to-x402)
 - [Coinbase x402 Documentation](https://docs.cdp.coinbase.com/x402/welcome)
-- [bags.fm Token Page](https://bags.fm/token/DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS)
+- [bags.fm Token Page](https://bags.fm/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)

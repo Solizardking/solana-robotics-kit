@@ -66,7 +66,7 @@ describe('xAI Grok Integration', () => {
 
   it('GROK_SYSTEM_PROMPT contains required information', () => {
     // Check for key information in system prompt
-    expect(GROK_SYSTEM_PROMPT).toContain('$KIT');
+    expect(GROK_SYSTEM_PROMPT).toContain('$CLAWD');
     expect(GROK_SYSTEM_PROMPT).toContain('Trading');
     expect(GROK_SYSTEM_PROMPT).toContain('SOLtron');
     expect(GROK_SYSTEM_PROMPT).toContain('Jupiter');

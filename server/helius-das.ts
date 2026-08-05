@@ -1,10 +1,10 @@
 /**
  * Helius DAS (Digital Asset Standard) API Integration
- * Used for verifying $KIT token holdings and fetching wallet assets
+ * Used for verifying $CLAWD token holdings and fetching wallet assets
  */
 
 // Token address from environment
-const TOKEN_ADDRESS = process.env.TOKEN_ADDRESS || "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS";
+const TOKEN_ADDRESS = process.env.TOKEN_ADDRESS || "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump";
 
 // Helius RPC endpoint
 function getHeliusRpcUrl(): string {
@@ -229,7 +229,7 @@ export interface TokenVerificationResult {
 }
 
 /**
- * Verify if a wallet holds $KIT tokens and return holdings info
+ * Verify if a wallet holds $CLAWD tokens and return holdings info
  */
 export async function verifyTokenHolder(
   walletAddress: string,

@@ -32,8 +32,8 @@ import {
 } from "./db";
 import { generateAgentPersonality, generateTradingAnalysis } from "./nvidia";
 import { chatWithAssistant, listAssistantFiles } from "./pinecone";
-import { getTokenPrice, getTokenOverview, getTokenPriceHistory, getTokenOHLCV, getTrendingTokens, getMemeTokenDetail, getRealTimePrice, KIT_TOKEN, KIT_TOKEN_ADDRESS } from "./birdeye";
-import { verifyTokenHolding, getWalletTokens, getWalletTransactions, KIT_TOKEN as HELIUS_KIT_TOKEN } from "./helius";
+import { getTokenPrice, getTokenOverview, getTokenPriceHistory, getTokenOHLCV, getTrendingTokens, getMemeTokenDetail, getRealTimePrice, CLAWD_TOKEN, CLAWD_TOKEN_ADDRESS } from "./birdeye";
+import { verifyTokenHolding, getWalletTokens, getWalletTransactions, CLAWD_TOKEN as HELIUS_CLAWD_TOKEN } from "./helius";
 import { getDocumentationPDFs, getGraphicsAssets, getAllDocumentationAssets, getAssetUrl, R2_CONFIG } from "./cloudflare";
 import { chatWithGrok, generateGrokImage, grokTradingAssistant, grokVibeCode, searchX, searchWebAndNews, GROK_SYSTEM_PROMPT, type GrokMessage } from "./xai";
 import { vibeCode, getVibeModels, getCodeModes, getCodeLanguages, isVibeStudioConfigured, type CodeMode, type CodeLanguage, type VibeModelId } from "./vibe-studio";
@@ -314,10 +314,10 @@ export const appRouter = router({
     }),
   }),
 
-  // $KIT Token with Birdeye
+  // $CLAWD Token with Birdeye
   token: router({
     info: publicProcedure.query(async () => {
-      return KIT_TOKEN;
+      return CLAWD_TOKEN;
     }),
     
     price: publicProcedure.query(async () => {
@@ -401,7 +401,7 @@ export const appRouter = router({
 
     // Get the configured token address
     address: publicProcedure.query(() => {
-      return KIT_TOKEN_ADDRESS;
+      return CLAWD_TOKEN_ADDRESS;
     }),
 
     // Check if wallet is admin
@@ -444,7 +444,7 @@ export const appRouter = router({
           isAdmin: false,
           isHolder: tokenResult.isHolder,
           balance: tokenResult.balance,
-          reason: tokenResult.isHolder ? 'Token holder' : 'Insufficient $KIT balance',
+          reason: tokenResult.isHolder ? 'Token holder' : 'Insufficient $CLAWD balance',
         };
       }),
   }),
@@ -1058,7 +1058,7 @@ export const appRouter = router({
 
   // Wallet Verification & Portfolio
   wallet: router({
-    // Verify $KIT token holder status
+    // Verify $CLAWD token holder status
     verifyHolder: publicProcedure
       .input(z.object({
         walletAddress: z.string(),

@@ -257,7 +257,7 @@ Contributions earn $KIT tokens via Vibe to Earn:
 | Property | Value |
 |----------|-------|
 | **Token** | $KIT |
-| **Mint** | `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS` |
+| **Mint** | `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump` |
 | **Network** | Solana |
 | **Decimals** | 9 |
 

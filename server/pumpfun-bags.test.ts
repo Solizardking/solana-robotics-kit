@@ -134,7 +134,7 @@ describe("Pump.fun & Bags Integration", () => {
         return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address);
       };
       
-      expect(isValidSolanaAddress("DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS")).toBe(true);
+      expect(isValidSolanaAddress("8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump")).toBe(true);
       expect(isValidSolanaAddress("9juYSPJ59hP1dFFSMHft7ajmZ9rfVpibHXPR4VFdADMm")).toBe(true);
       expect(isValidSolanaAddress("invalid")).toBe(false);
       expect(isValidSolanaAddress("")).toBe(false);

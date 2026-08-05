@@ -42,8 +42,8 @@ describe("Voice Trading Integration", () => {
     });
 
     it("should have valid KIT token address", () => {
-      const KIT_TOKEN = process.env.TOKEN_ADDRESS || "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS";
-      expect(KIT_TOKEN.length).toBeGreaterThanOrEqual(32);
+      const CLAWD_TOKEN = process.env.TOKEN_ADDRESS || "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump";
+      expect(CLAWD_TOKEN.length).toBeGreaterThanOrEqual(32);
     });
   });
 
@@ -72,7 +72,7 @@ describe("Voice Trading Integration", () => {
       
       expect(match).not.toBeNull();
       expect(match?.[1]).toBe("100");
-      expect(match?.[2].toUpperCase()).toBe("KIT");
+      expect(match?.[2].toUpperCase()).toBe("CLAWD");
     });
   });
 

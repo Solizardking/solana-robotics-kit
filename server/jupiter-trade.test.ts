@@ -19,7 +19,7 @@ describe("Jupiter Trade Execution", () => {
 
       expect(tokens).toHaveProperty("SOL");
       expect(tokens).toHaveProperty("USDC");
-      expect(tokens).toHaveProperty("KIT");
+      expect(tokens).toHaveProperty("CLAWD");
       expect(tokens.SOL).toBe("So11111111111111111111111111111111111111112");
     });
   });
@@ -30,7 +30,7 @@ describe("Jupiter Trade Execution", () => {
       const caller = appRouter.createCaller(ctx);
 
       const intent = await caller.trade.parseIntent({
-        message: "buy 0.5 SOL worth of $KIT",
+        message: "buy 0.5 SOL worth of $CLAWD",
       });
 
       expect(intent).not.toBeNull();
@@ -43,7 +43,7 @@ describe("Jupiter Trade Execution", () => {
       const caller = appRouter.createCaller(ctx);
 
       const intent = await caller.trade.parseIntent({
-        message: "sell 100 $KIT",
+        message: "sell 100 $CLAWD",
       });
 
       expect(intent).not.toBeNull();
@@ -69,7 +69,7 @@ describe("Jupiter Trade Execution", () => {
       const caller = appRouter.createCaller(ctx);
 
       const intent = await caller.trade.parseIntent({
-        message: "What is the price of $KIT?",
+        message: "What is the price of $CLAWD?",
       });
 
       expect(intent).toBeNull();
@@ -156,7 +156,7 @@ describe("Trade Intent Parser (Unit Tests)", () => {
   });
 
   it("parses various sell formats", () => {
-    expect(parseTradeIntent("sell 100 $KIT")).toMatchObject({
+    expect(parseTradeIntent("sell 100 $CLAWD")).toMatchObject({
       action: "sell",
       amount: 100,
     });
@@ -180,7 +180,7 @@ describe("Trade Intent Parser (Unit Tests)", () => {
   it("returns null for non-trade messages", () => {
     expect(parseTradeIntent("hello world")).toBeNull();
     expect(parseTradeIntent("what is the price")).toBeNull();
-    expect(parseTradeIntent("analyze $KIT")).toBeNull();
+    expect(parseTradeIntent("analyze $CLAWD")).toBeNull();
   });
 });
 

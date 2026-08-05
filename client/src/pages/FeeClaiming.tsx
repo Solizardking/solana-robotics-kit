@@ -112,7 +112,7 @@ export default function FeeClaiming() {
       // Demo data for display purposes
       setClaimablePositions([
         {
-          tokenMint: "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS",
+          tokenMint: "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump",
           tokenName: "Solana Robotics CLAWD",
           tokenSymbol: "CLAWD",
           claimableAmount: 0.0523,

@@ -237,13 +237,13 @@ export const SOLANA_ROBOTICS_TOOLS: FunctionTool[] = [
   {
     type: 'function',
     name: 'get_token_price',
-    description: 'Get the current price of $KIT token or any Solana token',
+    description: 'Get the current price of $CLAWD token or any Solana token',
     parameters: {
       type: 'object',
       properties: {
         token_address: {
           type: 'string',
-          description: 'The Solana token mint address. Use "KIT" for $KIT token.',
+          description: 'The Solana token mint address. Use 'CLAWD' for $CLAWD token.',
         },
       },
       required: ['token_address'],
@@ -332,7 +332,7 @@ export const SOLANA_ROBOTICS_TOOLS: FunctionTool[] = [
   {
     type: 'function',
     name: 'verify_token_holder',
-    description: 'Verify if a wallet holds $KIT tokens',
+    description: 'Verify if a wallet holds $CLAWD tokens',
     parameters: {
       type: 'object',
       properties: {

@@ -165,6 +165,6 @@ describe("Token Info", () => {
     expect(result).toHaveProperty("address");
     expect(result).toHaveProperty("symbol");
     expect(result).toHaveProperty("name");
-    expect(result.symbol).toBe("$KIT");
+    expect(result.symbol).toBe("$CLAWD");
   });
 });

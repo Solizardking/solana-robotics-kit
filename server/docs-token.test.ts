@@ -59,7 +59,7 @@ describe("Documentation Hub - Pinecone Integration", () => {
   });
 });
 
-describe("$KIT Token - Birdeye Integration", () => {
+describe("$CLAWD Token - Birdeye Integration", () => {
   it("token.info returns token metadata", async () => {
     const ctx = createPublicContext();
     const caller = appRouter.createCaller(ctx);
@@ -85,8 +85,8 @@ describe("$KIT Token - Birdeye Integration", () => {
 
     const info = await caller.token.info();
 
-    expect(info.address).toBe("DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS");
-    expect(info.symbol).toBe("$KIT");
+    expect(info.address).toBe("8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump");
+    expect(info.symbol).toBe("$CLAWD");
   });
 
   it("token.price returns price data or null when rate limited", async () => {

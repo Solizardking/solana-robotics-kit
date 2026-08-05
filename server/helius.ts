@@ -1,12 +1,12 @@
 /**
  * Helius API Integration for Token Gating
- * Uses DAS API to verify $KIT token holdings
+ * Uses DAS API to verify $CLAWD token holdings
  */
 
 import { ENV } from './_core/env';
 
-// $KIT Token Address
-const KIT_TOKEN_ADDRESS = 'DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS';
+// $CLAWD Token Address
+const CLAWD_TOKEN_ADDRESS = '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump';
 
 // Minimum token amount required for access (in token units)
 const MIN_TOKEN_AMOUNT = 1;
@@ -52,7 +52,7 @@ function getHeliusRpcUrl(): string {
 }
 
 /**
- * Verify if a wallet holds $KIT tokens using Helius DAS API
+ * Verify if a wallet holds $CLAWD tokens using Helius DAS API
  */
 export async function verifyTokenHolding(walletAddress: string): Promise<{
   isHolder: boolean;
@@ -68,7 +68,7 @@ export async function verifyTokenHolding(walletAddress: string): Promise<{
     return {
       isHolder: true, // Allow access in dev mode
       balance: 1000000,
-      tokenAddress: KIT_TOKEN_ADDRESS,
+      tokenAddress: CLAWD_TOKEN_ADDRESS,
       error: 'API key not configured - mock mode enabled',
     };
   }
@@ -105,9 +105,9 @@ export async function verifyTokenHolding(walletAddress: string): Promise<{
 
     const assets: HeliusAsset[] = data.result?.items || [];
     
-    // Find $KIT token in the wallet
+    // Find $CLAWD token in the wallet
     const kitToken = assets.find(
-      (asset) => asset.id === KIT_TOKEN_ADDRESS
+      (asset) => asset.id === CLAWD_TOKEN_ADDRESS
     );
 
     if (kitToken && kitToken.token_info) {
@@ -118,21 +118,21 @@ export async function verifyTokenHolding(walletAddress: string): Promise<{
       return {
         isHolder: humanBalance >= MIN_TOKEN_AMOUNT,
         balance: humanBalance,
-        tokenAddress: KIT_TOKEN_ADDRESS,
+        tokenAddress: CLAWD_TOKEN_ADDRESS,
       };
     }
 
     return {
       isHolder: false,
       balance: 0,
-      tokenAddress: KIT_TOKEN_ADDRESS,
+      tokenAddress: CLAWD_TOKEN_ADDRESS,
     };
   } catch (error: any) {
     console.error('[Helius] Token verification error:', error);
     return {
       isHolder: false,
       balance: 0,
-      tokenAddress: KIT_TOKEN_ADDRESS,
+      tokenAddress: CLAWD_TOKEN_ADDRESS,
       error: error.message,
     };
   }
@@ -158,9 +158,9 @@ export async function getWalletTokens(walletAddress: string): Promise<{
     return {
       tokens: [
         {
-          address: KIT_TOKEN_ADDRESS,
-          name: 'Solana Robotics Kit',
-          symbol: 'KIT',
+          address: CLAWD_TOKEN_ADDRESS,
+          name: 'CLAWD',
+          symbol: 'CLAWD',
           balance: 1000000,
           decimals: 9,
         },
@@ -309,10 +309,10 @@ export async function getWalletTransactions(
   }
 }
 
-export const KIT_TOKEN = {
-  address: KIT_TOKEN_ADDRESS,
-  name: 'Solana Robotics Kit',
-  symbol: 'KIT',
+export const CLAWD_TOKEN = {
+  address: CLAWD_TOKEN_ADDRESS,
+  name: 'CLAWD',
+  symbol: 'CLAWD',
   decimals: 9,
   minRequired: MIN_TOKEN_AMOUNT,
 };

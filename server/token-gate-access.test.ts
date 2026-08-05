@@ -3,7 +3,7 @@ import { verifyTokenHolder, getAssetsByOwner } from "./helius-das";
 
 // Admin wallet from environment
 const ADMIN_WALLET = process.env.ADMIN_WALLET || '9juYSPJ59hP1dFFSMHft7ajmZ9rfVpibHXPR4VFdADMm';
-const KIT_TOKEN_ADDRESS = 'DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS';
+const CLAWD_TOKEN_ADDRESS = '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump';
 
 describe("Token Gate and Admin Access", () => {
   describe("Admin Wallet Configuration", () => {
@@ -20,23 +20,23 @@ describe("Token Gate and Admin Access", () => {
     });
 
     it("should reject non-admin wallet", () => {
-      const testWallet = 'DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS';
+      const testWallet = '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump';
       const isAdmin = testWallet.toLowerCase() === ADMIN_WALLET.toLowerCase();
       expect(isAdmin).toBe(false);
     });
   });
 
-  describe("$KIT Token Configuration", () => {
-    it("should have correct $KIT token address", () => {
-      expect(KIT_TOKEN_ADDRESS).toBe('DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS');
+  describe("$CLAWD Token Configuration", () => {
+    it("should have correct $CLAWD token address", () => {
+      expect(CLAWD_TOKEN_ADDRESS).toBe('8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump');
     });
 
     it("should have valid Solana address format", () => {
       // Solana addresses are base58 encoded and 32-44 characters
-      expect(KIT_TOKEN_ADDRESS.length).toBeGreaterThanOrEqual(32);
-      expect(KIT_TOKEN_ADDRESS.length).toBeLessThanOrEqual(44);
+      expect(CLAWD_TOKEN_ADDRESS.length).toBeGreaterThanOrEqual(32);
+      expect(CLAWD_TOKEN_ADDRESS.length).toBeLessThanOrEqual(44);
       // Should only contain base58 characters
-      expect(/^[1-9A-HJ-NP-Za-km-z]+$/.test(KIT_TOKEN_ADDRESS)).toBe(true);
+      expect(/^[1-9A-HJ-NP-Za-km-z]+$/.test(CLAWD_TOKEN_ADDRESS)).toBe(true);
     });
   });
 
@@ -61,7 +61,7 @@ describe("Token Gate and Admin Access", () => {
     });
 
     it("should check token balance for non-admin wallets", () => {
-      const walletAddress = 'DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS';
+      const walletAddress = '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump';
       const isAdmin = walletAddress.toLowerCase() === ADMIN_WALLET.toLowerCase();
       
       // Non-admin should require token check

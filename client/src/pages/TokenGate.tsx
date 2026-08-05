@@ -23,7 +23,7 @@ import { trpc } from '@/lib/trpc';
 import { useLocation } from 'wouter';
 
 // $CLAWD Token Address
-const KIT_TOKEN_ADDRESS = 'DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS';
+const CLAWD_TOKEN_ADDRESS = '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump';
 
 // Terminal typing animation component
 function TerminalLine({ text, delay = 0, className = '' }: { text: string; delay?: number; className?: string }) {
@@ -126,7 +126,7 @@ export default function TokenGate() {
     addTerminalLine('[INIT] Solana Robotics CLAWD - Token Gate v1.0');
     addTerminalLine(`[CONNECT] Wallet detected: ${shortAddress}`);
     addTerminalLine('[SCAN] Initiating DAS API token scan...');
-    addTerminalLine(`[TARGET] Searching for $CLAWD: ${KIT_TOKEN_ADDRESS.slice(0, 8)}...`);
+    addTerminalLine(`[TARGET] Searching for $CLAWD: ${CLAWD_TOKEN_ADDRESS.slice(0, 8)}...`);
 
     // Small delay for effect
     await new Promise((r) => setTimeout(r, 1000));
@@ -135,7 +135,7 @@ export default function TokenGate() {
   };
 
   const copyAddress = () => {
-    navigator.clipboard.writeText(KIT_TOKEN_ADDRESS);
+    navigator.clipboard.writeText(CLAWD_TOKEN_ADDRESS);
     toast.success('Token address copied!');
   };
 
@@ -240,7 +240,7 @@ export default function TokenGate() {
                     <Copy className="h-4 w-4" />
                   </button>
                   <a
-                    href={`https://solscan.io/token/${KIT_TOKEN_ADDRESS}`}
+                    href={`https://solscan.io/token/${CLAWD_TOKEN_ADDRESS}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-gray-500 hover:text-white transition-colors"
@@ -251,11 +251,11 @@ export default function TokenGate() {
                 </div>
               </div>
               <div className="font-mono text-xs text-gray-400 break-all mb-3">
-                {KIT_TOKEN_ADDRESS}
+                {CLAWD_TOKEN_ADDRESS}
               </div>
               <div className="flex items-center gap-4 text-sm">
                 <a
-                  href={`https://jup.ag/swap/SOL-${KIT_TOKEN_ADDRESS}`}
+                  href={`https://jup.ag/swap/SOL-${CLAWD_TOKEN_ADDRESS}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1"
@@ -263,7 +263,7 @@ export default function TokenGate() {
                   Buy on Jupiter <ExternalLink className="h-3 w-3" />
                 </a>
                 <a
-                  href={`https://raydium.io/swap/?inputCurrency=sol&outputCurrency=${KIT_TOKEN_ADDRESS}`}
+                  href={`https://raydium.io/swap/?inputCurrency=sol&outputCurrency=${CLAWD_TOKEN_ADDRESS}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-purple-400 hover:text-purple-300 flex items-center gap-1"

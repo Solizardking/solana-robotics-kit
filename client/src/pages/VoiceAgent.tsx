@@ -475,7 +475,7 @@ export default function VoiceAgent() {
               Current balance: {tokenBalance.toLocaleString()} $CLAWD
             </p>
             <Button
-              onClick={() => window.open('https://jup.ag/swap/SOL-DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS', '_blank')}
+              onClick={() => window.open('https://jup.ag/swap/SOL-8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump', '_blank')}
               className="bg-gradient-to-r from-cyan-500 to-purple-500"
             >
               Buy $CLAWD on Jupiter

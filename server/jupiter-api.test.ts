@@ -43,12 +43,12 @@ describe("Jupiter API Configuration", () => {
       // Common Solana token addresses
       const SOL_MINT = "So11111111111111111111111111111111111111112";
       const USDC_MINT = "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
-      const KIT_TOKEN = "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS";
+      const CLAWD_TOKEN = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump";
       
       // Validate address lengths (Solana addresses are 32-44 chars base58)
       expect(SOL_MINT.length).toBeGreaterThanOrEqual(32);
       expect(USDC_MINT.length).toBeGreaterThanOrEqual(32);
-      expect(KIT_TOKEN.length).toBeGreaterThanOrEqual(32);
+      expect(CLAWD_TOKEN.length).toBeGreaterThanOrEqual(32);
     });
   });
 });

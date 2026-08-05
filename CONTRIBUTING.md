@@ -3,7 +3,7 @@
 Thank you for your interest in contributing to the Solana Robotics Kit! Together, we're building the future of autonomous robotics on Solana.
 
 **Website**: [solanarobotics.org](https://solanarobotics.org)
-**$KIT Token**: `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS`
+**$KIT Token**: `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`
 
 ---
 

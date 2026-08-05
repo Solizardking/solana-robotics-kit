@@ -10,7 +10,9 @@ const JUPITER_PRICE_API_URL = 'https://api.jup.ag/price/v2';
 export const TOKENS = {
   SOL: 'So11111111111111111111111111111111111111112',
   USDC: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
-  KIT: process.env.TOKEN_ADDRESS || 'DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS',
+  CLAWD: process.env.TOKEN_ADDRESS || process.env.CLAWD_TOKEN_ADDRESS || '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump',
+  /** @deprecated use CLAWD */
+  KIT: process.env.TOKEN_ADDRESS || process.env.CLAWD_TOKEN_ADDRESS || '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump',
 };
 
 export interface QuoteParams {
@@ -193,9 +195,9 @@ export function parseTradeIntent(message: string): TradeIntent | null {
   const lowerMessage = message.toLowerCase();
   
   // Common patterns
-  const buyPattern = /buy\s+(\d+(?:\.\d+)?)\s*(?:sol|usdc)?\s*(?:worth\s+(?:of\s+)?)?(\$?kit|sol|usdc)/i;
-  const sellPattern = /sell\s+(\d+(?:\.\d+)?)\s*(\$?kit|sol|usdc)/i;
-  const swapPattern = /swap\s+(\d+(?:\.\d+)?)\s*(sol|usdc|kit)\s+(?:for|to)\s*(sol|usdc|kit)/i;
+  const buyPattern = /buy\s+(\d+(?:\.\d+)?)\s*(?:sol|usdc)?\s*(?:worth\s+(?:of\s+)?)?(\$?clawd|\$?kit|sol|usdc)/i;
+  const sellPattern = /sell\s+(\d+(?:\.\d+)?)\s*(\$?clawd|\$?kit|sol|usdc)/i;
+  const swapPattern = /swap\s+(\d+(?:\.\d+)?)\s*(sol|usdc|clawd|kit)\s+(?:for|to)\s*(sol|usdc|clawd|kit)/i;
 
   // Try buy pattern
   const buyMatch = message.match(buyPattern);
@@ -206,7 +208,7 @@ export function parseTradeIntent(message: string): TradeIntent | null {
     return {
       action: 'buy',
       inputToken: 'SOL',
-      outputToken: outputToken === 'KIT' ? TOKENS.KIT : TOKENS[outputToken as keyof typeof TOKENS] || outputToken,
+      outputToken: outputToken === 'CLAWD' || outputToken === 'KIT' ? TOKENS.CLAWD : TOKENS[outputToken as keyof typeof TOKENS] || outputToken,
       amount,
       amountType: 'input',
     };
@@ -220,7 +222,7 @@ export function parseTradeIntent(message: string): TradeIntent | null {
     
     return {
       action: 'sell',
-      inputToken: inputToken === 'KIT' ? TOKENS.KIT : TOKENS[inputToken as keyof typeof TOKENS] || inputToken,
+      inputToken: inputToken === 'CLAWD' || inputToken === 'KIT' ? TOKENS.CLAWD : TOKENS[inputToken as keyof typeof TOKENS] || inputToken,
       outputToken: 'SOL',
       amount,
       amountType: 'input',
@@ -234,8 +236,8 @@ export function parseTradeIntent(message: string): TradeIntent | null {
     let inputToken = swapMatch[2].toUpperCase();
     let outputToken = swapMatch[3].toUpperCase();
     
-    inputToken = inputToken === 'KIT' ? TOKENS.KIT : TOKENS[inputToken as keyof typeof TOKENS] || inputToken;
-    outputToken = outputToken === 'KIT' ? TOKENS.KIT : TOKENS[outputToken as keyof typeof TOKENS] || outputToken;
+    inputToken = inputToken === 'CLAWD' || inputToken === 'KIT' ? TOKENS.CLAWD : TOKENS[inputToken as keyof typeof TOKENS] || inputToken;
+    outputToken = outputToken === 'CLAWD' || outputToken === 'KIT' ? TOKENS.CLAWD : TOKENS[outputToken as keyof typeof TOKENS] || outputToken;
     
     return {
       action: 'swap',
@@ -272,10 +274,10 @@ Ready to execute? Reply "confirm" to proceed or "cancel" to abort.
 }
 
 /**
- * Get $KIT token price
+ * Get $CLAWD token price
  */
-export async function getKitPrice(): Promise<{ price: number; priceChange24h?: number } | null> {
-  const price = await getTokenPrice(TOKENS.KIT);
+export async function getClawdPrice(): Promise<{ price: number; priceChange24h?: number } | null> {
+  const price = await getTokenPrice(TOKENS.CLAWD);
   if (!price) return null;
   
   return {

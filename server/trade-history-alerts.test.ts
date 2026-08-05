@@ -156,7 +156,7 @@ describe('Price Alerts System', () => {
     it('should have create procedure', () => {
       const createInput = {
         walletAddress: '9juYSPJ59hP1dFFSMHft7ajmZ9rfVpibHXPR4VFdADMm',
-        tokenMint: 'DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS',
+        tokenMint: '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump',
         alertType: 'price_above',
         targetValue: '0.001',
       };

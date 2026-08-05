@@ -9,11 +9,11 @@ import {
 
 // Test wallet address (known holder or test address)
 const TEST_WALLET = "6qzr1wJhMbPJqfpqZvqYDLjnNkfJuBMbM8JdZbrfUV1";
-const KIT_TOKEN_ADDRESS = "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS";
+const CLAWD_TOKEN_ADDRESS = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump";
 
 describe("Helius DAS Token Verification", () => {
   it("should verify token holder status", async () => {
-    const result = await verifyTokenHolder(TEST_WALLET, KIT_TOKEN_ADDRESS);
+    const result = await verifyTokenHolder(TEST_WALLET, CLAWD_TOKEN_ADDRESS);
     
     expect(result).toBeDefined();
     expect(result).toHaveProperty("isHolder");
@@ -40,7 +40,7 @@ describe("Helius DAS Token Verification", () => {
   }, 30000);
 
   it("should get token metadata", async () => {
-    const result = await getTokenMetadata(KIT_TOKEN_ADDRESS);
+    const result = await getTokenMetadata(CLAWD_TOKEN_ADDRESS);
     
     expect(result).toBeDefined();
     // Result should have token info or be null if API fails
@@ -51,7 +51,7 @@ describe("Helius DAS Token Verification", () => {
   }, 30000);
 
   it("should handle invalid wallet address gracefully", async () => {
-    const result = await verifyTokenHolder("invalid-address", KIT_TOKEN_ADDRESS);
+    const result = await verifyTokenHolder("invalid-address", CLAWD_TOKEN_ADDRESS);
     
     expect(result).toBeDefined();
     expect(result.isHolder).toBe(false);
@@ -116,7 +116,7 @@ describe("Birdeye Wallet Portfolio APIs", () => {
 
 describe("Token Verification Integration", () => {
   it("should return all token holdings with verification", async () => {
-    const result = await verifyTokenHolder(TEST_WALLET, KIT_TOKEN_ADDRESS);
+    const result = await verifyTokenHolder(TEST_WALLET, CLAWD_TOKEN_ADDRESS);
     
     expect(result).toBeDefined();
     expect(result).toHaveProperty("allTokens");
@@ -131,7 +131,7 @@ describe("Token Verification Integration", () => {
   }, 30000);
 
   it("should return native SOL balance", async () => {
-    const result = await verifyTokenHolder(TEST_WALLET, KIT_TOKEN_ADDRESS);
+    const result = await verifyTokenHolder(TEST_WALLET, CLAWD_TOKEN_ADDRESS);
     
     expect(result).toBeDefined();
     expect(result).toHaveProperty("nativeBalance");

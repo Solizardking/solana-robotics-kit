@@ -48,7 +48,7 @@ services:
     restart: unless-stopped
     environment:
       - NEXT_PUBLIC_SOLANA_RPC_URL=${SOLANA_RPC_URL:-https://api.devnet.solana.com}
-      - NEXT_PUBLIC_KIT_TOKEN_ADDRESS=DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+      - NEXT_PUBLIC_KIT_TOKEN_ADDRESS=8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
     ports:
       - "3000:3000"
     depends_on:

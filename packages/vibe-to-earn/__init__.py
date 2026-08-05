@@ -14,8 +14,8 @@ Features:
 - Automated $KIT token rewards
 
 Token Details:
-- $KIT Token: DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
-- Fee Wallet: DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+- $KIT Token: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
+- Fee Wallet: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 """
 
 import asyncio
@@ -37,8 +37,8 @@ logger = logging.getLogger("VibeToEarn")
 # CONSTANTS
 # =============================================================================
 
-KIT_TOKEN_MINT = "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS"
-FEE_WALLET = "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS"
+KIT_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
+FEE_WALLET = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 KIT_TOKEN_DECIMALS = 9
 
 # Reward multipliers (in $KIT tokens)

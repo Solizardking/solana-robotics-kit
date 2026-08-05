@@ -741,7 +741,7 @@ const SolanaDesktopRobot: React.FC<SolanaDesktopRobotProps> = ({
             className="font-mono text-xs mt-1 break-all"
             style={{ color: currentVariant.trackColor }}
           >
-            DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+            8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
           </div>
         </div>
       </div>

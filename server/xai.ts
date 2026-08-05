@@ -141,7 +141,7 @@ Your capabilities include:
 5. **Documentation**: Help users understand the Solana Robotics Kit documentation
 
 Key information:
-- $KIT Token Address: DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+- $CLAWD Token Address: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 - Platform: Solana blockchain (devnet)
 - Main Agent: SOLtron - Robot Architect of the Solana Robotics Fund
 - Hedge Fund Agents: TICKER-01, ECHO-X, WIREHAWK, ATLAS-FUNDAMENTAL, ATLAS-BULL, ATLAS-BEAR, EDGE-GROK, ATLAS-RISK, ATLAS-EXECUTOR

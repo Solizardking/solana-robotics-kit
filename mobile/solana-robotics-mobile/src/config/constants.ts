@@ -35,14 +35,14 @@ export const DEFAULT_NETWORK: NetworkType = 'devnet';
 // =============================================================================
 
 export const KIT_TOKEN = {
-  mint: new PublicKey('DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS'),
+  mint: new PublicKey('8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump'),
   symbol: '$KIT',
   name: 'Solana Robotics Kit Token',
   decimals: 9,
   logoUri: 'https://raw.githubusercontent.com/8bitsats/Solana-Robotics-Kit/main/assets/kit-token.png',
 };
 
-export const FEE_WALLET = new PublicKey('DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS');
+export const FEE_WALLET = new PublicKey('8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump');
 
 // =============================================================================
 // STAKING TIERS

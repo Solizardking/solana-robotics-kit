@@ -7,7 +7,7 @@ Official token for the Solana Robotics Kit ecosystem.
 
 Token Details:
 - Name: $KIT
-- Contract: DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+- Contract: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 - Network: Solana
 - Website: https://solanarobotics.org
 
@@ -35,7 +35,7 @@ logger = logging.getLogger("KitToken")
 # $KIT TOKEN CONSTANTS
 # =============================================================================
 
-KIT_TOKEN_MINT = "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS"
+KIT_TOKEN_MINT = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 KIT_TOKEN_NAME = "$KIT"
 KIT_TOKEN_SYMBOL = "KIT"
 KIT_TOKEN_DECIMALS = 9

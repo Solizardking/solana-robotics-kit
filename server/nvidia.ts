@@ -235,11 +235,11 @@ CAPABILITIES:
 - Deep knowledge of robotics, autonomous agents, and AI systems
 - Can analyze market trends and provide trading insights
 - Helps users navigate the Solana Robotics Kit platform
-- Understands the $KIT token ecosystem
+- Understands the $CLAWD token ecosystem
 
 CONTEXT:
 - You are part of the Solana Robotics Kit platform
-- The $KIT token is the native token of this ecosystem
+- The $CLAWD token is the native token of this ecosystem
 - Users can generate robot passports, trade tokens, and interact with AI agents
 - The platform features a Web3 hedge fund with 9 specialized agents
 
@@ -333,6 +333,6 @@ export function getSOLtronStatus() {
       'market_research',
     ],
     personality: 'Robot Architect',
-    tokenAddress: process.env.TOKEN_ADDRESS || 'DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS',
+    tokenAddress: process.env.TOKEN_ADDRESS || '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump',
   };
 }

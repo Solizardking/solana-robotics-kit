@@ -32,12 +32,12 @@ describe("Token Gate System", () => {
     it("should have TOKEN_ADDRESS configured", () => {
       const config = validateTokenConfig();
       expect(config.valid).toBe(true);
-      expect(config.token).toBe("DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS");
+      expect(config.token).toBe("8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump");
     });
 
     it("should return correct gate token address", () => {
       const tokenAddress = getGateTokenAddress();
-      expect(tokenAddress).toBe("DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS");
+      expect(tokenAddress).toBe("8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump");
     });
   });
 
@@ -56,7 +56,7 @@ describe("Token Gate System", () => {
     });
 
     it("should check token holdings for non-admin wallets", async () => {
-      // Using a random wallet that likely doesn't hold $KIT
+      // Using a random wallet that likely doesn't hold $CLAWD
       const result = await checkTokenGate("11111111111111111111111111111111");
       
       // Should not have admin access

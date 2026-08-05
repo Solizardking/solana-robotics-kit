@@ -116,7 +116,7 @@ describe("Birdeye Real-time Price", () => {
 
       const address = await caller.token.address();
 
-      expect(address).toBe("DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS");
+      expect(address).toBe("8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump");
     });
   });
 });
