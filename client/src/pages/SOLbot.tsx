@@ -189,7 +189,7 @@ Always maintain a friendly, robotic tone with occasional tech jargon.`;
                 </div>
                 <div className="space-y-1">
                    <div className="opacity-40">Contract</div>
-                   <div className="truncate text-green-400">DZbPqt...BAGS</div>
+                   <div className="truncate text-green-400">8cHzQHUS...pump</div>
                 </div>
              </div>
           </div>

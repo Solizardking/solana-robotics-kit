@@ -139,5 +139,10 @@
     "overrides": {
       "tailwindcss>nanoid": "3.3.7"
     }
+  },
+  "description": "Solana Robotics monorepo \u2014 $CLAWD, Eliza robot, Asimov, Brain2Qwerty",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_ORG/solana-robotics.git"
   }
 }
