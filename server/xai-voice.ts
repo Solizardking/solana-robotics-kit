@@ -243,7 +243,7 @@ export const SOLANA_ROBOTICS_TOOLS: FunctionTool[] = [
       properties: {
         token_address: {
           type: 'string',
-          description: 'The Solana token mint address. Use 'CLAWD' for $CLAWD token.',
+          description: "The Solana token mint address. Use 'CLAWD' for \$CLAWD token.",
         },
       },
       required: ['token_address'],
