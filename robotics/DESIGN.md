@@ -107,6 +107,7 @@ Mapping tables for link→subassembly can be added under `sim-model/link_map.jso
 |-------|------|
 | Mechanical / sim | This package |
 | GR00T avatar | `src/solana_gr00t_avatar*.py` |
+| Isaac GR00T VLA | `external/Isaac-GR00T-main/gr00t/` · shim `packages/isaac_gr00t/` |
 | On-chain ID | Robot Passport NFTs + **$CLAWD** staking |
 | Operator UI | `solana-robotics-kit-v0.4/apps/operator_console` |
 | Agent | `eliza/` character `solana-robotics-clawd` |
