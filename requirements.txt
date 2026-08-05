@@ -1,0 +1,92 @@
+# ===================================
+# Solana Robotics Kit - Dependencies
+# ===================================
+
+# Core Framework
+python-dotenv>=1.0.0
+pydantic>=2.0.0
+httpx>=0.25.0
+aiohttp>=3.9.0
+asyncio>=3.4.3
+typing-extensions>=4.8.0
+
+# Solana Blockchain
+solana>=0.30.0
+solders>=0.18.0
+anchorpy>=0.18.0
+base58>=2.1.0
+
+# NVIDIA NIM Integration
+openai>=1.6.0  # For NIM API calls
+nvidia-ml-py3>=7.352.0
+
+# AI & Machine Learning
+numpy>=1.24.0
+pillow>=10.0.0
+opencv-python>=4.8.0
+transformers>=4.35.0
+torch>=2.0.0
+torchaudio>=2.0.0
+torchvision>=0.15.0
+
+# Speech & Audio
+sounddevice>=0.4.6
+soundfile>=0.12.1
+pyaudio>=0.2.14
+webrtcvad>=2.0.10
+
+# LiveKit (Real-time Voice)
+livekit>=0.8.0
+livekit-api>=0.4.0
+
+# Web & API
+fastapi>=0.104.0
+uvicorn>=0.24.0
+websockets>=12.0
+requests>=2.31.0
+
+# Trading & Finance
+ccxt>=4.1.0
+pandas>=2.1.0
+ta>=0.10.2
+
+# Desktop GUI (Optional)
+pywebview>=4.4.0
+
+# Browser Automation (Optional)
+playwright>=1.40.0
+selenium>=4.15.0
+
+# Development & Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+black>=23.11.0
+ruff>=0.1.6
+
+# Robotics (Optional - for Jetson)
+# Uncomment if running on Jetson Orin Nano
+# jetson-inference>=1.0.0
+# jetson-utils>=1.0.0
+
+# ROS 2 Integration (Optional)
+# Install via apt: ros-humble-desktop
+# rclpy>=3.3.0
+
+# ===================================
+# Installation Notes
+# ===================================
+# 
+# Basic Install:
+#   pip install -r requirements.txt
+#
+# GPU Support (CUDA):
+#   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+#
+# Jetson Orin Nano:
+#   Use JetPack SDK containers with pre-built wheels
+#   See: https://github.com/dusty-nv/jetson-containers
+#
+# LiveKit Voice:
+#   pip install livekit livekit-api
+#
+# ===================================

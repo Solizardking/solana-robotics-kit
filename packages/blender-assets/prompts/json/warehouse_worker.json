@@ -1,0 +1,105 @@
+{
+  "name": "Solana Warehouse Worker",
+  "id": "warehouse_worker",
+  "version": "1.0.0",
+  "description": "Heavy-duty warehouse robot with mecanum wheels and 6-DOF manipulator arm",
+  "category": "mobile_manipulator",
+  "dimensions": {
+    "width": 0.50,
+    "height": 0.55,
+    "depth": 0.45,
+    "unit": "meters"
+  },
+  "capabilities": ["navigation", "manipulation", "warehouse", "object_detection", "heavy_lifting"],
+  "workflow": [
+    {
+      "step": 1,
+      "name": "Initialize Scene",
+      "prompt": "Clear and initialize the Blender scene:\n\n1. Delete all default objects\n2. Set units to Metric, scale 1.0\n3. Create collections: 'Robot', 'Arm', 'Environment', 'Lights'\n4. Add ground plane 8m x 8m at Z=0\n5. Set up industrial lighting:\n   - Main area light: 2000W at (3, -3, 4)\n   - Fill light: 800W at (-3, -2, 3)\n   - Rim lights: 2x 400W at (±2, 4, 2)\n6. Camera at (2, -2, 1.2) pointing at (0, 0, 0.3)\n7. Cycles render engine, 1920x1080"
+    },
+    {
+      "step": 2,
+      "name": "Create Main Chassis",
+      "prompt": "Create the reinforced warehouse robot chassis:\n\n1. Main body:\n   - Cube scaled to 0.45m x 0.40m x 0.10m\n   - Position at (0, 0, 0.08)\n   - Heavy-duty industrial design\n\n2. Add structural reinforcement:\n   - Cross-beam pattern on underside\n   - Visible through wheel wells\n\n3. Create wheel mounts at four corners:\n   - Reinforced motor housings\n   - Position at (±0.18, ±0.15, 0.05)\n\n4. Create arm mounting platform:\n   - Raised platform on top: 0.20m x 0.15m x 0.02m\n   - Position at (0, -0.08, 0.11)\n   - Bolt pattern visible\n\n5. Add side panels:\n   - Ventilation grilles on sides\n   - Access panels with hinges\n\n6. Apply material:\n   - 'mat_industrial_gray' - Color RGB(0.25, 0.25, 0.28)\n   - Metallic: 0.7, Roughness: 0.4\n   - Add subtle scratches/wear\n\n7. Name: 'robot_chassis_warehouse'\n8. Add to 'Robot' collection"
+    },
+    {
+      "step": 3,
+      "name": "Create Mecanum Wheels",
+      "prompt": "Create four mecanum wheels for omnidirectional movement:\n\nFor each wheel position (FL, FR, RL, RR at ±0.18m, ±0.15m):\n\n1. Create wheel hub:\n   - Cylinder radius 0.03m, depth 0.05m\n   - Central mounting plate\n\n2. Create outer frame:\n   - Two circular rings (inner and outer)\n   - Connect with 6 spokes\n\n3. Create mecanum rollers (9-12 per wheel):\n   - Small barrel shapes: radius 0.012m, length 0.025m\n   - Angled 45° to wheel axis\n   - IMPORTANT: Front-left and rear-right angle one way\n   - Front-right and rear-left angle opposite\n   - Array around wheel circumference\n\n4. Create motor housing:\n   - Cylindrical housing behind wheel\n   - Visible wiring channel\n\n5. Apply materials:\n   - Hub: 'mat_aluminum_anodized' - Black anodized\n   - Rollers: 'mat_rubber_gray' - Color RGB(0.3, 0.3, 0.3), Roughness 0.7\n   - Frame: 'mat_steel' - Metallic 0.95\n\n6. Name: 'robot_mecanum_FL', 'robot_mecanum_FR', etc.\n7. Parent to chassis"
+    },
+    {
+      "step": 4,
+      "name": "Create Arm Base",
+      "prompt": "Create the robot arm base and first joint:\n\n1. Base motor housing:\n   - Cylinder radius 0.06m, height 0.08m\n   - Position on arm mount platform\n   - Heavy-duty servo appearance\n\n2. Create rotating base plate:\n   - Disc on top of base motor\n   - Radius 0.055m, thickness 0.01m\n   - Visible bearing ring\n\n3. Create first arm segment mount:\n   - Vertical bracket\n   - Connects to shoulder motor\n   - Height 0.05m\n\n4. Add cable routing:\n   - Spiral cable wrap from base\n   - Connector panel on back\n\n5. Add base indicator LEDs:\n   - Ring of small LEDs around base\n   - Show rotation position\n\n6. Apply materials:\n   - Motor housing: 'mat_servo_black' - Color RGB(0.08, 0.08, 0.1)\n   - Base plate: 'mat_aluminum_machined' - Metallic 0.9\n\n7. Name: 'robot_arm_base'\n8. Add to 'Arm' collection"
+    },
+    {
+      "step": 5,
+      "name": "Create Arm Segments",
+      "prompt": "Create the two main arm segments:\n\nShoulder to Elbow Segment:\n1. Main arm body:\n   - Rounded rectangular profile: 0.05m x 0.04m x 0.18m\n   - Tapered design (wider at shoulder)\n   - Internal cable channel\n\n2. Shoulder joint:\n   - Motor housing at top\n   - Pitch rotation axis\n\n3. Elbow joint:\n   - Motor housing at bottom\n   - Connection to forearm\n\nElbow to Wrist Segment:\n1. Forearm body:\n   - Slightly smaller profile: 0.04m x 0.035m x 0.15m\n   - Tapered toward wrist\n\n2. Elbow connection:\n   - Bearing housing\n   - Cable pass-through\n\n3. Wrist mounting:\n   - Compact wrist assembly mount\n\nFor both segments:\n- Add panel lines and details\n- Cable routing clips along length\n- Apply 'mat_arm_white' - Color RGB(0.92, 0.92, 0.95), Metallic 0.3\n- Name: 'robot_arm_upper', 'robot_arm_forearm'\n- Parent segments in chain: base > upper > forearm"
+    },
+    {
+      "step": 6,
+      "name": "Create Wrist Assembly",
+      "prompt": "Create the 2-DOF wrist assembly:\n\n1. Wrist pitch mechanism:\n   - Compact servo housing\n   - Allows up/down rotation\n   - Size: 0.035m x 0.03m x 0.04m\n\n2. Wrist roll mechanism:\n   - Cylindrical housing\n   - Continuous rotation capable\n   - Diameter 0.03m, length 0.04m\n\n3. Tool mounting flange:\n   - Standard robot tool flange\n   - Circular with bolt pattern\n   - Diameter 0.05m\n\n4. Add details:\n   - Position sensors\n   - Cable connector\n   - Tool quick-release mechanism\n\n5. Apply materials:\n   - Match arm segment material\n   - Flange: machined aluminum look\n\n6. Name: 'robot_arm_wrist'\n7. Parent to forearm"
+    },
+    {
+      "step": 7,
+      "name": "Create Parallel Gripper",
+      "prompt": "Create parallel jaw gripper end effector:\n\n1. Gripper body:\n   - Housing: 0.08m x 0.05m x 0.04m\n   - Contains linear actuator\n   - Mounts to wrist flange\n\n2. Create finger rails:\n   - Two parallel rails\n   - Fingers slide on these\n\n3. Create gripper fingers (2x):\n   - L-shaped profile\n   - Base slides on rail\n   - Tip extends down: 0.06m\n   - Rubber pad on gripping surface\n\n4. Create finger tips:\n   - Replaceable rubber pads\n   - Textured gripping surface\n   - Serrated pattern\n\n5. Add sensors:\n   - Force sensor in each finger\n   - Proximity sensor at fingertip\n   - Small camera between fingers\n\n6. Apply materials:\n   - Body: 'mat_gripper_gray' - Color RGB(0.2, 0.2, 0.22)\n   - Fingers: 'mat_aluminum_anodized'\n   - Pads: 'mat_rubber_black'\n\n7. Name: 'robot_gripper'\n8. Parent to wrist"
+    },
+    {
+      "step": 8,
+      "name": "Create 3D LiDAR",
+      "prompt": "Create Velodyne-style 3D LiDAR:\n\n1. Main body:\n   - Cylinder diameter 0.10m, height 0.12m\n   - Position at (0, 0.20, 0.22) on elevated mount\n   - Domed top\n\n2. Create rotating head:\n   - Multi-faceted drum shape\n   - 16 or 32 channel appearance\n   - Visible optical windows\n\n3. Create optical apertures:\n   - Array of small windows around head\n   - Stacked vertically for multi-beam\n\n4. Create base:\n   - Mounting plate with connector panel\n   - Cable exit port\n   - Status LEDs\n\n5. Create elevated mount:\n   - Vertical post from chassis\n   - Vibration dampening base\n   - Height 0.10m\n\n6. Apply materials:\n   - Body: 'mat_lidar_black'\n   - Windows: 'mat_glass_ir' - Slight red tint\n\n7. Name: 'robot_lidar_3d'\n8. Parent to chassis"
+    },
+    {
+      "step": 9,
+      "name": "Create Safety Features",
+      "prompt": "Add industrial safety features:\n\n1. Emergency stop button:\n   - Large red mushroom button\n   - Position on top rear of chassis\n   - Yellow base plate with 'E-STOP' text\n   - Diameter 0.05m\n\n2. Warning stripes:\n   - Yellow and black diagonal stripes\n   - On all edges of chassis\n   - 45° angle, 0.02m stripe width\n\n3. Safety bumper:\n   - Compliant rubber bumper around perimeter\n   - Pressure sensors integrated\n   - Black rubber material\n\n4. Warning lights:\n   - Rotating beacon on rear\n   - Orange/amber color\n   - Emission material when active\n\n5. Safety labels:\n   - 'CAUTION: MOVING PARTS' decals\n   - Pinch point warnings near arm\n   - Maximum load capacity label\n\n6. Proximity sensors:\n   - Additional sensors around chassis\n   - For collision avoidance\n\n7. Apply emissive materials to warning lights\n8. Parent all to chassis"
+    },
+    {
+      "step": 10,
+      "name": "Create Electronics Bay",
+      "prompt": "Create the electronics compartment:\n\n1. Jetson Orin Nano:\n   - Same as delivery bot spec\n   - Position at (0.10, 0, 0.10)\n   - Include heatsink and fan\n\n2. Motor controllers:\n   - 4x motor driver boards\n   - Positioned near each wheel\n   - Heat sinks attached\n\n3. Power distribution:\n   - Main power board\n   - Fuse panel\n   - Position at (-0.10, 0, 0.10)\n\n4. Dual battery packs:\n   - Two large LiPo packs\n   - 6S 10000mAh each\n   - Position at (0, ±0.10, 0.08)\n\n5. Communication module:\n   - WiFi/BT module\n   - 4G/LTE modem option\n   - GPS antenna mount\n\n6. Cable management:\n   - Organized cable harness\n   - Labeled connectors\n   - Strain relief clips\n\n7. Create access panel:\n   - Hinged cover\n   - Ventilation slots\n\n8. Name and parent all components"
+    },
+    {
+      "step": 11,
+      "name": "Create Forklift Tines",
+      "prompt": "Create optional forklift attachment:\n\n1. Tine assembly:\n   - Two parallel tines\n   - Length 0.40m, width 0.05m, thickness 0.02m\n   - Position at front of robot\n   - Slight upward curve at tips\n\n2. Create lift mechanism:\n   - Vertical frame at front\n   - Height 0.30m\n   - Linear actuator for lifting\n\n3. Create carriage:\n   - Horizontal beam connecting tines\n   - Slides on vertical frame\n   - Roller bearings visible\n\n4. Create backrest:\n   - Vertical plate behind tines\n   - Prevents load from sliding back\n   - Height 0.25m\n\n5. Add load sensors:\n   - Strain gauges on tines\n   - Weight display panel\n\n6. Apply materials:\n   - Tines: 'mat_steel_painted' - Color RGB(0.9, 0.6, 0.1) - Orange\n   - Frame: 'mat_steel_black'\n\n7. Name: 'robot_forklift_assembly'\n8. Parent to chassis front"
+    },
+    {
+      "step": 12,
+      "name": "Add Branding and Final Details",
+      "prompt": "Complete the robot with branding and details:\n\n1. Solana branding:\n   - Large Solana logo on sides\n   - 'SOLANA ROBOTICS' text on front\n   - Gradient purple-cyan color scheme\n\n2. Model designation:\n   - 'WW-2000' model number\n   - Serial number plate\n   - QR code for identification\n\n3. Status display:\n   - Small LCD screen on top\n   - Shows battery, mode, task info\n   - Size: 0.08m x 0.05m\n\n4. Load capacity markings:\n   - 'MAX LOAD: 50KG' on arm\n   - 'LIFT CAPACITY: 100KG' on forklift\n\n5. Maintenance access points:\n   - Labeled access panels\n   - Lubrication points marked\n\n6. Final checks:\n   - All objects properly parented\n   - Materials assigned\n   - Origins set correctly\n   - Save as 'solana_warehouse_worker.blend'"
+    }
+  ],
+  "export_settings": {
+    "glb": {
+      "format": "GLB",
+      "export_animations": true,
+      "export_draco_mesh_compression": true
+    }
+  },
+  "materials": {
+    "mat_industrial_gray": {
+      "base_color": [0.25, 0.25, 0.28, 1.0],
+      "metallic": 0.7,
+      "roughness": 0.4
+    },
+    "mat_servo_black": {
+      "base_color": [0.08, 0.08, 0.1, 1.0],
+      "metallic": 0.2,
+      "roughness": 0.4
+    },
+    "mat_arm_white": {
+      "base_color": [0.92, 0.92, 0.95, 1.0],
+      "metallic": 0.3,
+      "roughness": 0.35
+    },
+    "mat_warning_yellow": {
+      "base_color": [1.0, 0.8, 0.0, 1.0],
+      "metallic": 0.0,
+      "roughness": 0.5
+    }
+  }
+}

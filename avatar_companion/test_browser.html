@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Avatar Server Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #0f0; }
+        .test { margin: 10px 0; padding: 10px; background: #2a2a2a; border-radius: 5px; }
+        .success { color: #0f0; }
+        .error { color: #f00; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🤖 Avatar Server Browser Test</h1>
+    
+    <div class="test">
+        <h3>1. Server Health Check</h3>
+        <button onclick="testHealth()">Test /api/health</button>
+        <pre id="health-result">Click button to test...</pre>
+    </div>
+    
+    <div class="test">
+        <h3>2. Microphone Test</h3>
+        <button onclick="testMicrophone()">Test Microphone</button>
+        <pre id="mic-result">Click button to test...</pre>
+    </div>
+    
+    <div class="test">
+        <h3>3. Audio Processing Test</h3>
+        <button onclick="testProcessAudio()">Test /process_audio (Empty)</button>
+        <pre id="audio-result">Click button to test...</pre>
+    </div>
+    
+    <div class="test">
+        <h3>4. Assets Check</h3>
+        <button onclick="testAssets()">Check Assets</button>
+        <pre id="assets-result">Click button to test...</pre>
+    </div>
+    
+    <div class="test">
+        <h3>5. Console Errors</h3>
+        <pre id="console-errors">No errors detected...</pre>
+    </div>
+    
+    <script>
+        // Capture console errors
+        const errors = [];
+        const originalError = console.error;
+        console.error = function(...args) {
+            errors.push(args.join(' '));
+            document.getElementById('console-errors').textContent = errors.join('\n') || 'No errors detected...';
+            originalError.apply(console, args);
+        };
+        
+        async function testHealth() {
+            const result = document.getElementById('health-result');
+            result.textContent = 'Testing...';
+            try {
+                const res = await fetch('/api/health');
+                const data = await res.json();
+                result.textContent = JSON.stringify(data, null, 2);
+                result.className = 'success';
+            } catch (e) {
+                result.textContent = 'Error: ' + e.message;
+                result.className = 'error';
+            }
+        }
+        
+        async function testMicrophone() {
+            const result = document.getElementById('mic-result');
+            result.textContent = 'Requesting microphone access...';
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                result.textContent = '✅ Microphone access granted!\n' + 
+                    'Tracks: ' + stream.getAudioTracks().length + '\n' +
+                    'Track: ' + stream.getAudioTracks()[0].label;
+                result.className = 'success';
+                stream.getTracks().forEach(track => track.stop());
+            } catch (e) {
+                result.textContent = '❌ Error: ' + e.message + '\n' + 
+                    'Name: ' + e.name;
+                result.className = 'error';
+            }
+        }
+        
+        async function testProcessAudio() {
+            const result = document.getElementById('audio-result');
+            result.textContent = 'Sending test request...';
+            try {
+                const formData = new FormData();
+                // Create empty audio blob for testing
+                const emptyBlob = new Blob([], { type: 'audio/webm' });
+                formData.append('audio', emptyBlob, 'test.webm');
+                
+                const res = await fetch('/process_audio', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const data = await res.json();
+                result.textContent = 'Status: ' + res.status + '\n' + 
+                    'Response: ' + JSON.stringify(data, null, 2);
+                result.className = res.ok ? 'success' : 'error';
+            } catch (e) {
+                result.textContent = 'Error: ' + e.message;
+                result.className = 'error';
+            }
+        }
+        
+        async function testAssets() {
+            const result = document.getElementById('assets-result');
+            const assets = [
+                '/assets/waifu.vrm',
+                '/assets/idle.fbx',
+                '/assets/background.hdr',
+                '/assets/cliente_final.html'
+            ];
+            
+            result.textContent = 'Checking assets...\n';
+            let allOk = true;
+            
+            for (const asset of assets) {
+                try {
+                    const res = await fetch(asset, { method: 'HEAD' });
+                    const status = res.ok ? '✅' : '❌';
+                    result.textContent += `${status} ${asset} (${res.status})\n`;
+                    if (!res.ok) allOk = false;
+                } catch (e) {
+                    result.textContent += `❌ ${asset} (Error: ${e.message})\n`;
+                    allOk = false;
+                }
+            }
+            
+            result.className = allOk ? 'success' : 'error';
+        }
+        
+        // Auto-run health check on load
+        window.addEventListener('load', () => {
+            testHealth();
+            testAssets();
+        });
+    </script>
+</body>
+</html>

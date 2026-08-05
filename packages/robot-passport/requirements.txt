@@ -1,0 +1,17 @@
+# Solana Robot Passport Generator Dependencies
+
+# HTTP client for FAL API
+httpx>=0.24.0
+
+# Image processing
+Pillow>=9.0.0
+
+# Solana integration
+solders>=0.18.0
+solana>=0.30.0
+
+# Base58 encoding
+base58>=2.1.0
+
+# Environment variables
+python-dotenv>=1.0.0

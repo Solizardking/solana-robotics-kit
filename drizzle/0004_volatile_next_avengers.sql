@@ -1,0 +1,61 @@
+CREATE TABLE `bonding_curve_snapshots` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`tokenMint` varchar(64) NOT NULL,
+	`tokenSymbol` varchar(32),
+	`bondingCurveAddress` varchar(64) NOT NULL,
+	`virtualTokenReserves` decimal(24,0),
+	`virtualSolReserves` decimal(24,0),
+	`realTokenReserves` decimal(24,0),
+	`realSolReserves` decimal(24,0),
+	`tokenTotalSupply` decimal(24,0),
+	`complete` boolean NOT NULL DEFAULT false,
+	`graduationProgress` decimal(5,2),
+	`marketCap` decimal(18,2),
+	`pricePerToken` decimal(24,18),
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `bonding_curve_snapshots_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `price_alerts` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`userId` int,
+	`walletAddress` varchar(64) NOT NULL,
+	`tokenMint` varchar(64) NOT NULL,
+	`tokenSymbol` varchar(32),
+	`tokenName` varchar(128),
+	`alertType` enum('price_above','price_below','mcap_above','mcap_below','graduation') NOT NULL,
+	`targetValue` decimal(24,9) NOT NULL,
+	`currentValue` decimal(24,9),
+	`isActive` boolean NOT NULL DEFAULT true,
+	`isTriggered` boolean NOT NULL DEFAULT false,
+	`triggeredAt` timestamp,
+	`notificationSent` boolean NOT NULL DEFAULT false,
+	`notificationMethod` enum('in_app','email','push') NOT NULL DEFAULT 'in_app',
+	`notes` text,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `price_alerts_id` PRIMARY KEY(`id`)
+);
+--> statement-breakpoint
+CREATE TABLE `pumpfun_trades` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`userId` int,
+	`walletAddress` varchar(64) NOT NULL,
+	`tradeType` enum('buy','sell','create','create_and_buy') NOT NULL,
+	`tokenMint` varchar(64) NOT NULL,
+	`tokenSymbol` varchar(32),
+	`tokenName` varchar(128),
+	`tokenAmount` decimal(24,9) NOT NULL,
+	`solAmount` decimal(18,9) NOT NULL,
+	`pricePerToken` decimal(24,18),
+	`slippage` decimal(5,2),
+	`txSignature` varchar(128) NOT NULL,
+	`txStatus` enum('pending','confirmed','failed') NOT NULL DEFAULT 'pending',
+	`platform` enum('pump_bonding','pump_swap','bags') NOT NULL DEFAULT 'pump_bonding',
+	`bondingCurveAddress` varchar(64),
+	`poolAddress` varchar(64),
+	`feesPaid` decimal(18,9),
+	`blockTime` timestamp,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	CONSTRAINT `pumpfun_trades_id` PRIMARY KEY(`id`)
+);

@@ -1,0 +1,108 @@
+{
+  "id": "ollama",
+  "name": "Ollama",
+  "description": "Ollama provider for running local LLMs on your own machine.",
+  "npmName": "@elizaos/plugin-ollama",
+  "version": "2.0.0-beta.0",
+  "source": "bundled",
+  "tags": ["ai-provider", "llm", "ollama", "local-models"],
+  "config": {
+    "OLLAMA_API_ENDPOINT": {
+      "type": "url",
+      "required": true,
+      "sensitive": false,
+      "default": "http://localhost:11434/api",
+      "label": "Api Endpoint",
+      "help": "Base URL for the Ollama API (local, Fly private URL, or Ollama Cloud). Normalized to end with /api.",
+      "advanced": false,
+      "autoEnableProvider": true
+    },
+    "OLLAMA_BASE_URL": {
+      "type": "url",
+      "required": false,
+      "sensitive": false,
+      "default": "http://localhost:11434",
+      "label": "Base Url",
+      "help": "Compatibility auto-enable key for a running Ollama server (without /api).",
+      "advanced": false,
+      "autoEnableProvider": true
+    },
+    "OLLAMA_SMALL_MODEL": {
+      "type": "string",
+      "required": false,
+      "sensitive": false,
+      "default": "8bit/solana-clawd-core-ai:latest",
+      "label": "Small Model",
+      "help": "Fast 1.5B Solana/core agent model tag from local ollama list.",
+      "placeholder": "8bit/solana-clawd-core-ai:latest",
+      "advanced": false
+    },
+    "OLLAMA_MEDIUM_MODEL": {
+      "type": "string",
+      "required": false,
+      "sensitive": false,
+      "default": "8bit/solana-trading-factory:8b-lora-20260620",
+      "label": "Medium Model",
+      "help": "8B trading LoRA used for planners and medium text.",
+      "placeholder": "8bit/solana-trading-factory:8b-lora-20260620",
+      "advanced": false
+    },
+    "OLLAMA_LARGE_MODEL": {
+      "type": "string",
+      "required": false,
+      "sensitive": false,
+      "default": "8bit/hauhau-qwen36-onchain:latest",
+      "label": "Large Model",
+      "help": "On-chain specialist ~35B MoE model for heavy reasoning.",
+      "placeholder": "8bit/hauhau-qwen36-onchain:latest",
+      "advanced": false
+    },
+    "OLLAMA_EMBEDDING_MODEL": {
+      "type": "string",
+      "required": false,
+      "sensitive": false,
+      "default": "nomic-embed-text",
+      "label": "Embedding Model",
+      "help": "Ollama embedding model. Pull with: ollama pull nomic-embed-text",
+      "placeholder": "nomic-embed-text",
+      "advanced": false
+    },
+    "SMALL_MODEL": {
+      "type": "string",
+      "required": false,
+      "sensitive": false,
+      "default": "8bit/solana-clawd-core-ai:latest",
+      "label": "Model",
+      "help": "Fallback for small model if OLLAMA_SMALL_MODEL is not set.",
+      "placeholder": "8bit/solana-clawd-core-ai:latest",
+      "advanced": false
+    },
+    "LARGE_MODEL": {
+      "type": "string",
+      "required": false,
+      "sensitive": false,
+      "default": "8bit/hauhau-qwen36-onchain:latest",
+      "label": "Model",
+      "help": "Fallback for large model if OLLAMA_LARGE_MODEL is not set.",
+      "placeholder": "8bit/hauhau-qwen36-onchain:latest",
+      "advanced": false
+    }
+  },
+  "render": {
+    "visible": true,
+    "pinTo": [],
+    "style": "card",
+    "icon": "Bot",
+    "group": "ai-provider",
+    "groupOrder": 0,
+    "actions": ["enable", "configure"]
+  },
+  "resources": {
+    "homepage": "https://github.com/elizaos-plugins/plugin-ollama#readme",
+    "repository": "https://github.com/elizaos-plugins/plugin-ollama",
+    "setupGuideUrl": "https://docs.eliza.ai/plugin-setup-guide#ollama-local-models"
+  },
+  "dependsOn": [],
+  "kind": "plugin",
+  "subtype": "ai-provider"
+}

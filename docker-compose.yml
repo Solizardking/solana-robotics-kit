@@ -1,0 +1,167 @@
+# Solana Robotics Kit - Docker Compose Configuration
+# For local development and testing
+
+version: "3.9"
+
+services:
+  # ============================================
+  # Robot Daemon - Core robot controller
+  # ============================================
+  robot-daemon:
+    build:
+      context: .
+      target: production
+    container_name: solana-robot-daemon
+    restart: unless-stopped
+    environment:
+      - SOLANA_RPC_URL=${SOLANA_RPC_URL:-https://api.devnet.solana.com}
+      - ROBOT_ID=${ROBOT_ID:-ROBOT-001}
+      - PYTHONPATH=/app
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./configs:/app/configs:ro
+      - robot-data:/app/data
+      - ${WALLET_PATH:-~/.config/solana}:/home/robot/.config/solana:ro
+    ports:
+      - "8000:8000"
+    command: >
+      python -m apps.robot_daemon.main
+      --task-runner
+      --capabilities navigation,delivery
+      --poll-s 5
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - solana-robotics
+
+  # ============================================
+  # Operator Console - Web Dashboard
+  # ============================================
+  operator-console:
+    build:
+      context: ./solana-robotics-kit-v0.4/apps/operator_console
+      dockerfile: Dockerfile
+    container_name: solana-operator-console
+    restart: unless-stopped
+    environment:
+      - NEXT_PUBLIC_SOLANA_RPC_URL=${SOLANA_RPC_URL:-https://api.devnet.solana.com}
+      - NEXT_PUBLIC_KIT_TOKEN_ADDRESS=DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+    ports:
+      - "3000:3000"
+    depends_on:
+      - robot-daemon
+    networks:
+      - solana-robotics
+
+  # ============================================
+  # Trading Agent - WebSocket Server
+  # ============================================
+  trading-agent:
+    build:
+      context: .
+      target: production
+    container_name: solana-trading-agent
+    restart: unless-stopped
+    environment:
+      - SOLANA_RPC_URL=${SOLANA_RPC_URL:-https://api.devnet.solana.com}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PYTHONPATH=/app
+    volumes:
+      - ${WALLET_PATH:-~/.config/solana}:/home/robot/.config/solana:ro
+    ports:
+      - "8080:8080"
+    command: python -m apps.trading_agent_server.main
+    networks:
+      - solana-robotics
+
+  # ============================================
+  # Local Solana Validator (Development)
+  # ============================================
+  solana-validator:
+    image: solanalabs/solana:v1.17.0
+    container_name: solana-local-validator
+    profiles:
+      - dev
+    ports:
+      - "8899:8899"
+      - "8900:8900"
+    command: >
+      solana-test-validator
+      --reset
+      --quiet
+    networks:
+      - solana-robotics
+
+  # ============================================
+  # Redis (Caching & Pub/Sub)
+  # ============================================
+  redis:
+    image: redis:7-alpine
+    container_name: solana-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    networks:
+      - solana-robotics
+
+  # ============================================
+  # Prometheus (Metrics)
+  # ============================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: solana-prometheus
+    profiles:
+      - monitoring
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    networks:
+      - solana-robotics
+
+  # ============================================
+  # Grafana (Dashboards)
+  # ============================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: solana-grafana
+    profiles:
+      - monitoring
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - solana-robotics
+
+# ============================================
+# Networks
+# ============================================
+networks:
+  solana-robotics:
+    driver: bridge
+
+# ============================================
+# Volumes
+# ============================================
+volumes:
+  robot-data:
+  redis-data:
+  prometheus-data:
+  grafana-data:

@@ -1,0 +1,96 @@
+{
+  "mcpServers": {
+    "blender": {
+      "command": "uvx",
+      "args": ["blender-mcp"],
+      "description": "Blender MCP server for 3D robotics asset generation",
+      "env": {
+        "BLENDER_HOST": "localhost",
+        "BLENDER_PORT": "9876"
+      }
+    }
+  },
+  "solanaRoboticsAssets": {
+    "description": "Configuration for Solana Robotics Kit 3D asset generation",
+    "defaultOutputPath": "./packages/blender-assets/exports",
+    "defaultFormat": "glb",
+    "renderSettings": {
+      "engine": "CYCLES",
+      "samples": 128,
+      "resolution": [1920, 1080],
+      "denoising": true
+    },
+    "polyHaven": {
+      "enabled": true,
+      "defaultHdri": "studio_small_08",
+      "defaultTexture": "concrete_floor_02"
+    },
+    "robotPresets": {
+      "delivery_bot": {
+        "description": "Autonomous delivery robot for warehouse and last-mile delivery",
+        "components": ["chassis_differential", "wheel_standard", "sensor_camera_depth", "sensor_lidar_2d", "control_jetson_orin"],
+        "scene": "warehouse"
+      },
+      "warehouse_worker": {
+        "description": "Heavy-duty warehouse robot with manipulation capabilities",
+        "components": ["chassis_differential", "wheel_mecanum", "arm_segment", "gripper_parallel", "sensor_lidar_3d"],
+        "scene": "warehouse"
+      },
+      "patrol_bot": {
+        "description": "Rugged tracked robot for outdoor patrol and security",
+        "components": ["chassis_tracked", "sensor_lidar_3d", "sensor_camera_rgb", "sensor_camera_depth"],
+        "scene": "outdoor"
+      },
+      "hexapod": {
+        "description": "Six-legged walking robot for complex terrain",
+        "components": ["chassis_hexapod", "motor_servo", "sensor_camera_rgb", "sensor_imu"],
+        "scene": "laboratory"
+      },
+      "manipulator_arm": {
+        "description": "Industrial 6-DOF robotic arm for manipulation tasks",
+        "components": ["motor_servo", "arm_segment", "gripper_parallel", "sensor_camera_rgb"],
+        "scene": "studio"
+      }
+    },
+    "materialLibrary": {
+      "anodized_aluminum_dark": {
+        "base_color": [0.15, 0.15, 0.18, 1.0],
+        "metallic": 0.8,
+        "roughness": 0.3
+      },
+      "anodized_aluminum_silver": {
+        "base_color": [0.9, 0.9, 0.92, 1.0],
+        "metallic": 0.85,
+        "roughness": 0.25
+      },
+      "rubber_black": {
+        "base_color": [0.02, 0.02, 0.02, 1.0],
+        "metallic": 0.0,
+        "roughness": 0.8
+      },
+      "plastic_abs_black": {
+        "base_color": [0.1, 0.1, 0.12, 1.0],
+        "metallic": 0.1,
+        "roughness": 0.4
+      },
+      "pcb_green": {
+        "base_color": [0.0, 0.4, 0.2, 1.0],
+        "metallic": 0.0,
+        "roughness": 0.5
+      },
+      "led_blue": {
+        "base_color": [0.0, 0.5, 1.0, 1.0],
+        "emission_strength": 5.0
+      },
+      "led_green": {
+        "base_color": [0.0, 1.0, 0.3, 1.0],
+        "emission_strength": 5.0
+      },
+      "carbon_fiber": {
+        "base_color": [0.05, 0.05, 0.08, 1.0],
+        "metallic": 0.3,
+        "roughness": 0.2
+      }
+    }
+  }
+}

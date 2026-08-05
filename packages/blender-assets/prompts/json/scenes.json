@@ -1,0 +1,57 @@
+{
+  "name": "Scene Templates Collection",
+  "version": "1.0.0",
+  "description": "Ready-to-use scene templates for robot visualization",
+  "scenes": {
+    "studio": {
+      "name": "Product Photography Studio",
+      "description": "Clean studio environment for professional robot renders",
+      "prompt": "Set up a professional product photography studio:\n\n1. Environment:\n   - Delete all default objects\n   - Create seamless backdrop (cyclorama):\n     - Large curved plane from floor to wall\n     - Smooth transition, no hard edge\n     - White or light gray color RGB(0.9, 0.9, 0.92)\n\n2. Ground:\n   - Reflective floor option:\n     - Glossy material, roughness 0.1\n     - Subtle reflection of robot\n   - Or matte option:\n     - Roughness 0.8 for soft shadows\n\n3. Lighting Setup:\n   Key Light:\n   - Area light, size 2m x 2m\n   - Position: (3, -2, 4)\n   - Power: 1500W\n   - Soft shadows\n\n   Fill Light:\n   - Area light, size 3m x 3m\n   - Position: (-3, -1, 3)\n   - Power: 600W\n   - Very soft\n\n   Rim/Back Light:\n   - Area light, size 1m x 2m\n   - Position: (0, 4, 3)\n   - Power: 800W\n   - Creates edge definition\n\n   Top Light (optional):\n   - Softbox above robot\n   - For even fill\n\n4. Camera:\n   - Position: (1.5, -1.5, 0.8)\n   - Focal length: 85mm\n   - F-stop: 4.0 for slight DOF\n   - Focus on robot center\n\n5. Render Settings:\n   - Cycles engine\n   - Samples: 256\n   - Denoising enabled\n   - Resolution: 2048x2048 (square)\n   - Transparent background option\n\n6. Color Management:\n   - View: Filmic\n   - Look: Medium Contrast\n   - Exposure: 0"
+    },
+    "warehouse": {
+      "name": "Industrial Warehouse",
+      "description": "Warehouse environment with shelving and industrial lighting",
+      "prompt": "Create an industrial warehouse environment:\n\n1. Structure:\n   - Large open space: 20m x 30m x 8m\n   - Concrete floor with texture\n   - Metal support columns every 5m\n   - Visible ceiling structure (beams/trusses)\n\n2. Floor:\n   - Concrete material with:\n     - Base color: RGB(0.4, 0.4, 0.42)\n     - Roughness: 0.7\n     - Normal map for texture\n   - Painted lane markings:\n     - Yellow safety lines\n     - Blue pedestrian paths\n     - White zone boundaries\n   - Subtle oil stains and wear\n\n3. Shelving/Racking:\n   - Industrial pallet racking:\n     - Orange/blue steel frames\n     - 3 levels high (each 2m)\n     - Spaced 3m apart\n   - Pallets on shelves:\n     - Wooden pallets 1.2m x 1m\n     - Cardboard boxes stacked\n     - Wrapped packages\n\n4. Lighting:\n   - High bay LED lights:\n     - 6500K color temperature\n     - Pendant style fixtures\n     - Array across ceiling\n   - Natural light from:\n     - Skylights (translucent panels)\n     - Loading dock doors (partially open)\n\n5. Props:\n   - Forklift in background\n   - Pallet jack nearby\n   - Safety signs and posters\n   - Fire extinguisher on column\n   - First aid station\n   - Clock on wall\n\n6. Atmosphere:\n   - Slight dust in air (volume scatter)\n   - Light beams from skylights\n\n7. Camera positions:\n   - Wide shot showing context\n   - Robot-eye-level action shot\n   - Overhead path planning view"
+    },
+    "outdoor_urban": {
+      "name": "Urban Outdoor Environment",
+      "description": "City sidewalk/street scene for delivery robots",
+      "prompt": "Create an urban outdoor environment:\n\n1. Ground Surface:\n   - Concrete sidewalk:\n     - Expansion joints every 1.5m\n     - Slight color variation per slab\n     - Weathered texture\n   - Asphalt road section:\n     - Darker material\n     - Road markings\n     - Manhole cover\n\n2. Environment Lighting:\n   - Use HDRI sky:\n     - Search Poly Haven: 'urban_street' or 'city'\n     - Or create procedural sky\n   - Sun position:\n     - Golden hour angle (15-20° above horizon)\n     - Creates long shadows\n   - Ambient: from sky HDRI\n\n3. Urban Props:\n   Street Furniture:\n   - Street lamp post\n   - Bench (wooden slats, metal frame)\n   - Trash bin (city style)\n   - Bike rack\n   - Planter box with small tree\n\n   Infrastructure:\n   - Curb edge\n   - Storm drain\n   - Parking meter\n   - Traffic sign\n\n   Background:\n   - Building facades (simple)\n   - Parked cars (low detail)\n   - Pedestrian silhouettes\n\n4. Details:\n   - Fallen leaves\n   - Gum spots on sidewalk\n   - Cracks and repairs\n   - Puddles (optional)\n\n5. Atmosphere:\n   - Slight haze for depth\n   - Warm golden tones\n\n6. Camera:\n   - Street level perspective\n   - Wide establishing shot\n   - Dynamic action angle"
+    },
+    "laboratory": {
+      "name": "Robotics Research Lab",
+      "description": "Research laboratory with testing equipment",
+      "prompt": "Create a robotics research laboratory:\n\n1. Room Structure:\n   - Size: 8m x 6m x 3m\n   - White walls with minimal texture\n   - Anti-static tile flooring:\n     - Gray tiles 0.6m x 0.6m\n     - Subtle grid pattern\n\n2. Lighting:\n   - Fluorescent panels:\n     - 2x4 recessed fixtures\n     - 6500K daylight color\n     - Even, shadow-free illumination\n   - Task lighting:\n     - Desk lamps at workstations\n     - Adjustable arms\n\n3. Lab Equipment:\n   Workstations:\n   - Lab bench with:\n     - Computer monitors (2-3)\n     - Keyboard and mouse\n     - Oscilloscope\n     - Multimeter\n     - Soldering station\n\n   Testing Area:\n   - Motion capture volume markers\n   - Calibration pattern on wall\n   - Robot testing platform\n   - Safety barriers\n\n   Storage:\n   - Tool wall/pegboard\n   - Parts bins\n   - Component drawers\n\n4. Props:\n   - Whiteboard with diagrams\n   - 3D printer in corner\n   - Spare robot parts on shelf\n   - Safety goggles hanging\n   - Lab coats on hooks\n   - Coffee mug on desk\n\n5. Technical Details:\n   - Cable management trays\n   - Network switches\n   - Power strips\n   - Grounding straps\n\n6. Camera:\n   - Documentary style\n   - Clean technical views\n   - Detail shots possible"
+    },
+    "abstract_tech": {
+      "name": "Abstract Technology Showcase",
+      "description": "Stylized environment for dramatic hero shots",
+      "prompt": "Create an abstract technology showcase:\n\n1. Environment:\n   - Dark void background:\n     - Near black: RGB(0.02, 0.02, 0.03)\n     - Slight blue or purple tint\n   - No visible horizon\n   - Infinite feel\n\n2. Ground Surface:\n   - Reflective dark plane:\n     - Color: RGB(0.05, 0.05, 0.08)\n     - High gloss (roughness 0.05)\n     - Perfect mirror reflection\n   - Or grid pattern:\n     - Glowing lines\n     - Tech aesthetic\n     - Emission material for lines\n\n3. Lighting:\n   - Dramatic rim lighting:\n     - Cyan accent: RGB(0, 0.8, 1.0)\n     - Position behind robot\n     - Creates edge glow\n   - Magenta counter:\n     - RGB(1.0, 0, 0.6)\n     - Opposite side\n     - Subtle fill\n   - Minimal key light:\n     - Just enough to see details\n     - Preserves drama\n\n4. Effects:\n   - Volumetric fog:\n     - Very subtle density\n     - Light beams visible\n   - Bloom/glare:\n     - On bright elements\n     - Compositor effect\n   - Particle systems:\n     - Floating dust motes\n     - Data visualization dots\n\n5. Abstract Elements:\n   - Floating geometric shapes:\n     - Hexagons (Solana reference)\n     - Wire frame objects\n     - Holographic appearance\n   - Tech UI projections:\n     - Floating text/data\n     - Emission planes\n   - Solana logo elements:\n     - Gradient glows\n     - Animated potential\n\n6. Camera:\n   - Low angle hero shot\n   - Shallow depth of field\n   - Orbital motion path\n\n7. Render Settings:\n   - High samples (512+)\n   - Denoising essential\n   - Bloom in compositor\n   - High contrast grade"
+    }
+  },
+  "hdri_suggestions": {
+    "studio": ["studio_small_08", "photo_studio_01"],
+    "warehouse": ["industrial_workshop_foundry", "empty_warehouse_01"],
+    "outdoor": ["urban_street_01", "city_park_parking"],
+    "laboratory": ["interior_atrium", "modern_office"],
+    "abstract": null
+  },
+  "poly_haven_textures": {
+    "concrete_floor": {
+      "name": "concrete_floor_02",
+      "scale": 2.0
+    },
+    "asphalt": {
+      "name": "asphalt_02",
+      "scale": 3.0
+    },
+    "wood_floor": {
+      "name": "wood_floor_deck",
+      "scale": 1.0
+    },
+    "metal_plate": {
+      "name": "metal_plate_02",
+      "scale": 1.5
+    }
+  }
+}

@@ -1,0 +1,138 @@
+services:
+  - type: web
+    runtime: python
+    name: meta-mesh-brain-api
+    plan: free
+    buildCommand: pip install -r requirements-api.txt
+    startCommand: uvicorn solana_robot_harness.api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: META_MESH_API_NAME
+        value: Meta Mesh for the Brain
+      - key: SOLANA_CLUSTER
+        value: mainnet
+      - key: MASSIVE_BASE_URL
+        value: https://api.massive.com
+      - key: DFLOW_PROD_BASE_URL
+        value: https://quote-api.dflow.net
+      - key: DFLOW_DEV_BASE_URL
+        value: https://dev-quote-api.dflow.net
+      - key: DFLOW_BIN
+        value: dflow
+      - key: PHOENIX_API_URL
+        value: https://perp-api.phoenix.trade
+      - key: OPENGATEWAY_BASE_URL
+        value: https://opengateway.gitlawb.com/v1
+      - key: OPENGATEWAY_MODEL
+        value: mimo-v2.5-pro
+      - key: OPENROUTER_BASE_URL
+        value: https://openrouter.ai/api/v1
+      - key: OPENROUTER_MODEL
+        value: poolside/laguna-xs-2.1:free
+      - key: ARWEAVE_GATEWAY_URL
+        value: https://arweave.net
+      - key: ARWEAVE_APP_NAME
+        value: Meta-Mesh-Brain
+      - key: ARWEAVE_PERMAWEB_DEPLOY_BIN
+        value: permaweb-deploy
+      - key: VULCAN_BIN
+        value: vulcan
+      - key: RIG_ONCHAIN_KIT_PATH
+        value: rig-onchain-kit-main
+      - key: SOLANA_KEYCHAIN_PATH
+        value: solana-keychain
+      - key: SOLANA_KEYCHAIN_BRIDGE_PATH
+        value: solana-keychain/typescript/scripts/brain-wallet-bridge.mjs
+      - key: SOLANA_KEYCHAIN_NODE_BIN
+        value: node
+      - key: SOLANA_WALLET_BACKEND
+        value: memory
+      - key: SOLANA_WALLET_KEYPAIR_PATH
+        value: solana-keychain/brain-wallet.json
+      - key: SOLANA_KEYGEN_BIN
+        value: solana-keygen
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"
+      - key: META_MESH_LEDGER_PATH
+        value: runs/meta-mesh-api-ledger.jsonl
+      - key: ROBOTIC_WALLET_JOURNAL_PATH
+        value: runs/robotic-wallet-journal.jsonl
+      - key: GOBOT_REPO_PATH
+        sync: false
+      - key: GOBOT_API_URL
+        sync: false
+      - key: ZK_PRIMITIVES_PATH
+        sync: false
+      - key: RPC_URL
+        sync: false
+      - key: HELIUS_API_KEY
+        sync: false
+      - key: HELIUS_RPC_URL
+        sync: false
+      - key: BIRDEYE_API_KEY
+        sync: false
+      - key: XAI_API_KEY
+        sync: false
+      - key: DFLOW_API_KEY
+        sync: false
+      - key: DFLOW_BASE_URL
+        sync: false
+      - key: OPENGATEWAY_KEY
+        sync: false
+      - key: GITLAWB_OPENGATEWAY_KEY
+        sync: false
+      - key: GITLAWB
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENROUTER_KEY
+        sync: false
+      - key: ARWEAVE_GRAPHQL_URL
+        sync: false
+      - key: ARWEAVE_WALLET_PATH
+        sync: false
+      - key: ARWEAVE_DEPLOY_KEY
+        sync: false
+      - key: ARWEAVE_WALLET_KEY_JSON
+        sync: false
+      - key: HYPERBEAM_URL
+        sync: false
+      - key: SOLANA_KEYCHAIN_CONFIG_JSON
+        sync: false
+      - key: SOLANA_KEYCHAIN_CONFIG_PATH
+        sync: false
+      - key: SOLANA_WALLET_PUBKEY
+        sync: false
+  - type: web
+    runtime: docker
+    name: rig-onchain-kit-api
+    plan: free
+    rootDir: rig-onchain-kit-main
+    dockerfilePath: ./rig-onchain-kit-main/Dockerfile
+    dockerContext: ./rig-onchain-kit-main
+    healthCheckPath: /healthz
+    autoDeployTrigger: commit
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: RUST_LOG
+        value: info,rig_onchain_kit=info
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: PRIVY_APP_ID
+        sync: false
+      - key: PRIVY_APP_SECRET
+        sync: false
+      - key: PRIVY_VERIFICATION_KEY
+        sync: false
+      - key: SOLANA_PRIVATE_KEY
+        sync: false
+      - key: SOLANA_RPC_URL
+        sync: false
+      - key: ETHEREUM_PRIVATE_KEY
+        sync: false
+      - key: ETHEREUM_RPC_URL
+        sync: false

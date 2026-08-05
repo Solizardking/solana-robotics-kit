@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<!--
+Copyright (c) Meta Platforms, Inc. and affiliates.
+All rights reserved.
+
+This source code is licensed under the license found in the
+LICENSE file in the root directory of this source tree.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meta Mesh Brain 3D - a talking neural mesh</title>
+  <meta name="description" content="A React Three Fiber neural brain for Meta Mesh: a live 3D cortical point mesh that chats through OpenRouter on the backend and speaks its answers aloud." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23080b0a'/%3E%3Ccircle cx='16' cy='16' r='10' fill='%2314f195'/%3E%3Cpath d='M8 17h16M16 8v16' stroke='%23080b0a' stroke-width='3'/%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --mesh-green: #14f195;
+      --mesh-purple: #9945ff;
+      --panel-bg: rgba(8, 11, 10, 0.82);
+      --panel-border: rgba(20, 241, 149, 0.25);
+      --text: #e8fff4;
+      --text-dim: #7da895;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      background: radial-gradient(ellipse at 50% 40%, #0c1512 0%, #060908 55%, #030504 100%);
+      color: var(--text);
+      font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+    }
+    #brain-root { position: fixed; inset: 0; }
+    .scene-layer { position: absolute; inset: 0; }
+    .hud { position: absolute; inset: 0; pointer-events: none; display: flex; flex-direction: column; }
+    .hud > * { pointer-events: auto; }
+
+    .hud-top {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; gap: 12px;
+    }
+    .hud-brand { display: flex; flex-direction: column; gap: 2px; }
+    .hud-brand strong { color: var(--mesh-green); letter-spacing: 0.08em; font-size: 14px; text-transform: uppercase; }
+    .hud-brand span { color: var(--text-dim); font-size: 11px; }
+    .hud-links { display: flex; gap: 10px; align-items: center; }
+    .hud-links a {
+      color: var(--text-dim); text-decoration: none; font-size: 12px;
+      border: 1px solid rgba(125, 168, 149, 0.3); border-radius: 999px; padding: 5px 12px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .hud-links a:hover { color: var(--mesh-green); border-color: var(--mesh-green); }
+
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 11px;
+      color: var(--text-dim); border: 1px solid rgba(125, 168, 149, 0.3);
+      border-radius: 999px; padding: 5px 12px; white-space: nowrap;
+    }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #666; }
+    .status-dot.ok { background: var(--mesh-green); box-shadow: 0 0 8px var(--mesh-green); }
+    .status-dot.bad { background: #ff5470; box-shadow: 0 0 8px #ff5470; }
+
+    .chat-dock {
+      margin-top: auto; margin-left: auto;
+      width: min(430px, calc(100vw - 24px));
+      max-height: min(62vh, 560px);
+      display: flex; flex-direction: column;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px 16px 0 0;
+      backdrop-filter: blur(12px);
+      margin-right: 12px;
+      overflow: hidden;
+    }
+    .chat-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; border-bottom: 1px solid rgba(20, 241, 149, 0.12);
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim);
+    }
+    .chat-head-controls { display: flex; gap: 8px; }
+    .chip {
+      font-family: inherit; font-size: 11px; cursor: pointer;
+      color: var(--text-dim); background: transparent;
+      border: 1px solid rgba(125, 168, 149, 0.35); border-radius: 999px; padding: 4px 10px;
+      transition: all 0.2s;
+    }
+    .chip.on { color: #04110a; background: var(--mesh-green); border-color: var(--mesh-green); }
+    .chip:hover:not(.on) { color: var(--mesh-green); border-color: var(--mesh-green); }
+
+    .chat-log {
+      flex: 1; overflow-y: auto; padding: 12px 14px;
+      display: flex; flex-direction: column; gap: 10px; min-height: 120px;
+      scrollbar-width: thin; scrollbar-color: rgba(20,241,149,0.3) transparent;
+    }
+    .msg { max-width: 92%; font-size: 13px; line-height: 1.5; border-radius: 12px; padding: 8px 12px; white-space: pre-wrap; word-break: break-word; }
+    .msg.user { align-self: flex-end; background: rgba(153, 69, 255, 0.16); border: 1px solid rgba(153, 69, 255, 0.4); }
+    .msg.assistant { align-self: flex-start; background: rgba(20, 241, 149, 0.08); border: 1px solid rgba(20, 241, 149, 0.25); }
+    .msg.error { align-self: flex-start; background: rgba(255, 84, 112, 0.1); border: 1px solid rgba(255, 84, 112, 0.4); color: #ffb3c0; }
+    .msg.pending { color: var(--text-dim); font-style: italic; }
+    .msg .who { display: block; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.6; margin-bottom: 3px; }
+
+    .chat-input-row {
+      display: flex; gap: 8px; padding: 10px 12px;
+      border-top: 1px solid rgba(20, 241, 149, 0.12);
+    }
+    .chat-input-row input {
+      flex: 1; font-family: inherit; font-size: 13px; color: var(--text);
+      background: rgba(4, 8, 6, 0.8); border: 1px solid rgba(125, 168, 149, 0.3);
+      border-radius: 10px; padding: 10px 12px; outline: none;
+    }
+    .chat-input-row input:focus { border-color: var(--mesh-green); }
+    .btn {
+      font-family: inherit; font-size: 13px; cursor: pointer;
+      border-radius: 10px; padding: 10px 14px; border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+    .btn-send { background: var(--mesh-green); color: #04110a; font-weight: 700; }
+    .btn-send:disabled { opacity: 0.45; cursor: wait; }
+    .btn-mic { background: transparent; border-color: rgba(153, 69, 255, 0.6); color: #c9a6ff; }
+    .btn-mic.listening { background: var(--mesh-purple); color: #fff; box-shadow: 0 0 16px rgba(153, 69, 255, 0.7); }
+
+    .caption {
+      position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
+      max-width: min(640px, calc(100vw - 480px));
+      text-align: center; font-size: 14px; line-height: 1.5; color: var(--mesh-green);
+      text-shadow: 0 0 18px rgba(20, 241, 149, 0.5);
+      pointer-events: none;
+    }
+    @media (max-width: 860px) {
+      .caption { display: none; }
+      .chat-dock { width: calc(100vw - 16px); margin-right: 8px; max-height: 56vh; }
+    }
+    .boot-note {
+      position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+      color: var(--text-dim); font-size: 13px; letter-spacing: 0.08em;
+    }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "react": "https://esm.sh/react@18.3.1",
+      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+      "react-dom": "https://esm.sh/react-dom@18.3.1",
+      "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+      "three": "https://esm.sh/three@0.160.0",
+      "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.16.8?deps=react@18.3.1,react-dom@18.3.1,three@0.160.0",
+      "htm": "https://esm.sh/htm@3.1.1"
+    }
+  }
+  </script>
+</head>
+<body>
+  <div id="brain-root"><div class="boot-note">Waking the neural mesh...</div></div>
+  <script type="module" src="./src/brain3d.js"></script>
+</body>
+</html>

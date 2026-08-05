@@ -1,0 +1,28 @@
+# Avatar Companion - Core Dependencies
+# Note: faster-whisper and av may fail on Python 3.14 - install separately if needed
+
+# Web Framework
+flask>=2.3.0
+flask-cors>=4.0.0
+waitress>=2.1.0
+
+# Environment
+python-dotenv>=1.0.0
+
+# AI & ML
+google-generativeai>=0.3.0
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Audio Processing (optional - may fail on Python 3.14)
+pydub>=0.25.1
+
+# NLP
+nltk>=3.8.0
+
+# Optional: Speech-to-Text (may fail on Python 3.14)
+# faster-whisper>=1.0.0
+
+# Optional: Audio/Video (may fail on Python 3.14)
+# av>=11.0.0

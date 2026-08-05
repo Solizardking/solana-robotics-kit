@@ -1,0 +1,94 @@
+{
+  "name": "Solana Robotics Kit",
+  "image": "mcr.microsoft.com/devcontainers/python:3.11",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "18"
+    },
+    "ghcr.io/devcontainers/features/rust:1": {
+      "version": "latest"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.black-formatter",
+        "charliermarsh.ruff",
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "mechatroner.rainbow-csv",
+        "redhat.vscode-yaml",
+        "yzhang.markdown-all-in-one",
+        "streetsidesoftware.code-spell-checker",
+        "github.copilot"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.formatting.provider": "none",
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+          }
+        },
+        "python.linting.enabled": true,
+        "editor.formatOnSave": true,
+        "editor.rulers": [100],
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "[typescript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "[json]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "rust-analyzer.check.command": "clippy"
+      }
+    }
+  },
+  "postCreateCommand": "pip install -e '.[dev]' && cd solana-robotics-kit-v0.4/apps/operator_console && npm install",
+  "postStartCommand": "solana config set --url devnet",
+  "forwardPorts": [3000, 8000, 8080, 8899, 8900],
+  "portsAttributes": {
+    "3000": {
+      "label": "Operator Console",
+      "onAutoForward": "openBrowser"
+    },
+    "8000": {
+      "label": "Robot Daemon API"
+    },
+    "8080": {
+      "label": "Trading Agent"
+    },
+    "8899": {
+      "label": "Solana RPC"
+    },
+    "8900": {
+      "label": "Solana Websocket"
+    }
+  },
+  "remoteEnv": {
+    "SOLANA_RPC_URL": "https://api.devnet.solana.com",
+    "PYTHONPATH": "${containerWorkspaceFolder}"
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.config/solana,target=/home/vscode/.config/solana,type=bind,consistency=cached"
+  ],
+  "containerEnv": {
+    "SHELL": "/bin/bash"
+  }
+}

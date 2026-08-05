@@ -1,0 +1,25 @@
+# LiveKit Server Configuration
+port: 7880
+rtc:
+  tcp_port: 7881
+  port_range_start: 50000
+  port_range_end: 60000
+  use_external_ip: false
+  stun_servers:
+    - stun:stun.l.google.com:19302
+  turn_servers:
+    - host: turn.livekit.io
+      port: 3478
+      username: your-username
+      credential: your-credential
+keys:
+  # Generate with: livekit-server generate-keys
+  API_KEY: your-api-key
+  API_SECRET: your-api-secret
+database:
+  redis:
+    address: localhost:6379
+    username: ""
+    password: ""
+log_level: info
+development: true

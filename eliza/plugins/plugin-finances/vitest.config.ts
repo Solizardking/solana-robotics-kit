@@ -1,0 +1,64 @@
+/**
+ * Vitest configuration for finances unit and React view tests with local module
+ * aliases.
+ */
+import { createRequire } from "node:module";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { defineConfig } from "vitest/config";
+import baseConfig from "../../packages/scripts/vitest/default.config";
+
+const require = createRequire(import.meta.url);
+const here = path.dirname(fileURLToPath(import.meta.url));
+const baseAliases = Array.isArray(baseConfig.resolve?.alias)
+  ? baseConfig.resolve.alias
+  : [];
+
+export default defineConfig({
+  ...baseConfig,
+  resolve: {
+    ...baseConfig.resolve,
+    // Pin one React copy so jsdom view tests do not mix workspace and hoisted peers.
+    alias: [
+      {
+        find: /^@elizaos\/plugin-elizacloud\/cloud\/managed-payment-clients$/,
+        replacement: path.join(
+          here,
+          "../plugin-elizacloud/src/cloud/managed-payment-clients.ts",
+        ),
+      },
+      ...baseAliases,
+      {
+        find: /^react$/,
+        replacement: path.dirname(require.resolve("react/package.json")),
+      },
+      {
+        find: /^react\/jsx-runtime$/,
+        replacement: require.resolve("react/jsx-runtime"),
+      },
+      {
+        find: /^react\/jsx-dev-runtime$/,
+        replacement: require.resolve("react/jsx-dev-runtime"),
+      },
+      {
+        find: /^react-dom$/,
+        replacement: path.dirname(require.resolve("react-dom/package.json")),
+      },
+      {
+        find: /^react-dom\/client$/,
+        replacement: require.resolve("react-dom/client"),
+      },
+    ],
+  },
+  test: {
+    ...baseConfig.test,
+    // .test.ts run in the default node environment. View component tests live in
+    // .test.tsx files and opt into jsdom via a `// @vitest-environment jsdom`
+    // docblock at the top of each file.
+    environment: "node",
+    include: [
+      "src/**/*.{test,spec}.{ts,tsx}",
+      "test/**/*.{test,spec}.{ts,tsx}",
+    ],
+  },
+});

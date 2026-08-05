@@ -1,0 +1,36 @@
+# Environments
+.env
+.env.*
+!.env.example
+.venv*/
+venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+
+# Experiment / training outputs
+wandb/
+lightning_logs/
+outputs/
+results/
+*.ckpt
+*.ckpt.tmp
+
+# Local Solana wallet material
+solana-keychain/brain-wallet*.json
+solana-keychain/brain-wallet*.pub
+solana-keychain/*.keypair.json
+
+# OS
+.DS_Store
+core.*
+lightning_logs/

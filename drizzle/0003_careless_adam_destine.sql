@@ -1,0 +1,21 @@
+CREATE TABLE `models_3d` (
+	`id` int AUTO_INCREMENT NOT NULL,
+	`userId` int NOT NULL,
+	`walletAddress` varchar(64),
+	`name` varchar(256) NOT NULL,
+	`description` text,
+	`filename` varchar(256) NOT NULL,
+	`fileType` enum('vrm','glb','gltf','fbx','obj') NOT NULL,
+	`fileSize` int NOT NULL,
+	`storagePath` varchar(512) NOT NULL,
+	`publicUrl` text NOT NULL,
+	`thumbnailUrl` text,
+	`metadata` json,
+	`tags` json,
+	`isPublic` boolean NOT NULL DEFAULT false,
+	`downloads` int NOT NULL DEFAULT 0,
+	`views` int NOT NULL DEFAULT 0,
+	`createdAt` timestamp NOT NULL DEFAULT (now()),
+	`updatedAt` timestamp NOT NULL DEFAULT (now()) ON UPDATE CURRENT_TIMESTAMP,
+	CONSTRAINT `models_3d_id` PRIMARY KEY(`id`)
+);

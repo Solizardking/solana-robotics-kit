@@ -1,0 +1,50 @@
+{
+  "name": "@openclawd/hedge-dna",
+  "version": "1.1.0",
+  "description": "eliZERO-class Clawd hedge spawn: five-claw persona + DNA continuity + $CLAWD Zero power.",
+  "characterSeed": "hedgedna",
+  "characterFile": "character.json",
+  "catalogFile": "manifest.json",
+  "clawdPowerFile": "clawd-power.json",
+  "local_personas": [
+    "hedgedna.json"
+  ],
+  "dna": [
+    "IDENTITY.md",
+    "SOUL.md",
+    "TOOLS.md",
+    "USER.md"
+  ],
+  "eliza": {
+    "character": "character.json",
+    "sibling": "eliZERO",
+    "runtime": "clawdbot-go"
+  },
+  "lineage": {
+    "clawd": [
+      "eliZERO",
+      "clawd-power.json"
+    ],
+    "hedge": [
+      "activistpinch.json",
+      "latticeclaw.json",
+      "moatmaw.json",
+      "soltoshi.json",
+      "valueclaw.json"
+    ],
+    "dna": [
+      "IDENTITY.MD",
+      "SOUL.MD",
+      "TOOLS.MD",
+      "USER.MD",
+      "BOOTSTRAP.MD.COMPLETED"
+    ]
+  },
+  "modes": [
+    "value",
+    "moat",
+    "lattice",
+    "activist",
+    "builder"
+  ]
+}

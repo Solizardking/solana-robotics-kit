@@ -1,0 +1,114 @@
+{
+  "name": "Solana Hexapod Walker",
+  "id": "hexapod",
+  "version": "1.0.0",
+  "description": "Six-legged walking robot for complex terrain navigation and inspection",
+  "category": "mobile_legged",
+  "dimensions": {
+    "width": 0.35,
+    "height": 0.20,
+    "depth": 0.35,
+    "unit": "meters"
+  },
+  "capabilities": ["walking", "climbing", "inspection", "rough_terrain", "stability"],
+  "workflow": [
+    {
+      "step": 1,
+      "name": "Initialize Scene",
+      "prompt": "Set up scene for hexapod robot:\n\n1. Clear all default objects\n2. Set Metric units, scale 1.0\n3. Create collections: 'Body', 'Legs', 'Sensors', 'Environment'\n4. Ground plane 4m x 4m\n5. Add terrain variation:\n   - Subdivide ground\n   - Add slight displacement for uneven surface\n6. Three-point lighting with fill\n7. Camera at (0.8, -0.8, 0.5) looking at origin\n8. Set render to Cycles"
+    },
+    {
+      "step": 2,
+      "name": "Create Hexagonal Body",
+      "prompt": "Create the hexapod main body:\n\n1. Create hexagonal prism:\n   - Use cylinder with 6 vertices\n   - Radius 0.12m, height 0.04m\n   - Position at (0, 0, 0.12)\n\n2. Shape the body:\n   - Flatten top and bottom\n   - Bevel edges for aerodynamic look\n   - Slight dome on top\n\n3. Create leg mounting sockets:\n   - 6 cylindrical recesses at each vertex\n   - Radius 0.015m, depth 0.01m\n   - Angle outward 15° from vertical\n\n4. Create internal structure:\n   - Rib supports visible through vents\n   - Central electronics bay\n\n5. Add ventilation:\n   - Hexagonal pattern vents on top\n   - Side ventilation slots\n\n6. Create sensor dome:\n   - Small dome at body center top\n   - Transparent cover\n   - Houses camera and sensors\n\n7. Apply material:\n   - 'mat_carbon_fiber' - Dark with weave pattern\n   - Color RGB(0.05, 0.05, 0.08)\n\n8. Name: 'hexapod_body'\n9. Add to 'Body' collection"
+    },
+    {
+      "step": 3,
+      "name": "Create Leg Template",
+      "prompt": "Create a template leg with 3-DOF (coxa-femur-tibia):\n\nCoxa Joint (hip rotation):\n1. Servo housing:\n   - Cube 0.025m x 0.02m x 0.018m\n   - Mounts to body socket\n   - Rotates leg forward/backward\n\nFemur Segment (upper leg):\n1. Servo housing for femur joint:\n   - Perpendicular to coxa\n   - Raises/lowers leg\n2. Femur link:\n   - Tapered tube: 0.06m length\n   - Start diameter 0.012m, end 0.008m\n   - Carbon fiber material\n\nTibia Segment (lower leg):\n1. Servo housing for tibia joint:\n   - At end of femur\n   - Extends/retracts lower leg\n2. Tibia link:\n   - Tapered tube: 0.07m length\n   - Curved slightly for ground contact\n   - Pointed tip with rubber pad\n\nFoot:\n1. Rubber foot pad:\n   - Sphere radius 0.008m\n   - High-grip rubber material\n   - Slight compliance\n\nApply materials:\n- Servos: 'mat_servo_black'\n- Links: 'mat_carbon_fiber'\n- Foot: 'mat_rubber_grip' - Color RGB(0.15, 0.15, 0.15)\n\nName: 'hexapod_leg_template'\nSet origins at each joint for animation"
+    },
+    {
+      "step": 4,
+      "name": "Duplicate and Position Legs",
+      "prompt": "Create all six legs from template:\n\nLeg positions (60° apart around hexagon):\n\n1. Front Right (FR) - Position 30°:\n   - Duplicate leg template\n   - Position at body vertex\n   - Rotate coxa 30° from forward\n   - Name: 'hexapod_leg_FR'\n\n2. Front Left (FL) - Position 150°:\n   - Mirror of FR\n   - Name: 'hexapod_leg_FL'\n\n3. Middle Right (MR) - Position -30°:\n   - Perpendicular to body\n   - Name: 'hexapod_leg_MR'\n\n4. Middle Left (ML) - Position -150°:\n   - Mirror of MR\n   - Name: 'hexapod_leg_ML'\n\n5. Rear Right (RR) - Position -90°:\n   - Angled backward\n   - Name: 'hexapod_leg_RR'\n\n6. Rear Left (RL) - Position 90°:\n   - Mirror of RR\n   - Name: 'hexapod_leg_RL'\n\nFor each leg:\n- Parent coxa servo to body\n- Parent femur to coxa\n- Parent tibia to femur\n- Parent foot to tibia\n\nSet neutral standing pose:\n- Femur angled 45° down\n- Tibia angled 90° from femur\n- Feet touching ground"
+    },
+    {
+      "step": 5,
+      "name": "Create Head Sensor Array",
+      "prompt": "Create the front sensor head:\n\n1. Camera turret:\n   - Pan-tilt mechanism\n   - Two servos for 2-DOF\n   - Position at front of body\n\n2. Main camera:\n   - Wide-angle RGB camera\n   - 0.02m x 0.02m housing\n   - Visible lens\n\n3. Depth sensor:\n   - Small stereo camera pair\n   - IR projector between them\n\n4. LED illuminators:\n   - Two small LEDs flanking camera\n   - For low-light operation\n\n5. Create protective cover:\n   - Clear dome over sensors\n   - Scratch-resistant appearance\n\n6. Add antenna:\n   - Small whip antenna\n   - For telemetry\n\n7. Apply materials:\n   - Housing: match body material\n   - Lens: 'mat_glass_dark'\n   - LEDs: 'mat_led_white' with emission\n\n8. Name: 'hexapod_head'\n9. Parent to body with ability to pan/tilt"
+    },
+    {
+      "step": 6,
+      "name": "Create IMU and Internal Sensors",
+      "prompt": "Add internal sensor modules:\n\n1. IMU (Inertial Measurement Unit):\n   - Small PCB at body center\n   - 0.025m x 0.025m x 0.003m\n   - Accelerometer, gyroscope, magnetometer\n\n2. Current sensors:\n   - On each leg servo\n   - Monitor torque/force\n\n3. Joint encoders:\n   - Position feedback on each joint\n   - Small discs on servo output\n\n4. Battery monitor:\n   - Voltage and current sensing\n   - Temperature monitoring\n\n5. Foot pressure sensors:\n   - Force-sensitive resistor in each foot\n   - Ground contact detection\n\n6. Add internal wiring:\n   - Cable harness from body to legs\n   - Spiral wrap for flexibility\n   - Connector at each coxa joint\n\n7. Apply PCB materials to sensor boards\n8. Keep sensors mostly internal/hidden"
+    },
+    {
+      "step": 7,
+      "name": "Create Electronics Stack",
+      "prompt": "Create the main electronics:\n\n1. Raspberry Pi 5:\n   - Central processor\n   - Position in body center\n   - 0.085m x 0.056m\n\n2. Servo controller board:\n   - 18-channel servo controller\n   - Position below Pi\n   - Stacked configuration\n\n3. Power distribution:\n   - Main power board\n   - Voltage regulators\n   - 5V for Pi, 7.4V for servos\n\n4. Battery pack:\n   - 2S or 3S LiPo\n   - Compact form factor\n   - 0.06m x 0.04m x 0.02m\n   - Fits in body cavity\n\n5. WiFi module:\n   - Integrated or USB dongle\n   - Antenna routing\n\n6. Create mounting:\n   - Standoffs and screws\n   - Vibration dampening\n\n7. Add status LEDs:\n   - Power indicator\n   - Activity lights\n   - Error indicator\n\n8. Materials: PCB green, component colors\n9. Parent all to body"
+    },
+    {
+      "step": 8,
+      "name": "Create LED Status Ring",
+      "prompt": "Add status indication LEDs:\n\n1. Body perimeter LEDs:\n   - Ring of 12 RGB LEDs\n   - Around body edge\n   - Individually addressable\n\n2. Create diffuser strip:\n   - Translucent material over LEDs\n   - Smooth light appearance\n\n3. Leg status LEDs:\n   - One LED per leg at coxa\n   - Shows leg state (stance/swing)\n\n4. Head status:\n   - LED ring around camera\n   - Shows attention/direction\n\n5. Create animation-ready setup:\n   - Each LED as separate emission material\n   - Can be animated for patterns\n\n6. Default colors:\n   - Idle: slow cyan breathing\n   - Walking: rotating blue pattern\n   - Error: red flash\n\n7. Apply emission materials:\n   - Strength 3.0 for visibility\n   - Various colors available\n\n8. Name: 'hexapod_led_*' for each"
+    },
+    {
+      "step": 9,
+      "name": "Add Shell Cover",
+      "prompt": "Create optional protective shell:\n\n1. Top shell:\n   - Follows body contour\n   - Slight gap for ventilation\n   - Hexagonal shape matching body\n\n2. Design features:\n   - Aerodynamic curves\n   - Raised center ridge\n   - Cutouts for sensors\n\n3. Add details:\n   - Panel lines\n   - Ventilation slots at rear\n   - Access hatch\n\n4. Create transparent section:\n   - Over sensor dome\n   - Clear polycarbonate look\n\n5. Add grip texture:\n   - For carrying handle area\n   - Rubberized zones\n\n6. Apply materials:\n   - Main shell: 'mat_shell_black' - Matte finish\n   - Accents: 'mat_accent_cyan' - Solana colors\n\n7. Name: 'hexapod_shell'\n8. Parent to body (can be hidden)"
+    },
+    {
+      "step": 10,
+      "name": "Create Walking Pose",
+      "prompt": "Set up a natural walking pose:\n\n1. Tripod gait stance:\n   - Three legs in stance (FR, ML, RR)\n   - Three legs in swing (FL, MR, RL)\n\n2. Stance legs:\n   - Feet firmly on ground\n   - Body supported evenly\n   - Slight bend in all joints\n\n3. Swing legs:\n   - Lifted 0.03m off ground\n   - Mid-swing position\n   - Ready to step forward\n\n4. Body attitude:\n   - Level with ground\n   - Or slight forward tilt for forward motion\n\n5. Head position:\n   - Looking forward\n   - Slightly down for path scanning\n\n6. Save pose:\n   - Create pose library entry\n   - Name: 'walk_tripod_1'\n\n7. Alternative pose:\n   - Swap stance/swing legs\n   - Name: 'walk_tripod_2'\n\n8. Verify ground contact and stability"
+    },
+    {
+      "step": 11,
+      "name": "Add Branding",
+      "prompt": "Apply Solana branding and details:\n\n1. Solana logo:\n   - On top shell/body\n   - Gradient purple-cyan\n   - Size: 0.04m diameter\n\n2. Model designation:\n   - 'HEX-6' on side\n   - Clean sans-serif font\n\n3. Serial/ID plate:\n   - Small metal plate\n   - QR code for identification\n\n4. Warning labels:\n   - 'CAUTION: MOVING PARTS'\n   - Near leg bases\n\n5. Version info:\n   - 'v1.0 SOLANA ROBOTICS'\n   - Small text on bottom\n\n6. Add reflective elements:\n   - Small reflectors on legs\n   - For visibility\n\n7. Final organization:\n   - Group all leg parts\n   - Verify parenting\n   - Check all materials\n\n8. Save as 'solana_hexapod.blend'"
+    }
+  ],
+  "animation_presets": {
+    "idle_breathing": {
+      "description": "Subtle up/down body motion",
+      "frames": 60,
+      "loop": true
+    },
+    "tripod_walk": {
+      "description": "Standard tripod gait walking",
+      "frames": 30,
+      "loop": true
+    },
+    "wave_gait": {
+      "description": "Slower wave gait for rough terrain",
+      "frames": 60,
+      "loop": true
+    },
+    "turn_in_place": {
+      "description": "Rotate body while standing",
+      "frames": 45,
+      "loop": false
+    }
+  },
+  "materials": {
+    "mat_carbon_fiber": {
+      "base_color": [0.05, 0.05, 0.08, 1.0],
+      "metallic": 0.3,
+      "roughness": 0.2
+    },
+    "mat_servo_black": {
+      "base_color": [0.08, 0.08, 0.1, 1.0],
+      "metallic": 0.2,
+      "roughness": 0.4
+    },
+    "mat_rubber_grip": {
+      "base_color": [0.15, 0.15, 0.15, 1.0],
+      "metallic": 0.0,
+      "roughness": 0.8
+    },
+    "mat_led_cyan": {
+      "base_color": [0.0, 0.8, 1.0, 1.0],
+      "emission_strength": 4.0
+    }
+  }
+}

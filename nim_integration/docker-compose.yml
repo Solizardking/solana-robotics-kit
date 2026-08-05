@@ -1,0 +1,220 @@
+version: '3.8'
+
+services:
+  # NVIDIA NIM Analyst Service
+  analyst-nim:
+    image: solana-analyst-nim:latest
+    build:
+      context: ..
+      dockerfile: nim/Dockerfile.analyst-nim
+    container_name: analyst-nim
+    ports:
+      - "8000:8000"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0
+      - MODEL_PATH=/models/gemini-optimized
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
+      - MAX_BATCH_SIZE=32
+      - ENABLE_CACHING=true
+    volumes:
+      - model-cache:/models
+      - ./configs:/app/nim-configs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - solana-nim-network
+    depends_on:
+      - redis
+      - postgres
+
+  # NVIDIA NIM Researcher Service
+  researcher-nim:
+    image: solana-researcher-nim:latest
+    build:
+      context: ..
+      dockerfile: nim/Dockerfile.researcher-nim
+    container_name: researcher-nim
+    ports:
+      - "8001:8001"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=1
+      - MODEL_PATH=/models/gpt4o-optimized
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
+      - MAX_BATCH_SIZE=16
+      - CONTEXT_LENGTH=128000
+    volumes:
+      - model-cache:/models
+      - ./configs:/app/nim-configs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - solana-nim-network
+    depends_on:
+      - redis
+      - postgres
+
+  # NVIDIA NIM Trader Service
+  trader-nim:
+    image: solana-trader-nim:latest
+    build:
+      context: ..
+      dockerfile: nim/Dockerfile.trader-nim
+    container_name: trader-nim
+    ports:
+      - "8002:8002"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=2
+      - MODEL_PATH=/models/grok3-optimized
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
+      - MAX_BATCH_SIZE=8
+      - KELLY_FRACTION=0.25
+    volumes:
+      - model-cache:/models
+      - ./configs:/app/nim-configs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - solana-nim-network
+    depends_on:
+      - redis
+      - postgres
+
+  # NVIDIA NIM Risk & Executor Service
+  risk-executor-nim:
+    image: solana-risk-executor-nim:latest
+    build:
+      context: ..
+      dockerfile: nim/Dockerfile.risk-executor-nim
+    container_name: risk-executor-nim
+    ports:
+      - "8003:8003"
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=3
+      - MODEL_PATH=/models/claude-optimized
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
+      - MAX_BATCH_SIZE=16
+      - VETO_AUTHORITY=true
+    volumes:
+      - model-cache:/models
+      - ./configs:/app/nim-configs
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    networks:
+      - solana-nim-network
+    depends_on:
+      - redis
+      - postgres
+
+  # Redis for caching
+  redis:
+    image: redis:7-alpine
+    container_name: nim-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - solana-nim-network
+    command: redis-server --appendonly yes
+
+  # PostgreSQL for audit trails
+  postgres:
+    image: postgres:16-alpine
+    container_name: nim-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=solana_automation
+      - POSTGRES_USER=solana
+      - POSTGRES_PASSWORD=solana_secure_password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - solana-nim-network
+
+  # Prometheus for monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: nim-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - solana-nim-network
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+
+  # Grafana for visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: nim-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./configs/grafana-dashboards:/etc/grafana/provisioning/dashboards
+    networks:
+      - solana-nim-network
+    depends_on:
+      - prometheus
+
+  # NVIDIA DCGM Exporter for GPU metrics
+  dcgm-exporter:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:latest
+    container_name: dcgm-exporter
+    ports:
+      - "9400:9400"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    networks:
+      - solana-nim-network
+
+networks:
+  solana-nim-network:
+    driver: bridge
+
+volumes:
+  model-cache:
+    driver: local
+  redis-data:
+    driver: local
+  postgres-data:
+    driver: local
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local

@@ -1,0 +1,165 @@
+/**
+ * Data + state wrapper around `Launcher`: merges loaded views with the
+ * installable app catalog, curates them into the ordered page
+ * (`curateLauncherPages`), and wires tile taps to either first-install launch or
+ * view navigation. `Launcher` itself is pure presentation — one flat grid, no
+ * favorites, recents, or section zones.
+ */
+import { logger } from "@elizaos/logger";
+import * as React from "react";
+import { dispatchChatOpen } from "../../events";
+import { useViewCatalog } from "../../hooks/useViewCatalog";
+import type { ViewEntry } from "../../hooks/view-catalog";
+import { cn } from "../../lib/utils";
+import { isAospShellEnabled } from "../../navigation";
+import { useAppSelectorShallow } from "../../state/app-store";
+import { useEnabledViewKinds } from "../../state/useViewKinds";
+import { shellHistory } from "../../surface-realm-channel";
+import { openExternalUrl } from "../../utils/openExternalUrl";
+import { getAppSlug } from "../apps/helpers";
+import { Launcher } from "./Launcher";
+import { curateLauncherPages } from "./launcher-curation";
+
+export interface LauncherSurfaceProps {
+  /** Full-screen route or natural-height content inside Home's app scroller. */
+  layout?: "page" | "embedded";
+}
+
+export const LauncherSurface = React.memo(function LauncherSurface({
+  layout = "page",
+}: LauncherSurfaceProps): React.JSX.Element {
+  const { entries, get, loading } = useViewCatalog();
+  const enabledKinds = useEnabledViewKinds();
+  const { appRuns, elizaCloudConnected, setActionNotice, setState, setTab, t } =
+    useAppSelectorShallow((state) => ({
+      appRuns: state.appRuns,
+      elizaCloudConnected: state.elizaCloudConnected,
+      setActionNotice: state.setActionNotice,
+      setState: state.setState,
+      setTab: state.setTab,
+      t: state.t,
+    }));
+  const isAosp = React.useMemo(() => isAospShellEnabled(), []);
+
+  const page = React.useMemo<ViewEntry[]>(
+    () =>
+      curateLauncherPages(entries, {
+        isAosp,
+        enabledKinds,
+        cloudActive: elizaCloudConnected,
+      }),
+    [entries, isAosp, enabledKinds, elizaCloudConnected],
+  );
+
+  const handleLaunch = React.useCallback(
+    async (entry: ViewEntry) => {
+      // Catalog entries have no route until their package is installed and
+      // loaded. Use the launch response itself to open a viewer on this first
+      // click; the app manager intentionally resolves registry metadata before
+      // installation, so no manifest rehydration/restart is required.
+      if (entry.kind === "app" && entry.appName && !entry.path) {
+        try {
+          const result = await get(entry);
+          if (!result) return;
+          const run = result.run;
+          if (run?.viewer?.url) {
+            setState("appRuns", [
+              ...appRuns.filter((candidate) => candidate.runId !== run.runId),
+              run,
+            ]);
+            setState("activeGameRunId", run.runId);
+            setState("appsSubTab", "games");
+            const path = `/apps/${getAppSlug(run.appName)}`;
+            if (window.location.protocol === "file:") {
+              window.location.hash = path;
+            } else {
+              shellHistory.pushState(null, "", path);
+              window.dispatchEvent(new PopStateEvent("popstate"));
+            }
+            return;
+          }
+          const targetUrl = result.launchUrl ?? entry.launchUrl;
+          if (targetUrl) {
+            await openExternalUrl(targetUrl);
+            setActionNotice(
+              t("appsview.OpenedInNewTab", { name: entry.label }),
+              "success",
+              2600,
+            );
+            return;
+          }
+          if (run) {
+            setState("appRuns", [
+              ...appRuns.filter((candidate) => candidate.runId !== run.runId),
+              run,
+            ]);
+            setTab("apps");
+            setState("appsSubTab", "running");
+            return;
+          }
+          setActionNotice(
+            t("appsview.LaunchedNoViewer", { name: entry.label }),
+            "error",
+            4000,
+          );
+        } catch (err) {
+          // error-policy:J4 a failed catalog install/launch remains visible on
+          // the tile and in the shell notice instead of navigating to an empty
+          // app surface.
+          setActionNotice(
+            t("appsview.LaunchFailed", {
+              name: entry.label,
+              message: err instanceof Error ? err.message : t("common.error"),
+            }),
+            "error",
+            4000,
+          );
+        }
+        return;
+      }
+
+      const path = entry.path ?? `/apps/${entry.id}`;
+      try {
+        if (typeof window === "undefined") return;
+        if (window.location.protocol === "file:") {
+          window.location.hash = path;
+        } else {
+          shellHistory.pushState(null, "", path);
+          window.dispatchEvent(new PopStateEvent("popstate"));
+        }
+        if (entry.id === "chat") {
+          // The Messages tile lands on `/chat` (the ambient home). Open the chat
+          // so the user arrives in a conversation, not on a collapsed pill.
+          dispatchChatOpen();
+        }
+      } catch (err) {
+        // error-policy:J4 sandboxed webviews (embeds) can reject history
+        // navigation with a SecurityError; the tile tap degrades to a no-op
+        // there. Logged so a launcher that silently stops navigating is
+        // diagnosable.
+        logger.warn({ err, path }, "[LauncherSurface] tile navigation failed");
+      }
+    },
+    [appRuns, get, setActionNotice, setState, setTab, t],
+  );
+
+  return (
+    <div
+      data-testid="launcher-surface"
+      data-layout={layout}
+      className={cn(
+        "flex flex-col px-0",
+        layout === "page"
+          ? "absolute inset-0 min-h-0"
+          : "relative w-full flex-none",
+      )}
+    >
+      <Launcher
+        entries={page}
+        loading={loading}
+        onLaunch={handleLaunch}
+        embedded={layout === "embedded"}
+      />
+    </div>
+  );
+});

@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenVoice Multi-Voice TTS</title>
+    <style>
+        :root {
+            --bg-primary: #0f0f1a;
+            --bg-secondary: #1a1a2e;
+            --bg-tertiary: #252542;
+            --accent: #7c3aed;
+            --accent-hover: #8b5cf6;
+            --accent-light: rgba(124, 58, 237, 0.2);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --error: #ef4444;
+            --border: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #7c3aed, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-header h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .card-header .icon {
+            font-size: 1.5rem;
+        }
+
+        /* Voice Management */
+        .voice-list {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .voice-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .voice-item:hover {
+            border-color: var(--accent);
+        }
+
+        .voice-item.active {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .voice-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .voice-info {
+            flex: 1;
+        }
+
+        .voice-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .voice-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .voice-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: none;
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-icon:hover {
+            background: var(--error);
+            color: white;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state .icon {
+            font-size: 3rem;
+            margin-bottom: 16px;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 10px;
+            border: 2px solid var(--border);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 14px 28px;
+            border-radius: 10px;
+            border: none;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), #8b5cf6);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            border-color: var(--accent);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* File Upload */
+        .file-upload {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            background: var(--bg-tertiary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .file-upload:hover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .file-upload.dragover {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+
+        .file-upload input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-upload .icon {
+            font-size: 2.5rem;
+            margin-bottom: 12px;
+            color: var(--accent);
+        }
+
+        .file-upload .text {
+            font-weight: 500;
+        }
+
+        .file-upload .hint {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        /* Audio Player */
+        .audio-container {
+            background: var(--bg-tertiary);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        .audio-container audio {
+            width: 100%;
+        }
+
+        /* Recording Button */
+        .record-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, var(--error), #dc2626);
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .record-btn:hover:not(:disabled) {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.5);
+        }
+
+        .record-btn.recording {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            50% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+        }
+
+        /* Status Indicator */
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            font-size: 0.95rem;
+        }
+
+        .status.info {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+        }
+
+        .status.success {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--success);
+        }
+
+        .status.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: var(--error);
+        }
+
+        .status.warning {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--warning);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Range Slider */
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--bg-tertiary);
+            appearance: none;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+        }
+
+        .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 20px;
+            background: var(--bg-tertiary);
+            padding: 4px;
+            border-radius: 12px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--bg-tertiary);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 15, 26, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .loading-overlay .spinner {
+            width: 48px;
+            height: 48px;
+            border-width: 4px;
+        }
+
+        .loading-overlay p {
+            margin-top: 20px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>OpenVoice Studio</h1>
+            <p class="subtitle">Multi-Voice Text-to-Speech with AI</p>
+        </header>
+
+        <!-- Status Indicator -->
+        <div id="status" class="status info hidden">
+            <span class="status-icon"></span>
+            <span class="status-text"></span>
+        </div>
+
+        <!-- Voice Management Card -->
+        <div class="card">
+            <div class="card-header">
+                <span class="icon"></span>
+                <h2>Voice Profiles</h2>
+            </div>
+
+            <div id="voiceList" class="voice-list">
+                <div class="empty-state">
+                    <div class="icon"></div>
+                    <p>No voice profiles yet</p>
+                    <p style="margin-top: 8px; font-size: 0.9rem;">Add a reference audio to create your first voice</p>
+                </div>
+            </div>
+
+            <!-- Add Voice Form -->
+            <div id="addVoiceForm" class="hidden">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="voiceName">Voice Name</label>
+                        <input type="text" id="voiceName" placeholder="e.g., Sarah, Professional, Friendly">
+                    </div>
+                    <div class="form-group">
+                        <label for="voiceLanguage">Language</label>
+                        <select id="voiceLanguage">
+                            <option value="EN">English</option>
+                            <option value="ES">Spanish</option>
+                            <option value="FR">French</option>
+                            <option value="ZH">Chinese</option>
+                            <option value="JP">Japanese</option>
+                            <option value="KR">Korean</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Reference Audio</label>
+                    <div class="file-upload" id="audioDropzone">
+                        <input type="file" id="audioFile" accept="audio/*">
+                        <div class="icon"></div>
+                        <div class="text">Drop audio file or click to browse</div>
+                        <div class="hint">MP3, WAV, M4A (5-30 seconds recommended)</div>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" id="saveVoiceBtn" disabled>
+                        Save Voice Profile
+                    </button>
+                    <button class="btn btn-secondary" id="cancelVoiceBtn">Cancel</button>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary" id="addVoiceBtn">
+                 Add New Voice
+            </button>
+        </div>
+
+        <!-- Text-to-Speech Card -->
+        <div class="card">
+            <div class="card-header">
+                <span class="icon"></span>
+                <h2>Text-to-Speech</h2>
+            </div>
+
+            <div class="tabs">
+                <button class="tab active" data-tab="text">Text Input</button>
+                <button class="tab" data-tab="voice">Voice Input</button>
+            </div>
+
+            <!-- Text Input Tab -->
+            <div id="textTab" class="tab-content active">
+                <div class="form-group">
+                    <label for="textInput">Enter text to synthesize</label>
+                    <textarea id="textInput" placeholder="Type or paste your text here..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ttsLanguage">Language</label>
+                        <select id="ttsLanguage">
+                            <option value="EN">English</option>
+                            <option value="ES">Spanish</option>
+                            <option value="FR">French</option>
+                            <option value="ZH">Chinese</option>
+                            <option value="JP">Japanese</option>
+                            <option value="KR">Korean</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="speedSlider">Speed: <span id="speedValue">1.0x</span></label>
+                        <input type="range" id="speedSlider" min="0.5" max="2.0" step="0.1" value="1.0">
+                        <div class="range-labels">
+                            <span>Slow</span>
+                            <span>Fast</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" id="synthesizeBtn" style="width: 100%;">
+                     Generate Speech
+                </button>
+            </div>
+
+            <!-- Voice Input Tab -->
+            <div id="voiceTab" class="tab-content">
+                <p style="text-align: center; color: var(--text-secondary); margin-bottom: 20px;">
+                    Press and hold to record your voice. The AI will respond with the selected voice.
+                </p>
+
+                <button class="record-btn" id="recordBtn">
+
+                </button>
+
+                <p id="recordingStatus" style="text-align: center; color: var(--text-secondary);">
+                    Tap to start recording
+                </p>
+            </div>
+
+            <!-- Audio Output -->
+            <div id="audioOutput" class="audio-container hidden">
+                <audio id="audioPlayer" controls></audio>
+            </div>
+        </div>
+
+        <!-- API Information -->
+        <div class="card" style="background: var(--bg-tertiary);">
+            <div class="card-header">
+                <span class="icon"></span>
+                <h2>API Endpoints</h2>
+            </div>
+            <div style="font-family: monospace; font-size: 0.9rem; color: var(--text-secondary);">
+                <p><strong>GET</strong> /api/voices - List all voice profiles</p>
+                <p><strong>POST</strong> /api/voices - Add new voice (multipart: audio, name, language)</p>
+                <p><strong>POST</strong> /api/synthesize - Generate speech (JSON: text, voice, language, speed)</p>
+                <p><strong>POST</strong> /api/process_audio - Full pipeline with AI response</p>
+                <p><strong>GET</strong> /health - Server health check</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p id="loadingText">Processing...</p>
+    </div>
+
+    <script>
+        // =====================================================================
+        // State Management
+        // =====================================================================
+        const state = {
+            voices: [],
+            activeVoice: null,
+            isRecording: false,
+            mediaRecorder: null,
+            audioChunks: []
+        };
+
+        // DOM Elements
+        const elements = {
+            status: document.getElementById('status'),
+            voiceList: document.getElementById('voiceList'),
+            addVoiceForm: document.getElementById('addVoiceForm'),
+            addVoiceBtn: document.getElementById('addVoiceBtn'),
+            cancelVoiceBtn: document.getElementById('cancelVoiceBtn'),
+            saveVoiceBtn: document.getElementById('saveVoiceBtn'),
+            voiceName: document.getElementById('voiceName'),
+            voiceLanguage: document.getElementById('voiceLanguage'),
+            audioFile: document.getElementById('audioFile'),
+            audioDropzone: document.getElementById('audioDropzone'),
+            textInput: document.getElementById('textInput'),
+            ttsLanguage: document.getElementById('ttsLanguage'),
+            speedSlider: document.getElementById('speedSlider'),
+            speedValue: document.getElementById('speedValue'),
+            synthesizeBtn: document.getElementById('synthesizeBtn'),
+            recordBtn: document.getElementById('recordBtn'),
+            recordingStatus: document.getElementById('recordingStatus'),
+            audioOutput: document.getElementById('audioOutput'),
+            audioPlayer: document.getElementById('audioPlayer'),
+            loadingOverlay: document.getElementById('loadingOverlay'),
+            loadingText: document.getElementById('loadingText')
+        };
+
+        // =====================================================================
+        // Utility Functions
+        // =====================================================================
+        function showStatus(message, type = 'info') {
+            elements.status.className = `status ${type}`;
+            elements.status.querySelector('.status-text').textContent = message;
+            elements.status.classList.remove('hidden');
+
+            if (type === 'success' || type === 'error') {
+                setTimeout(() => elements.status.classList.add('hidden'), 5000);
+            }
+        }
+
+        function hideStatus() {
+            elements.status.classList.add('hidden');
+        }
+
+        function showLoading(text = 'Processing...') {
+            elements.loadingText.textContent = text;
+            elements.loadingOverlay.classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            elements.loadingOverlay.classList.add('hidden');
+        }
+
+        // =====================================================================
+        // Voice Management
+        // =====================================================================
+        async function loadVoices() {
+            try {
+                const response = await fetch('/api/voices');
+                const data = await response.json();
+
+                if (data.success) {
+                    state.voices = data.voices;
+                    state.activeVoice = data.voices.find(v => v.active)?.name;
+                    renderVoiceList();
+                }
+            } catch (error) {
+                console.error('Failed to load voices:', error);
+            }
+        }
+
+        function renderVoiceList() {
+            if (state.voices.length === 0) {
+                elements.voiceList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon"></div>
+                        <p>No voice profiles yet</p>
+                        <p style="margin-top: 8px; font-size: 0.9rem;">Add a reference audio to create your first voice</p>
+                    </div>
+                `;
+                return;
+            }
+
+            elements.voiceList.innerHTML = state.voices.map(voice => `
+                <div class="voice-item ${voice.active ? 'active' : ''}" data-name="${voice.name}">
+                    <div class="voice-avatar">${voice.name.charAt(0).toUpperCase()}</div>
+                    <div class="voice-info">
+                        <div class="voice-name">${voice.name}</div>
+                        <div class="voice-meta">${voice.language} • ${voice.description || 'No description'}</div>
+                    </div>
+                    <div class="voice-actions">
+                        <button class="btn-icon delete-voice" data-name="${voice.name}" title="Delete">
+
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Add click handlers
+            document.querySelectorAll('.voice-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    if (!e.target.closest('.delete-voice')) {
+                        activateVoice(item.dataset.name);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.delete-voice').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    deleteVoice(btn.dataset.name);
+                });
+            });
+        }
+
+        async function activateVoice(name) {
+            try {
+                const response = await fetch(`/api/voices/${name}/activate`, { method: 'POST' });
+                const data = await response.json();
+
+                if (data.success) {
+                    state.activeVoice = name;
+                    state.voices = state.voices.map(v => ({ ...v, active: v.name === name }));
+                    renderVoiceList();
+                    showStatus(`Voice "${name}" activated`, 'success');
+                }
+            } catch (error) {
+                showStatus('Failed to activate voice', 'error');
+            }
+        }
+
+        async function deleteVoice(name) {
+            if (!confirm(`Delete voice "${name}"?`)) return;
+
+            try {
+                const response = await fetch(`/api/voices/${name}`, { method: 'DELETE' });
+                const data = await response.json();
+
+                if (data.success) {
+                    showStatus(`Voice "${name}" deleted`, 'success');
+                    loadVoices();
+                }
+            } catch (error) {
+                showStatus('Failed to delete voice', 'error');
+            }
+        }
+
+        async function saveVoice() {
+            const name = elements.voiceName.value.trim();
+            const language = elements.voiceLanguage.value;
+            const file = elements.audioFile.files[0];
+
+            if (!name || !file) {
+                showStatus('Please provide a name and audio file', 'warning');
+                return;
+            }
+
+            showLoading('Extracting voice characteristics...');
+
+            const formData = new FormData();
+            formData.append('audio', file);
+            formData.append('name', name);
+            formData.append('language', language);
+
+            try {
+                const response = await fetch('/api/voices', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showStatus(`Voice "${name}" created!`, 'success');
+                    elements.addVoiceForm.classList.add('hidden');
+                    elements.addVoiceBtn.classList.remove('hidden');
+                    elements.voiceName.value = '';
+                    elements.audioFile.value = '';
+                    loadVoices();
+                } else {
+                    showStatus(data.error || 'Failed to create voice', 'error');
+                }
+            } catch (error) {
+                showStatus('Error creating voice', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // =====================================================================
+        // Text-to-Speech
+        // =====================================================================
+        async function synthesize() {
+            const text = elements.textInput.value.trim();
+            if (!text) {
+                showStatus('Please enter some text', 'warning');
+                return;
+            }
+
+            if (!state.activeVoice) {
+                showStatus('Please select a voice profile first', 'warning');
+                return;
+            }
+
+            showLoading('Generating speech...');
+
+            try {
+                const response = await fetch('/api/synthesize', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: text,
+                        voice: state.activeVoice,
+                        language: elements.ttsLanguage.value,
+                        speed: parseFloat(elements.speedSlider.value)
+                    })
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = URL.createObjectURL(blob);
+                    elements.audioPlayer.src = url;
+                    elements.audioOutput.classList.remove('hidden');
+                    elements.audioPlayer.play();
+                    showStatus('Speech generated!', 'success');
+                } else {
+                    const data = await response.json();
+                    showStatus(data.error || 'Synthesis failed', 'error');
+                }
+            } catch (error) {
+                showStatus('Error generating speech', 'error');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // =====================================================================
+        // Voice Recording
+        // =====================================================================
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                state.mediaRecorder = new MediaRecorder(stream);
+                state.audioChunks = [];
+
+                state.mediaRecorder.ondataavailable = (e) => state.audioChunks.push(e.data);
+                state.mediaRecorder.onstop = processRecording;
+
+                state.mediaRecorder.start();
+                state.isRecording = true;
+                elements.recordBtn.classList.add('recording');
+                elements.recordBtn.innerHTML = '';
+                elements.recordingStatus.textContent = 'Recording... Tap to stop';
+            } catch (error) {
+                showStatus('Could not access microphone', 'error');
+            }
+        }
+
+        function stopRecording() {
+            if (state.mediaRecorder && state.isRecording) {
+                state.mediaRecorder.stop();
+                state.isRecording = false;
+                elements.recordBtn.classList.remove('recording');
+                elements.recordBtn.innerHTML = '';
+                elements.recordingStatus.textContent = 'Processing...';
+            }
+        }
+
+        async function processRecording() {
+            showLoading('Processing your voice...');
+
+            const blob = new Blob(state.audioChunks, { type: 'audio/webm' });
+            const formData = new FormData();
+            formData.append('audio', blob, 'recording.webm');
+
+            try {
+                const response = await fetch('/api/process_audio', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.success && data.audio_url) {
+                    elements.audioPlayer.src = data.audio_url;
+                    elements.audioOutput.classList.remove('hidden');
+                    elements.audioPlayer.play();
+
+                    if (data.transcribed_text) {
+                        showStatus(`You said: "${data.transcribed_text}"`, 'info');
+                    }
+                } else {
+                    showStatus(data.error || 'Processing failed', 'error');
+                }
+            } catch (error) {
+                showStatus('Error processing recording', 'error');
+            } finally {
+                hideLoading();
+                elements.recordingStatus.textContent = 'Tap to start recording';
+            }
+        }
+
+        // =====================================================================
+        // Event Listeners
+        // =====================================================================
+        // Voice management
+        elements.addVoiceBtn.addEventListener('click', () => {
+            elements.addVoiceForm.classList.remove('hidden');
+            elements.addVoiceBtn.classList.add('hidden');
+        });
+
+        elements.cancelVoiceBtn.addEventListener('click', () => {
+            elements.addVoiceForm.classList.add('hidden');
+            elements.addVoiceBtn.classList.remove('hidden');
+        });
+
+        elements.saveVoiceBtn.addEventListener('click', saveVoice);
+
+        elements.audioFile.addEventListener('change', () => {
+            elements.saveVoiceBtn.disabled = !elements.audioFile.files[0];
+        });
+
+        // Drag and drop
+        elements.audioDropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            elements.audioDropzone.classList.add('dragover');
+        });
+
+        elements.audioDropzone.addEventListener('dragleave', () => {
+            elements.audioDropzone.classList.remove('dragover');
+        });
+
+        elements.audioDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            elements.audioDropzone.classList.remove('dragover');
+            if (e.dataTransfer.files[0]) {
+                elements.audioFile.files = e.dataTransfer.files;
+                elements.saveVoiceBtn.disabled = false;
+            }
+        });
+
+        // TTS
+        elements.synthesizeBtn.addEventListener('click', synthesize);
+
+        elements.speedSlider.addEventListener('input', () => {
+            elements.speedValue.textContent = `${elements.speedSlider.value}x`;
+        });
+
+        // Recording
+        elements.recordBtn.addEventListener('click', () => {
+            if (state.isRecording) {
+                stopRecording();
+            } else {
+                startRecording();
+            }
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`${tab.dataset.tab}Tab`).classList.add('active');
+            });
+        });
+
+        // =====================================================================
+        // Initialize
+        // =====================================================================
+        loadVoices();
+    </script>
+</body>
+</html>
