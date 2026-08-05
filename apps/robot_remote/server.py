@@ -42,11 +42,10 @@ if str(ROOT) not in sys.path:
 import uvicorn  # noqa: E402
 from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect  # noqa: E402
 from fastapi.middleware.cors import CORSMiddleware  # noqa: E402
-from fastapi.responses import FileResponse, JSONResponse  # noqa: E402
-from fastapi.staticfiles import StaticFiles  # noqa: E402
+from fastapi.responses import FileResponse  # noqa: E402
 from pydantic import BaseModel, Field  # noqa: E402
 
-from packages.asimov import AsimovClient, AsimovSession, load_config  # noqa: E402
+from packages.asimov import AsimovClient, AsimovSession  # noqa: E402
 
 logger = logging.getLogger("robot_remote")
 
@@ -101,7 +100,7 @@ class ControlState:
 
     locked: bool = True  # stop key required to take control
     operator: Optional[str] = None  # peer that currently holds control
-    connected_peers: dict = field(default_factory=dict)  # ws id -> peer label
+    connected_peers: dict = field(default_factory=dict)  # ws id -> {"label":str,"ws":WebSocket}
     last_cmd_at: float = 0.0
     _watchdog: Optional[asyncio.Task] = None
 
@@ -227,7 +226,7 @@ class ControlState:
             "locked": self.locked,
             "operator": self.operator,
             "peers": [
-                {"id": k, "label": v} for k, v in self.connected_peers.items()
+                {"id": k, "label": v["label"]} for k, v in self.connected_peers.items()
             ],
             "robot_id": self.robot_id,
             "viewer_url": self.session.viewer_url if self.session else None,
@@ -312,6 +311,7 @@ async def unlock(body: UnlockIn) -> Dict[str, Any]:
     STATE.locked = False
     STATE.operator = "rest"
     await STATE.ensure_watchdog()
+    await _broadcast_status()
     return {"ok": True, "locked": False}
 
 
@@ -320,6 +320,7 @@ async def lock() -> Dict[str, Any]:
     await STATE.stop()
     STATE.locked = True
     STATE.operator = None
+    await _broadcast_status()
     return {"ok": True, "locked": True}
 
 
@@ -361,7 +362,7 @@ async def ws_endpoint(ws: WebSocket) -> None:
     await ws.accept()
     peer_id = str(id(ws))
     peer_label = "browser"
-    STATE.connected_peers[peer_id] = peer_label
+    STATE.connected_peers[peer_id] = {"label": peer_label, "ws": ws}
     try:
         # Send an initial snapshot.
         await ws.send_text(json.dumps({"type": "status", "data": STATE.snapshot()}))
@@ -371,8 +372,9 @@ async def ws_endpoint(ws: WebSocket) -> None:
             kind = msg.get("type")
             if kind == "hello":
                 peer_label = msg.get("label") or peer_label
-                STATE.connected_peers[peer_id] = peer_label
+                STATE.connected_peers[peer_id] = {"label": peer_label, "ws": ws}
                 await ws.send_text(json.dumps({"type": "status", "data": STATE.snapshot()}))
+                await _broadcast_status()
                 continue
             if kind == "unlock":
                 if msg.get("key") == STATE.unlock_code:
@@ -423,6 +425,7 @@ async def ws_endpoint(ws: WebSocket) -> None:
         logger.warning("ws error: %s", exc)
     finally:
         STATE.connected_peers.pop(peer_id, None)
+        await _broadcast_status()
         if STATE.operator == peer_label:
             # Driver gone — stop the robot and re-lock for safety.
             logger.warning("Operator %s disconnected → stop + lock", peer_label)
@@ -435,18 +438,20 @@ async def ws_endpoint(ws: WebSocket) -> None:
 
 
 async def _broadcast_status() -> None:
-    """Best-effort status broadcast to all connected websockets."""
-    snapshot = STATE.snapshot()
-    for ws in list(STATE.connected_peers.keys()):
-        ws_obj = None
-        # We stored string ids in snapshot; the live ws objects are not
-        # tracked here, so this is a no-op hook for future server push.
-        # Status is re-fetched via the 'status' message instead.
-        _ = ws_obj
-    payload = json.dumps({"type": "status", "data": snapshot})
-    # TODO: keep a registry of websocket objects for true push. For now each
-    # peer periodically requests status. This keeps the surface simple.
-    logger.debug("broadcast payload %d bytes (peers: %d)", len(payload), len(STATE.connected_peers))
+    """Push the current status snapshot to every connected WebSocket."""
+    payload = json.dumps({"type": "status", "data": STATE.snapshot()})
+    dead: list[str] = []
+    for peer_id, info in list(STATE.connected_peers.items()):
+        ws_obj = info.get("ws")
+        if ws_obj is None:
+            continue
+        try:
+            await ws_obj.send_text(payload)
+        except Exception:  # noqa: BLE001
+            dead.append(peer_id)
+    for peer_id in dead:
+        STATE.connected_peers.pop(peer_id, None)
+    logger.debug("broadcast %d bytes to %d peers", len(payload), len(STATE.connected_peers))
 
 
 def main() -> None:
