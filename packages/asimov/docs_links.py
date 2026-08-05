@@ -15,10 +15,10 @@ MENLO_PLATFORM = "https://platform.menlo.ai"
 MENLO_CONSOLE = "https://console.menlo.ai"
 MENLO_VIEWER = "https://sim.menlo.ai"
 
-# RCS edge used by menlo-robot-sdk with sk_live_… keys
-MENLO_RCS_URL = "https://platform-auth.menlo.ai/rcs"
-# Alternate host mentioned in older docs (may 404 for some paths)
-MENLO_RCS_URL_ALT = "https://api.menlo.ai/rcs"
+# RCS edge used by menlo-robot-sdk with sk_live_… keys (verified live)
+MENLO_RCS_URL = "https://api.menlo.ai/rcs"
+# Alternate mentioned in package README (may fault-filter in prod)
+MENLO_RCS_URL_ALT = "https://platform-auth.menlo.ai/rcs"
 
 WORKING_DOCS: List[Dict[str, str]] = [
     {

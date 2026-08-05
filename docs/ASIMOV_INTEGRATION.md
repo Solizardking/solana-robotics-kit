@@ -45,8 +45,8 @@ ASIMOV_API_KEY=sk_live_...
 # Official SDK name also accepted:
 # MENLO_API_KEY=sk_live_...
 
-# RCS (control plane). Prefer platform-auth edge:
-MENLO_RCS_URL=https://platform-auth.menlo.ai/rcs
+# RCS (control plane) — api.menlo.ai is the working edge for sk_live_ keys:
+MENLO_RCS_URL=https://api.menlo.ai/rcs
 
 # Optional
 ASIMOV_ROBOT_NAME=Solana-Asimov

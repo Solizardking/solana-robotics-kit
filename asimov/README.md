@@ -6,11 +6,24 @@ Integration entry for **Menlo Asimov v1 (ASV1)** mechanical + sim assets, assemb
 |------|---------|
 | [Assembly flow](../docs/ASIMOV_ASSEMBLY_FLOW.md) | Stage-by-stage build (prep → legs → torso → arms → head → compute → commission) |
 | [$10k plan](../docs/PLAN_10K_HARDWARE.md) | Cash + hardware allocation under a $10,000 cap |
+| [Menlo API integration](../docs/ASIMOV_INTEGRATION.md) | `ASIMOV_API_KEY` + Orin / Pi / Topion fabric |
 | [Nemotron Omni](../docs/NEMOTRON_OMNI.md) | 31B A3B multimodal model for testing |
 | [robotics/](../robotics/) | CAD (132 STEP) + MuJoCo `asimov.xml` |
 | [client/public/asimov](../client/public/asimov) | Web viewer meshes |
-| Menlo docs | https://docs.menlo.ai/asimov/1 |
+| [packages/asimov](../packages/asimov/) | Direct Menlo SDK client |
+| Menlo docs | https://docs.menlo.ai/asimov/1 · https://docs.menlo.ai/platform/reference/python-sdk |
 | Upstream CAD | https://github.com/asimovinc/asimov-1 |
+
+## Direct control (`ASIMOV_API_KEY`)
+
+```bash
+export ASIMOV_API_KEY=sk_live_...
+export MENLO_RCS_URL=https://api.menlo.ai/rcs   # verified working edge
+python examples/asimov_drive.py --docs           # working Menlo URLs (skip 404 shells)
+python examples/asimov_drive.py                  # create robot + viewer + set_velocity
+```
+
+Hardware fabric: **Orin Nano** motors `:9101`, **Raspberry Pi** sensors `:9102`, **Topion** expansion `:9103`.
 
 ## Quick doctor
 

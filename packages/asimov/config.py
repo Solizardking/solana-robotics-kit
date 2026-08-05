@@ -11,8 +11,10 @@ from dotenv import load_dotenv
 # Prefer kit-local .env without overriding already-exported shell vars.
 load_dotenv(override=False)
 
-# Menlo platform defaults (package README + docs.menlo.ai).
-DEFAULT_RCS_URL = "https://platform-auth.menlo.ai/rcs"
+# Menlo platform defaults.
+# Live smoke (2026-08): api.menlo.ai/rcs works with sk_live_… keys;
+# platform-auth.menlo.ai/rcs may return "fault filter abort".
+DEFAULT_RCS_URL = "https://api.menlo.ai/rcs"
 DEFAULT_VIEWER_URL = "https://sim.menlo.ai"
 DEFAULT_ROBOT_MODEL = "asimov-v0"
 

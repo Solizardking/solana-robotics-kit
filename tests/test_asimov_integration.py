@@ -6,8 +6,6 @@ import os
 import sys
 from pathlib import Path
 
-import pytest
-
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -32,12 +30,12 @@ def test_resolve_api_key_prefers_asimov_alias():
 
 def test_load_config_maps_env(monkeypatch):
     monkeypatch.setenv("ASIMOV_API_KEY", "sk_live_test_key")
-    monkeypatch.setenv("MENLO_RCS_URL", "https://platform-auth.menlo.ai/rcs")
+    monkeypatch.setenv("MENLO_RCS_URL", "https://api.menlo.ai/rcs")
     monkeypatch.setenv("ORIN_PORT", "9199")
     monkeypatch.setenv("TOPION_ROLE", "motor_driver")
     cfg = load_config()
     assert cfg.api_key == "sk_live_test_key"
-    assert cfg.rcs_url.endswith("/rcs")
+    assert cfg.rcs_url == "https://api.menlo.ai/rcs"
     assert cfg.orin_port == 9199
     assert cfg.topion_role == "motor_driver"
     redacted = cfg.redact()
@@ -51,27 +49,31 @@ def test_apply_to_process_env_sets_menlo(monkeypatch):
     monkeypatch.delenv("MENLO_RCS_URL", raising=False)
     cfg = AsimovConfig(
         api_key="sk_live_xyz",
-        rcs_url="https://platform-auth.menlo.ai/rcs",
+        rcs_url="https://api.menlo.ai/rcs",
     )
     cfg.apply_to_process_env()
     assert os.environ["MENLO_API_KEY"] == "sk_live_xyz"
-    assert os.environ["MENLO_RCS_URL"] == "https://platform-auth.menlo.ai/rcs"
+    assert os.environ["MENLO_RCS_URL"] == "https://api.menlo.ai/rcs"
 
 
-@pytest.mark.asyncio
-async def test_hardware_fabric_mock_velocity():
-    cfg = AsimovConfig(hardware_enabled=False, max_linear_mps=0.5)
-    fabric = HardwareFabric(cfg)
-    await fabric.probe()
-    assert all(n.online for n in fabric.nodes)
-    out = await fabric.apply_velocity(vx=9.0, vy=0, vyaw=0)  # clamp
-    assert out["clamped"]["vx"] == 0.5
-    assert out["orin"]["mock"] is True
-    estop = await fabric.emergency_stop()
-    assert estop["orin"]["ok"] is True
-    sense = await fabric.sense()
-    assert "imu" in sense
-    await fabric.aclose()
+def test_hardware_fabric_mock_velocity():
+    import asyncio
+
+    async def _run():
+        cfg = AsimovConfig(hardware_enabled=False, max_linear_mps=0.5)
+        fabric = HardwareFabric(cfg)
+        await fabric.probe()
+        assert all(n.online for n in fabric.nodes)
+        out = await fabric.apply_velocity(vx=9.0, vy=0, vyaw=0)  # clamp
+        assert out["clamped"]["vx"] == 0.5
+        assert out["orin"]["mock"] is True
+        estop = await fabric.emergency_stop()
+        assert estop["orin"]["ok"] is True
+        sense = await fabric.sense()
+        assert "imu" in sense
+        await fabric.aclose()
+
+    asyncio.run(_run())
 
 
 def test_node_roles():

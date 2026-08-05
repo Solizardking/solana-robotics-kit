@@ -209,19 +209,25 @@ def assembly_plan(budget_usd: int = 10_000) -> Dict[str, Any]:
         )
         spent += alloc
 
-    # Normalize if over budget
+    # Normalize if over budget (keep total ≤ budget_usd after float noise)
     if spent > budget_usd and spent > 0:
         factor = budget_usd / spent
         for row in stages_out:
             row["allocated_usd"] = round(row["allocated_usd"] * factor, 2)
+        spent = sum(r["allocated_usd"] for r in stages_out)
+    if spent > budget_usd and stages_out:
+        over = round(spent - budget_usd, 2)
+        stages_out[-1]["allocated_usd"] = round(
+            max(0.0, stages_out[-1]["allocated_usd"] - over), 2
+        )
         spent = sum(r["allocated_usd"] for r in stages_out)
 
     return {
         "budget_usd": budget_usd,
         "full_build_mid_usd": round(full, 2),
         "scale": round(scale, 3),
-        "allocated_total_usd": round(spent, 2),
-        "reserve_usd": round(max(0, budget_usd - spent), 2),
+        "allocated_total_usd": round(min(spent, float(budget_usd)), 2),
+        "reserve_usd": round(max(0, budget_usd - min(spent, float(budget_usd))), 2),
         "priority_note": (
             "Under $10k: prioritize prep, both legs, electrical e-stop, Orin/RPi compute, "
             "MuJoCo sim, and Nemotron NVFP4 cloud/edge path. Defer one arm or SLM parts to phase 2."
@@ -238,7 +244,7 @@ def assembly_plan(budget_usd: int = 10_000) -> Dict[str, Any]:
 
 
 def doctor() -> Dict[str, Any]:
-    """Combined Asimov + Nemotron readiness report."""
+    """Combined Asimov + Nemotron + Menlo API readiness report."""
     inv = inventory()
     plan = assembly_plan(10_000)
     nemo: Dict[str, Any] = {"available": False}
@@ -249,6 +255,22 @@ def doctor() -> Dict[str, Any]:
     except Exception as exc:  # noqa: BLE001
         nemo = {"available": False, "error": str(exc)}
 
+    menlo: Dict[str, Any] = {"available": False}
+    try:
+        from packages.asimov import load_config
+
+        cfg = load_config()
+        menlo = {
+            "available": True,
+            "has_api_key": cfg.has_credentials,
+            "rcs_url": cfg.rcs_url,
+            "runtime": cfg.runtime,
+            "hardware": cfg.redact().get("nodes"),
+            "docs": "docs/ASIMOV_INTEGRATION.md",
+        }
+    except Exception as exc:  # noqa: BLE001
+        menlo = {"available": False, "error": str(exc)}
+
     return {
         "asimov": inv,
         "plan_10k": {
@@ -257,5 +279,29 @@ def doctor() -> Dict[str, Any]:
             "priority_note": plan["priority_note"],
         },
         "nemotron": nemo,
+        "menlo": menlo,
         "paths": paths(),
     }
+
+
+# ---------------------------------------------------------------------------
+# Menlo / ASIMOV_API_KEY direct control (packages/asimov)
+# ---------------------------------------------------------------------------
+try:
+    from packages.asimov import (  # noqa: E402
+        AsimovClient,
+        AsimovConfig,
+        AsimovSession,
+        HardwareFabric,
+        load_config,
+        resolve_api_key,
+        working_docs_markdown,
+    )
+except ImportError:  # optional until menlo-robot-sdk / package deps install
+    AsimovClient = None  # type: ignore[misc, assignment]
+    AsimovConfig = None  # type: ignore[misc, assignment]
+    AsimovSession = None  # type: ignore[misc, assignment]
+    HardwareFabric = None  # type: ignore[misc, assignment]
+    load_config = None  # type: ignore[misc, assignment]
+    resolve_api_key = None  # type: ignore[misc, assignment]
+    working_docs_markdown = None  # type: ignore[misc, assignment]
