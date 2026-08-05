@@ -1,18 +1,30 @@
-#!/bin/bash
-# Start Solana GR00T Realtime Avatar Server (Deepgram + HeyGen + LiveKit)
+#!/usr/bin/env bash
+# Start Solana GR00T Realtime Avatar (Deepgram + HeyGen + LiveKit)
+set -euo pipefail
 
-cd "$(dirname "$0")"
-source venv/bin/activate
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$ROOT_DIR"
+
+if [[ -f "$ROOT_DIR/venv/bin/activate" ]]; then
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/venv/bin/activate"
+elif [[ -f "$ROOT_DIR/.venv/bin/activate" ]]; then
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/.venv/bin/activate"
+fi
+
+if [[ -f "$ROOT_DIR/.env" ]]; then
+  set -a
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/.env"
+  set +a
+fi
 
 echo "🚀 Starting Solana GR00T Realtime Avatar Server..."
-echo "   Using Deepgram STT + HeyGen Avatar + LiveKit"
-echo "   Server will run on port 5002 (or AVATAR_PORT from .env)"
+echo "   Deepgram STT + HeyGen Avatar + LiveKit"
+echo "   Port: ${AVATAR_PORT:-5002}"
+echo "   Module: python -m src.solana_gr00t_avatar_realtime"
 echo ""
 
-# Note: API keys are loaded from .env file by the Python script
-# The Python script will show the actual status after loading .env
-echo "   Loading configuration from .env file..."
-echo ""
-
-# Run the realtime avatar server
-python solana_gr00t_avatar_realtime.py
+exec python -m src.solana_gr00t_avatar_realtime

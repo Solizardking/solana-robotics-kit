@@ -1,53 +1,56 @@
-#!/bin/bash
-# Quick start script for Solana Trading Desktop Agent
+#!/usr/bin/env bash
+# Start Solana Trading Desktop Agent (if present)
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$ROOT_DIR"
 
 echo "🚀 Starting Solana Trading Desktop Agent"
 echo "========================================"
 echo ""
 
-cd "$(dirname "$0")"
-
-# Check if virtual environment exists
-if [ ! -f "venv/bin/activate" ]; then
-    echo "❌ Virtual environment not found!"
-    echo "   Run: python3 -m venv venv && source venv/bin/activate && pip install -r requirements.txt"
-    exit 1
+if [[ -f "$ROOT_DIR/venv/bin/activate" ]]; then
+  echo "📦 Activating virtual environment..."
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/venv/bin/activate"
+elif [[ -f "$ROOT_DIR/.venv/bin/activate" ]]; then
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/.venv/bin/activate"
+else
+  echo "⚠️  No venv at $ROOT_DIR/venv — using system Python"
 fi
 
-# Activate virtual environment
-echo "📦 Activating virtual environment..."
-source venv/bin/activate
-
-# Check if solders is correctly installed
-echo "🔍 Checking solders installation..."
-python3 -c "import solders; from solders.solders import __version__; print(f'✅ solders {__version__}')" 2>&1 | head -1
-
-if [ $? -ne 0 ]; then
-    echo ""
-    echo "⚠️  solders module issue detected. Fixing..."
-    pip uninstall -y solders 2>&1 | tail -2
-    pip install --no-cache-dir "solders>=0.21.0,<0.22.0" 2>&1 | tail -5
-    echo ""
+if [[ -f "$ROOT_DIR/.env" ]]; then
+  set -a
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/.env"
+  set +a
 fi
 
-# Check if solana imports work
-echo "🔍 Testing Solana imports..."
-python3 -c "from solana.rpc.async_api import AsyncClient; print('✅ Solana imports OK')" 2>&1 | head -1
+echo "🔍 Checking solders (optional)..."
+python3 -c "import solders; print('✅ solders available')" 2>/dev/null || \
+  echo "⚠️  solders not installed (pip install solders)"
 
-if [ $? -ne 0 ]; then
-    echo ""
-    echo "❌ Solana imports failed. Please fix solders version:"
-    echo "   pip uninstall -y solders"
-    echo "   pip install --no-cache-dir 'solders>=0.21.0,<0.22.0'"
-    exit 1
-fi
+# Prefer apps trading server / desktop entrypoints when present
+CANDIDATES=(
+  "$ROOT_DIR/solana_trading_desktop.py"
+  "$ROOT_DIR/apps/trading_agent_server/server.py"
+  "$ROOT_DIR/apps/trading_agent_server/start.sh"
+)
 
-echo ""
-echo "✅ All checks passed!"
-echo ""
-echo "🚀 Starting trading desktop agent..."
-echo "   (Press Ctrl+C to stop)"
-echo ""
+for c in "${CANDIDATES[@]}"; do
+  if [[ -f "$c" ]]; then
+    echo "▶ Launching $c"
+    if [[ "$c" == *.sh ]]; then
+      exec bash "$c"
+    else
+      exec python3 "$c"
+    fi
+  fi
+done
 
-# Start the agent
-python3 solana_trading_desktop.py
+echo "❌ No trading agent entrypoint found."
+echo "   Expected one of:"
+printf '   - %s\n' "${CANDIDATES[@]}"
+exit 1

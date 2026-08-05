@@ -1,42 +1,47 @@
-#!/bin/bash
-# Quick start script for Solana GR00T Avatar
+#!/usr/bin/env bash
+# Quick start: Solana GR00T Avatar (Flask + OpenVoice path)
+set -euo pipefail
 
-cd "$(dirname "$0")"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$ROOT_DIR"
 
-# Activate virtual environment
-if [ -d "venv" ]; then
-    source venv/bin/activate
+# Prefer project venv if present
+if [[ -f "$ROOT_DIR/venv/bin/activate" ]]; then
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/venv/bin/activate"
+elif [[ -f "$ROOT_DIR/.venv/bin/activate" ]]; then
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/.venv/bin/activate"
 else
-    echo "❌ Virtual environment not found. Please create one first:"
-    echo "   python3 -m venv venv"
-    echo "   source venv/bin/activate"
-    echo "   pip install -r requirements.txt"
-    exit 1
+  echo "⚠️  No venv found at $ROOT_DIR/venv — using system Python"
 fi
 
-# Check for required API keys
-if [ -z "$GOOGLE_API_KEY" ] && [ ! -f ".env" ]; then
-    echo "⚠️  Warning: GOOGLE_API_KEY not set"
-    echo "   Please set it in your .env file or environment"
-    echo "   Get your key from: https://makersuite.google.com/app/apikey"
+if [[ -f "$ROOT_DIR/.env" ]]; then
+  set -a
+  # shellcheck source=/dev/null
+  source "$ROOT_DIR/.env"
+  set +a
 fi
 
-# Check if OpenVoice is installed
-if [ ! -d "OpenVoice" ]; then
-    echo "⚠️  Warning: OpenVoice directory not found"
-    echo "   Please follow GR00T_AVATAR_SETUP.md to install OpenVoice"
-    echo "   This is required for voice cloning"
+if [[ -z "${GOOGLE_API_KEY:-}" ]]; then
+  echo "⚠️  GOOGLE_API_KEY not set (needed for Gemini path)"
 fi
 
-# Check if assets exist
-if [ ! -f "Realtime_Avatar_AI_Companion-main/assets/cliente_final.html" ]; then
-    echo "⚠️  Warning: Avatar assets not found"
-    echo "   Please ensure Realtime_Avatar_AI_Companion-main/assets/ exists"
+if [[ ! -d "$ROOT_DIR/OpenVoice" ]] && [[ ! -d "$ROOT_DIR/avatar_companion/OpenVoice" ]]; then
+  echo "⚠️  OpenVoice directory not found — voice cloning may fail"
+fi
+
+ASSETS="$ROOT_DIR/avatar_companion/assets"
+if [[ ! -d "$ASSETS" ]]; then
+  echo "⚠️  Avatar assets not found at avatar_companion/assets"
 fi
 
 echo "🚀 Starting Solana GR00T Avatar..."
-echo "   Server will be available at: http://localhost:5001"
+echo "   Repo: $ROOT_DIR"
+echo "   Module: python -m src.solana_gr00t_avatar"
+echo "   http://localhost:${AVATAR_PORT:-5001}"
 echo "   Press Ctrl+C to stop"
 echo ""
 
-python solana_gr00t_avatar.py
+exec python -m src.solana_gr00t_avatar

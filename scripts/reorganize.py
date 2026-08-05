@@ -211,46 +211,75 @@ def move_src_files():
     except OSError:
         pass
 
-def main():
+def plan_moves() -> List[Tuple[str, str, str]]:
+    """Return planned (kind, src, dst) moves without touching the filesystem."""
+    planned: List[Tuple[str, str, str]] = []
+    for src, dst in MIGRATION_MAP.items():
+        if (ROOT / src).exists():
+            planned.append(("dir", src, dst))
+    for src, dst in FILE_MIGRATIONS:
+        if (ROOT / src).exists():
+            planned.append(("file", src, dst))
+    return planned
+
+
+def main(argv: List[str] | None = None):
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Reorganize Solana Robotics Kit tree")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print planned moves only; do not create dirs or move files",
+    )
+    args = parser.parse_args(argv)
+
     print("🏗️  Solana Robotics Kit - Architecture Reorganization")
     print("=" * 60)
     print()
-    
+
+    planned = plan_moves()
+    print(f"📋 Planned migrations: {len(planned)} existing sources")
+    for kind, src, dst in planned[:40]:
+        print(f"  [{kind}] {src} → {dst}")
+    if len(planned) > 40:
+        print(f"  ... and {len(planned) - 40} more")
+    print()
+
+    if args.dry_run:
+        print("🔎 Dry-run only — no files were modified.")
+        return 0
+
     print("📁 Creating new directory structure...")
     create_structure()
     print("✅ Directory structure created")
     print()
-    
+
     print("🔄 Starting file migration...")
     print()
-    
-    # Move directories
+
     print("📦 Moving directories...")
     for src, dst in MIGRATION_MAP.items():
         move_directory(src, dst)
     print()
-    
-    # Move individual files
+
     print("📄 Moving individual files...")
     for src, dst in FILE_MIGRATIONS:
         move_file(src, dst)
     print()
-    
-    # Move agents
+
     print("🤖 Moving AI agents...")
     move_agents()
     print()
-    
-    # Move scripts
+
     print("🛠️  Moving scripts...")
     move_scripts()
     print()
-    
-    # Move src files
+
     print("📝 Moving src/ files...")
     move_src_files()
     print()
-    
+
     print("✅ Reorganization complete!")
     print()
     print("📝 Next steps:")
@@ -262,6 +291,8 @@ def main():
     print()
     print("⚠️  Note: Some files may need manual review and adjustment.")
     print("   See ARCHITECTURE_PLAN.md for details.")
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

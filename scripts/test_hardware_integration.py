@@ -215,14 +215,30 @@ def test_project_structure():
     print_header("6. Project Structure")
     
     required_dirs = [
-        "apps/robot-daemon",
+        "scripts",
+        "src",
+        "packages",
+        "apps",
+        "docs",
+        "solana-robotics-kit-v0.4",
         "packages/perception",
         "packages/planning",
         "packages/solana-client",
         "packages/nim-client",
-        "scripts",
         "examples",
     ]
+    # Optional legacy paths (report only)
+    optional_dirs = [
+        "apps/robot-daemon",
+        "apps/robot_daemon",
+        "eliza",
+        "robotics",
+    ]
+    for dir_path in optional_dirs:
+        full_path = project_root / dir_path
+        if full_path.exists():
+            print_result(f"Optional: {dir_path}", True)
+
     
     for dir_path in required_dirs:
         full_path = project_root / dir_path
