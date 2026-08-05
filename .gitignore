@@ -1,138 +1,105 @@
 # ===================================
-# Solana Robotics Kit - Git Ignore
+# Solana Robotics — open-source ignore
 # ===================================
 
-# Environment & Secrets
+# Secrets & local env
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+!.env.*.example
+!**/.env.example
+!**/.env.*.example
+!.env.clawd
 *.pem
 *.key
-*.json  # Wallet files (be careful!)
-!package.json
-!tsconfig.json
-node_modules
-.env
+id_rsa*
+**/wallet*.json
+**/*-keypair.json
+**/id.json
+**/.config/solana/**
+
+# Dependencies
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+.pnpm-store/
+
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
 *.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual Environments
+.eggs/
+.venv/
 venv/
 ENV/
 env/
-.venv/
 .conda/
-
-# IDE
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
-.project
-.classpath
-.settings/
-
-# Jupyter Notebooks
-.ipynb_checkpoints/
-*.ipynb_metadata/
-
-# Testing
+.mypy_cache/
+.ruff_cache/
 .pytest_cache/
 .coverage
 htmlcov/
-.tox/
-.nox/
 
-# Logs
+# Build / caches
+dist/
+build/
+out/
+.turbo/
+.cache/
+*.tsbuildinfo
+.vercel/
+.next/
+
+# Logs & runtime data
 logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+data/postgres/
+data/solana/
+data/logs/
+brain/runs/
 
-# OS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# Models & Data (large files)
+# Models & large binaries
 *.pt
 *.pth
 *.onnx
 *.bin
 *.h5
 *.pkl
-*.pickle
-models/
-checkpoints/
-data/
 *.safetensors
+checkpoints/
+models/
 
-# Node.js (if using extensions)
-node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
-.pnp/
-.pnp.js
+# OS / IDE
+.DS_Store
+.AppleDouble
+.LSOverride
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
 
-# Build outputs
-dist/
-*.dist/
-out/
-
-# Temporary files
-tmp/
-temp/
-*.tmp
-*.temp
-*.bak
-*.backup
-
-# Screenshots & media
-screenshots/
-*.mp4
-*.avi
-*.mov
-
-# Solana specific
+# Solana / Anchor
 .anchor/
 target/
 test-ledger/
 
-# Robotics specific
-ros2_ws/build/
-ros2_ws/install/
-ros2_ws/log/
-rosbag2_*/
+# Eliza local artifacts
+eliza/my-project/node_modules/
+eliza/**/dist/
+eliza/.turbo/
 
-# NVIDIA specific
-.cache/
-cuda-*
-cudnn-*
-tensorrt-*
-OpenVoice
+# Merge backups (local only)
+.merge-backup/
+
+# Media dumps (optional large assets)
+screenshots/
+*.mp4
+!brain/docs/**/*.mp4

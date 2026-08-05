@@ -221,3 +221,8 @@ Subscribe to security updates:
 If you see something, say something.
 
 </div>
+
+## Token & secrets
+
+- Ecosystem token is **$CLAWD** (`8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`).
+- Never open issues that paste private keys or full `.env` files.
