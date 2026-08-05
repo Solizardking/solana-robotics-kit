@@ -271,6 +271,15 @@ def doctor() -> Dict[str, Any]:
     except Exception as exc:  # noqa: BLE001
         menlo = {"available": False, "error": str(exc)}
 
+    solana_diy: Dict[str, Any] = {"available": False}
+    try:
+        from packages.solana_diy import SOLANA_COLORS
+        from packages.solana_diy import doctor as diy_doctor
+
+        solana_diy = {"available": True, "colors": SOLANA_COLORS, **diy_doctor()}
+    except Exception as exc:  # noqa: BLE001
+        solana_diy = {"available": False, "error": str(exc)}
+
     return {
         "asimov": inv,
         "plan_10k": {
@@ -280,7 +289,15 @@ def doctor() -> Dict[str, Any]:
         },
         "nemotron": nemo,
         "menlo": menlo,
+        "solana_diy": solana_diy,
         "paths": paths(),
+        "ocasv1": {
+            "profile": "OCASV1 / OPENCLAWDASV1",
+            "purple": "#9945FF",
+            "green": "#14F195",
+            "docs": "docs/SOLANA_DIY_MANUFACTURING.md",
+            "bootstrap": "scripts/bootstrap_solana_diy_robot.sh",
+        },
     }
 
 

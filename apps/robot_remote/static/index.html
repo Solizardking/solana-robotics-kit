@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Solana Robotics Kit · Robot Remote Control</title>
+<style>
+  :root {
+    --bg: #0b0f1a;
+    --panel: #131a2b;
+    --panel-2: #1a2238;
+    --text: #e6ecff;
+    --muted: #8a94b0;
+    --accent: #22d3ee;
+    --green: #34d399;
+    --amber: #fbbf24;
+    --red: #ef4444;
+    --border: #24304d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior: none;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    max-width: 520px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  /* ---------- header ---------- */
+  header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+  }
+  header .brand {
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+  }
+  header .brand span { color: var(--accent); }
+  .spacer { flex: 1; }
+  .pill {
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .pill.ok { color: var(--green); border-color: rgba(52, 211, 153, 0.4); }
+  .pill.warn { color: var(--amber); border-color: rgba(251, 191, 36, 0.4); }
+  .pill.err { color: var(--red); border-color: rgba(239, 68, 68, 0.4); }
+
+  /* ---------- status strip ---------- */
+  #status {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    padding: 6px 10px;
+    font-size: 11px;
+    color: var(--muted);
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  #status b { color: var(--text); font-weight: 600; }
+
+  /* ---------- viewer ---------- */
+  #viewer-wrap {
+    margin: 10px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #000;
+    position: relative;
+  }
+  #viewer-wrap iframe {
+    width: 100%;
+    height: 240px;
+    border: 0;
+    display: block;
+    background: #000;
+  }
+  .viewer-placeholder {
+    height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.06), transparent 60%),
+      #05070d;
+  }
+  .viewer-placeholder .big { font-size: 34px; }
+
+  /* ---------- unlock card ---------- */
+  #unlock-card {
+    margin: 10px;
+    padding: 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  #unlock-card h2 { font-size: 14px; margin-bottom: 8px; }
+  #unlock-card p { font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.45; }
+  .row { display: flex; gap: 8px; }
+  input[type="password"], input[type="text"] {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--panel-2);
+    color: var(--text);
+    font-size: 15px;
+    min-width: 0;
+  }
+  input:focus { outline: 2px solid rgba(34, 211, 238, 0.35); border-color: var(--accent); }
+
+  button {
+    border: 0;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    color: #04121a;
+    background: var(--accent);
+    transition: transform 0.06s ease, filter 0.15s ease;
+  }
+  button:active { transform: scale(0.96); }
+  button:disabled { opacity: 0.45; cursor: not-allowed; }
+  button.secondary { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+  button.danger {
+    background: var(--red);
+    color: #fff;
+    border-radius: 999px;
+    padding: 16px 18px;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    animation: pulse-red 0.9s infinite;
+  }
+  @keyframes pulse-red {
+    0%   { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.45); }
+    70%  { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+  }
+
+  /* ---------- control deck ---------- */
+  #deck {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    padding: 6px 10px 14px;
+    gap: 12px;
+  }
+  #deck.active { display: flex; }
+
+  .deck-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .deck-top .mode { font-size: 12px; color: var(--muted); }
+
+  .controls {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+    justify-content: center;
+    flex: 1;
+    min-height: 0;
+    user-select: none;
+  }
+
+  /* virtual joystick */
+  #stick-zone {
+    flex: 1;
+    max-width: 210px;
+    aspect-ratio: 1;
+    touch-action: none;
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  #stick-zone::before {
+    content: "";
+    position: absolute;
+    inset: 22%;
+    border: 1px dashed rgba(138, 148, 176, 0.25);
+    border-radius: 50%;
+  }
+  #stick-zone .cross-h {
+    position: absolute;
+    left: 0; right: 0; top: 50%;
+    height: 1px;
+    background: rgba(138, 148, 176, 0.2);
+  }
+  #stick-zone .cross-v {
+    position: absolute;
+    top: 0; bottom: 0; left: 50%;
+    width: 1px;
+    background: rgba(138, 148, 176, 0.2);
+  }
+  #stick-knob {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    margin: -32px 0 0 -32px;
+    top: 50%;
+    left: 50%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #2dd4bf, #0d9488);
+    border: 2px solid rgba(255,255,255,0.35);
+    box-shadow: 0 4px 18px rgba(13, 148, 136, 0.5);
+    pointer-events: none;
+  }
+  #stick-label {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.4px;
+    pointer-events: none;
+  }
+
+  /* right pad: yaw + stop */
+  .right-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+  }
+  .yaw-row { display: flex; gap: 8px; }
+  .yaw-btn {
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+    user-select: none;
+  }
+  .yaw-btn:active { background: rgba(34, 211, 238, 0.25); }
+  .stop-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .stop-label { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+
+  /* speed slider */
+  .speed-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .speed-row label { font-size: 11px; color: var(--muted); white-space: nowrap; }
+  .speed-row input[type="range"] {
+    flex: 1;
+    accent-color: var(--accent);
+    height: 28px;
+  }
+  #speed-val {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 700;
+    width: 42px;
+    text-align: right;
+  }
+
+  /* toast */
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%) translateY(16px);
+    background: rgba(20, 26, 44, 0.96);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-size: 13px;
+    color: var(--text);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 50;
+    max-width: 86vw;
+    text-align: center;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  footer {
+    padding: 8px;
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  @media (min-width: 480px) {
+    body { border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">🤖 <span>Solana Robotics</span> · Remote</div>
+  <div class="spacer"></div>
+  <div class="pill" id="conn-pill">connecting…</div>
+</header>
+
+<div id="status">
+  <span>Lock <b id="st-lock">—</b></span>
+  <span>Robot <b id="st-robot">—</b></span>
+  <span>Runtime <b id="st-runtime">—</b></span>
+  <span>Mode <b id="st-mode">—</b></span>
+</div>
+
+<div id="viewer-wrap">
+  <div class="viewer-placeholder" id="viewer-placeholder">
+    <div class="big">🦾</div>
+    <div>LiveKit viewer not available</div>
+    <div id="viewer-hint" style="font-size:11px;color:#5a647f;"></div>
+  </div>
+</div>
+
+<div id="unlock-card">
+  <h2>🔓 Unlock control</h2>
+  <p>Enter the operator stop key to take control of the robot. Control ends automatically if you disconnect or stop sending commands.</p>
+  <div class="row">
+    <input type="password" id="key-input" placeholder="stop key" autocomplete="off" />
+    <button id="unlock-btn">Unlock</button>
+  </div>
+</div>
+
+<div id="deck">
+  <div class="deck-top">
+    <span class="pill ok" id="ctrl-pill">HOLD to drive</span>
+    <div class="mode" id="hint-text">Drag joystick · WASD/Arrows · Q/E rotate</div>
+  </div>
+
+  <div class="controls">
+    <div id="stick-zone">
+      <div class="cross-h"></div>
+      <div class="cross-v"></div>
+      <div id="stick-knob"></div>
+      <div id="stick-label">TRANSLATE</div>
+    </div>
+    <div class="right-col">
+      <div class="yaw-row">
+        <div class="yaw-btn" id="yaw-l" title="Rotate left (Q)">⟲</div>
+        <div class="yaw-btn" id="yaw-r" title="Rotate right (E)">⟳</div>
+      </div>
+      <div class="stop-wrap">
+        <button class="danger" id="estop">■ E-STOP</button>
+        <div class="stop-label">stop + lock</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="speed-row">
+    <label>Speed</label>
+    <input type="range" id="speed" min="5" max="100" value="40" />
+    <div id="speed-val">40%</div>
+  </div>
+</div>
+
+<footer>Drive at your own risk · watchdog auto-stops after inactivity · v0.1.0</footer>
+
+<div id="toast"></div>
+
+<script>
+(() => {
+  "use strict";
+
+  // ---- DOM ----
+  const $ = (id) => document.getElementById(id);
+  const connPill = $("conn-pill");
+  const stLock = $("st-lock"), stRobot = $("st-robot"), stRuntime = $("st-runtime"), stMode = $("st-mode");
+  const viewerWrap = $("viewer-wrap"), viewerPlaceholder = $("viewer-placeholder"), viewerHint = $("viewer-hint");
+  const unlockCard = $("unlock-card"), deck = $("deck"), keyInput = $("key-input");
+  const stickZone = $("stick-zone"), stickKnob = $("stick-knob"), yawL = $("yaw-l"), yawR = $("yaw-r");
+  const estop = $("estop"), speedSlider = $("speed"), speedVal = $("speed-val");
+  const ctrlPill = $("ctrl-pill"), hintText = $("hint-text"), toastEl = $("toast");
+
+  // ---- state ----
+  const wsUrl = ((location.protocol === "https:") ? "wss://" : "ws://") + location.host + "/ws";
+  const api = (path, body) =>
+    fetch(path, {
+      method: body ? "POST" : "GET",
+      headers: body ? { "Content-Type": "application/json" } : undefined,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+
+  let ws = null;
+  let reconnectTimer = null;
+  let locked = true;
+  let robotId = null;
+  let runtime = null;
+  let maxLinear = 0.5, maxYaw = 0.8;
+  let operator = null;
+
+  // stick state
+  let stickActive = false;
+  let stickVX = 0, stickVY = 0;   // -1..1
+  let yawHeld = 0;                // -1..1 from held buttons
+  const keys = new Set();
+  let sendTimer = null;
+
+  // status polling for server truth
+  const statusPicker = (data) => {
+    locked = data.locked;
+    operator = data.operator;
+    robotId = data.robot_id;
+    runtime = data.runtime;
+    maxLinear = data.max_linear_mps ?? 0.5;
+    maxYaw = data.max_yaw_rps ?? 0.8;
+    renderStatus();
+    if (data.viewer_url && !viewerPlaceholder.dataset.loaded) {
+      // Lazy-load the LiveKit viewer iframe once we have a URL.
+      loadViewer(data.viewer_url);
+    }
+    if (!locked) {
+      unlockCard.style.display = "none";
+      deck.classList.add("active");
+      ctrlPill.textContent = "● LIVE — driving enabled";
+      ctrlPill.className = "pill ok";
+    } else {
+      unlockCard.style.display = "block";
+      deck.classList.remove("active");
+    }
+  };
+
+  // ---- viewer ----
+  function loadViewer(url) {
+    viewerPlaceholder.dataset.loaded = "1";
+    const iframe = document.createElement("iframe");
+    iframe.src = url;
+    iframe.allow = "camera; microphone; autoplay; fullscreen";
+    viewerPlaceholder.replaceWith(iframe);
+  }
+
+  // ---- toast ----
+  let toastTimer = null;
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toastEl.classList.remove("show"), 2600);
+  }
+
+  // ---- status render ----
+  function renderStatus() {
+    stLock.textContent = locked ? "🔒 on" : "🔓 off";
+    stRobot.textContent = robotId || "—";
+    stRuntime.textContent = runtime || "—";
+    stMode.textContent = !locked ? (operator ? operator : "any") : "—";
+    connPill.textContent = (ws && ws.readyState === 1) ? "● live" : "○ offline";
+    connPill.className = "pill " + ((ws && ws.readyState === 1) ? "ok" : "err");
+    if (locked) {
+      ctrlPill.textContent = "LOCKED — enter stop key";
+      ctrlPill.className = "pill warn";
+    }
+  }
+
+  // ---- websocket ----
+  function connectWs() {
+    clearTimeout(reconnectTimer);
+    ws = new WebSocket(wsUrl);
+    ws.onopen = () => {
+      renderStatus();
+      ws.send(JSON.stringify({ type: "hello", label: "driver" }));
+    };
+    ws.onmessage = (ev) => {
+      let msg;
+      try { msg = JSON.parse(ev.data); } catch { return; }
+      if (msg.type === "status") {
+        statusPicker(msg.data);
+      } else if (msg.type === "error") {
+        toast("⚠️ " + msg.data);
+      }
+    };
+    ws.onclose = () => {
+      renderStatus();
+      stopRobot();
+      reconnectTimer = setTimeout(connectWs, 1500);
+    };
+    ws.onerror = () => { try { ws.close(); } catch {} };
+  }
+
+  function wsSend(obj) {
+    if (ws && ws.readyState === 1) ws.send(JSON.stringify(obj));
+  }
+
+  // ---- commands ----
+  function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+
+  // Compute desired velocity (vx, vy, yaw) from stick + keyboard + yaw buttons.
+  function desiredVelocity() {
+    let vx = stickVX, vy = stickVY;
+    // keyboard (WASD + arrows)
+    if (keys.has("w") || keys.has("arrowup"))    vy = Math.max(vy, -1);
+    if (keys.has("s") || keys.has("arrowdown"))  vy = Math.min(vy, 1);
+    if (keys.has("a") || keys.has("arrowleft"))  vx = Math.max(vx, -1);
+    if (keys.has("d") || keys.has("arrowright")) vx = Math.min(vx, 1);
+    let yaw = yawHeld;
+    if (keys.has("q")) yaw = Math.max(yaw, -1);
+    if (keys.has("e")) yaw = Math.min(yaw, 1);
+
+    // tiny dead zone
+    const dz = 0.06;
+    const len = Math.hypot(vx, vy);
+    if (len < dz) { vx = 0; vy = 0; }
+    const speed = Number(speedSlider.value) / 100;
+
+    return {
+      vx: clamp(vx * maxLinear * speed, -maxLinear, maxLinear),
+      vy: clamp(vy * maxLinear * speed, -maxLinear, maxLinear),
+      yaw: clamp(yaw * maxYaw, -maxYaw, maxYaw),
+    };
+  }
+
+  let lastSentKey = "";
+  let cmdThrottle = 0;
+
+  function sendVelocity() {
+    const v = desiredVelocity();
+    const key = [v.vx.toFixed(3), v.vy.toFixed(3), v.yaw.toFixed(3)].join(",");
+    if (key === lastSentKey) return;           // no change → skip
+    lastSentKey = key;
+    wsSend({ type: "drive", vx: v.vx, vy: v.vy, yaw: v.yaw, duration_s: 0.3 });
+  }
+
+  // Throttle to ~12 Hz so we don't spam the socket.
+  function scheduleSend() {
+    const now = Date.now();
+    if (now - cmdThrottle > 90) {
+      cmdThrottle = now;
+      sendVelocity();
+    } else {
+      clearTimeout(sendTimer);
+      sendTimer = setTimeout(sendVelocity, 90);
+    }
+  }
+
+  function stopRobot() {
+    lastSentKey = "";
+    if (locked) return;
+    wsSend({ type: "drive", vx: 0, vy: 0, yaw: 0, duration_s: 0.05 });
+  }
+
+  // ---- stick ----
+  let stickPointer = null;
+  function stickCenter() {
+    const r = stickZone.getBoundingClientRect();
+    return { x: r.left + r.width / 2, y: r.top + r.height / 2, rad: Math.min(r.width, r.height) / 2 - 8 };
+  }
+  function stickUpdate(clientX, clientY) {
+    const c = stickCenter();
+    let dx = (clientX - c.x) / c.rad;
+    let dy = (clientY - c.y) / c.rad;
+    const len = Math.hypot(dx, dy);
+    if (len > 1) { dx /= len; dy /= len; }
+    stickVX = -dx;  // pull right → vx positive
+    stickVY = dy;   // push up → vy negative (forward)
+    stickKnob.style.transform = `translate(${dx * c.rad}px, ${dy * c.rad}px)`;
+    scheduleSend();
+  }
+  function stickReset() {
+    stickVX = 0; stickVY = 0;
+    stickKnob.style.transform = "translate(0,0)";
+    stopRobot();
+    scheduleSend();
+  }
+  stickZone.addEventListener("pointerdown", (e) => {
+    if (locked) return;
+    stickActive = true;
+    stickPointer = e.pointerId;
+    stickZone.setPointerCapture(e.pointerId);
+    stickUpdate(e.clientX, e.clientY);
+  });
+  stickZone.addEventListener("pointermove", (e) => {
+    if (!stickActive || e.pointerId !== stickPointer) return;
+    stickUpdate(e.clientX, e.clientY);
+  });
+  stickZone.addEventListener("pointerup", () => { stickActive = false; stickPointer = null; stickReset(); });
+  stickZone.addEventListener("pointercancel", () => { stickActive = false; stickPointer = null; stickReset(); });
+
+  // ---- yaw buttons ----
+  function holdYaw(dir) {
+    yawHeld = clamp(yawHeld + dir, -1, 1);
+    scheduleSend();
+  }
+  function releaseYaw(dir) {
+    yawHeld = yawHeld > 0 ? Math.max(0, yawHeld - dir) : Math.min(0, yawHeld + dir);
+    if (dir === 1 && yawHeld > 0) yawHeld = 0;
+    if (dir === -1 && yawHeld < 0) yawHeld = 0;
+    scheduleSend();
+  }
+  const bindHold = (el, dir) => {
+    el.addEventListener("pointerdown", (e) => { e.preventDefault(); if (!locked) { el.setPointerCapture(e.pointerId); holdYaw(dir); } });
+    el.addEventListener("pointerup", () => releaseYaw(dir));
+    el.addEventListener("pointercancel", () => releaseYaw(dir));
+  };
+  bindHold(yawL, -1);
+  bindHold(yawR, 1);
+
+  // ---- keyboard ----
+  window.addEventListener("keydown", (e) => {
+    const k = e.key.toLowerCase();
+    if (["w","a","s","d","arrowup","arrowdown","arrowleft","arrowright","q","e"].includes(k)) {
+      e.preventDefault();
+      if (locked) return;
+      keys.add(k);
+      scheduleSend();
+    }
+    if (k === " " || k === "spacebar") { e.preventDefault(); if (!locked) stopRobot(); }
+  });
+  window.addEventListener("keyup", (e) => {
+    const k = e.key.toLowerCase();
+    if (keys.delete(k)) scheduleSend();
+  });
+
+  // ---- e-stop / lock ----
+  estop.addEventListener("click", async () => {
+    await api("/api/lock");
+    locked = true;
+    renderStatus();
+    stopRobot();
+    toast("⚠️ E-STOP — robot stopped & locked");
+  });
+
+  // ---- unlock ----
+  async function unlock() {
+    const key = keyInput.value.trim();
+    if (!key) { toast("Enter the stop key"); return; }
+    const res = await api("/api/unlock", { key });
+    if (!res.ok) {
+      if (res.status === 403) toast("❌ Invalid stop key");
+      else toast("⚠️ Unlock failed (" + res.status + ")");
+      return;
+    }
+    keyInput.value = "";
+    const data = await api("/api/status").then(r => r.json());
+    statusPicker(data);
+    toast("🔓 Control unlocked");
+  }
+  $("unlock-btn").addEventListener("click", unlock);
+  keyInput.addEventListener("keydown", (e) => { if (e.key === "Enter") unlock(); });
+
+  // ---- window raf render for stick knob smoothness ----
+  function rafLoop() {
+    if (!stickActive) {
+      // idle: knob returns home
+      stickKnob.style.transform = "translate(0,0)";
+    }
+    requestAnimationFrame(rafLoop);
+  }
+  requestAnimationFrame(rafLoop);
+
+  // ---- boot ----
+  speedSlider.addEventListener("input", () => {
+    speedVal.textContent = speedSlider.value + "%";
+    if (!locked) scheduleSend();
+  });
+
+  // Tilt steering (optional, phone landscape): gamma → yaw? keep simple: beta → vy
+  if ("DeviceOrientationEvent" in window) {
+    window.addEventListener("deviceorientation", (e) => {
+      // Unused by default; tilt support is opt-in via the JS API below.
+    });
+  }
+
+  renderStatus();
+  connectWs();
+
+  // expose a tiny API for embedding / scripting
+  window.robotRemote = {
+    unlock,
+    statusPicker,
+    drive: (vx, vy, yaw) => { if (!locked) wsSend({ type: "drive", vx, vy, yaw, duration_s: 0.3 }); },
+  };
+})();
+</script>
+</body>
+</html>

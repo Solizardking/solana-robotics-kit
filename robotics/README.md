@@ -14,9 +14,12 @@ Mechanical CAD + MuJoCo model from [Asimov / Menlo](https://asimov.inc), integra
   <a href="../asimov/README.md">Kit Asimov hub</a> ·
   <a href="../docs/ASIMOV_ASSEMBLY_FLOW.md">Assembly flow</a> ·
   <a href="../docs/PLAN_10K_HARDWARE.md">$10k plan</a> ·
+  <a href="../docs/SOLANA_DIY_MANUFACTURING.md">Solana DIY / OCASV1</a> ·
   <a href="DESIGN.md">Design system</a> ·
   <a href="https://forum.menlo.ai">Forum</a>
 </p>
+
+**OCASV1 styling:** Solana purple `#9945FF` + green `#14F195` — see [`packages/solana_diy`](../packages/solana_diy) and `bash scripts/bootstrap_solana_diy_robot.sh colors`.
 
 ---
 

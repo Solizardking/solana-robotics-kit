@@ -293,6 +293,8 @@ Built for **1,000+ developers** with:
 | [SOL GPT / Kimi K3](docs/SOL_GPT.md) | **171-tool** non-custodial desk · Moonshot trading + vision |
 | [Asimov assembly flow](docs/ASIMOV_ASSEMBLY_FLOW.md) | ASV1 stage-by-stage build (legs → torso → compute) |
 | [$10k hardware plan](docs/PLAN_10K_HARDWARE.md) | Budget + phased hardware integration |
+| [**Solana DIY manufacturing**](docs/SOLANA_DIY_MANUFACTURING.md) | **OCASV1** Clawd+Eliza+GR00T · `#9945FF` / `#14F195` |
+| [Menlo docs mirror](docs/MENLO_DOCS_MIRROR.md) | When `docs.menlo.ai` soft-404s — kit-local substitutes |
 | [Nemotron 3 Nano Omni](docs/NEMOTRON_OMNI.md) | Multimodal 31B A3B reasoning model testing |
 | [Asimov hub](asimov/README.md) | Python hub → `robotics/` + plan + Nemotron doctor |
 | [Eliza](eliza/README.md) | elizaOS agent runtime |

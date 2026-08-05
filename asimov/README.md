@@ -7,6 +7,8 @@ Integration entry for **Menlo Asimov v1 (ASV1)** mechanical + sim assets, assemb
 | [Assembly flow](../docs/ASIMOV_ASSEMBLY_FLOW.md) | Stage-by-stage build (prep → legs → torso → arms → head → compute → commission) |
 | [$10k plan](../docs/PLAN_10K_HARDWARE.md) | Cash + hardware allocation under a $10,000 cap |
 | [Menlo API integration](../docs/ASIMOV_INTEGRATION.md) | `ASIMOV_API_KEY` + Orin / Pi / Topion fabric |
+| [**Solana DIY / OCASV1**](../docs/SOLANA_DIY_MANUFACTURING.md) | Clawd+Eliza+GR00T · `#9945FF` / `#14F195` manufacturing |
+| [Menlo docs mirror](../docs/MENLO_DOCS_MIRROR.md) | Use when docs.menlo.ai returns a 404 shell |
 | [Nemotron Omni](../docs/NEMOTRON_OMNI.md) | 31B A3B multimodal model for testing |
 | [robotics/](../robotics/) | CAD (132 STEP) + MuJoCo `asimov.xml` |
 | [client/public/asimov](../client/public/asimov) | Web viewer meshes |
@@ -31,6 +33,7 @@ Hardware fabric: **Orin Nano** motors `:9101`, **Raspberry Pi** sensors `:9102`,
 # From monorepo root
 python3 -c "from asimov import doctor, inventory, assembly_plan; import json; print(json.dumps(doctor(), indent=2))"
 python3 -c "from packages.nemotron import doctor; import json; print(json.dumps(doctor().as_dict(), indent=2))"
+bash scripts/bootstrap_solana_diy_robot.sh doctor   # OCASV1 colors + BOM + stack
 ```
 
 ## Specs (Asimov 1)

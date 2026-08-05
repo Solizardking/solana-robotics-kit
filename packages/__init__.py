@@ -6,4 +6,5 @@ __all__ = [
     "isaac_gr00t",
     "moonshot",
     "nemotron",
+    "solana_diy",
 ]

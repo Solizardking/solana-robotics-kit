@@ -6,12 +6,19 @@ Solana Robotics Kit drives **Asimov** robots through the Menlo platform using
 ## Working documentation (avoid 404 shells)
 
 Menlo docs sometimes return a Next.js **404** HTML shell for deep or renamed
-paths. Use these verified entry points:
+paths (`title: 404: This page could not be found`, canonical `docs.menlo.ai`).
+**Do not paste that HTML into the agent** — use the kit mirror instead:
+
+→ **[MENLO_DOCS_MIRROR.md](./MENLO_DOCS_MIRROR.md)** (full map + kit-local substitutes)
 
 | Topic | URL |
 | --- | --- |
 | Docs home | https://docs.menlo.ai/ |
+| Asimov product / DIY kit | https://asimov.inc · https://asimov.inc/diy-kit |
 | Asimov 1 overview | https://docs.menlo.ai/asimov/1 |
+| Assembly preparations | https://docs.menlo.ai/asimov/1/assembly-preparations |
+| Assembly steps | https://docs.menlo.ai/asimov/1/assembly-steps |
+| Manual journey | https://docs.menlo.ai/asimov/1/overview/manual-journey |
 | Asimov API | https://docs.menlo.ai/asimov/1/api |
 | Robot control | https://docs.menlo.ai/asimov/1/api/robot-control |
 | Asimov OS | https://docs.menlo.ai/asimov-os |
@@ -19,14 +26,18 @@ paths. Use these verified entry points:
 | Platform concepts | https://docs.menlo.ai/platform/get-started/concepts |
 | **Python SDK** | https://docs.menlo.ai/platform/reference/python-sdk |
 | Digital Asimov | https://docs.menlo.ai/asimov/digital-asimov/quickstart |
+| CAD GitHub | https://github.com/asimovinc/asimov-1 |
 | PyPI | https://pypi.org/project/menlo-robot-sdk/ |
 | Console / API keys | https://platform.menlo.ai · https://console.menlo.ai |
 | Viewer | https://sim.menlo.ai |
+| **Kit assembly (offline)** | [ASIMOV_ASSEMBLY_FLOW.md](./ASIMOV_ASSEMBLY_FLOW.md) |
+| **Solana OCASV1 DIY** | [SOLANA_DIY_MANUFACTURING.md](./SOLANA_DIY_MANUFACTURING.md) |
 
 Print the same list from the CLI:
 
 ```bash
 python examples/asimov_drive.py --docs
+python3 -c "from packages.asimov.docs_links import full_docs_index_markdown; print(full_docs_index_markdown())"
 ```
 
 ## Install
