@@ -39,6 +39,9 @@ webrtcvad>=2.0.10
 livekit>=0.8.0
 livekit-api>=0.4.0
 
+# Asimov / Menlo platform (direct control via ASIMOV_API_KEY)
+menlo-robot-sdk[livekit]>=0.3.0
+
 # Web & API
 fastapi>=0.104.0
 uvicorn>=0.24.0

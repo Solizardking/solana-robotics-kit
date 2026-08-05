@@ -22,6 +22,7 @@ from .hardware import (
     RaspberryPiNode,
     TopionNode,
 )
+from .docs_links import WORKING_DOCS, working_docs_markdown
 
 __all__ = [
     "AsimovConfig",
@@ -33,6 +34,8 @@ __all__ = [
     "OrinNanoMotorNode",
     "RaspberryPiNode",
     "TopionNode",
+    "WORKING_DOCS",
+    "working_docs_markdown",
     "resolve_api_key",
     "load_config",
 ]
