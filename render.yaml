@@ -12,8 +12,8 @@ services:
     plan: free
     region: oregon
     rootDir: .
-    # Install all deps (incl. esbuild) — Render sets NODE_ENV=production which would skip devDeps
-    buildCommand: corepack enable && corepack prepare pnpm@9.15.4 --activate && NODE_ENV=development pnpm install --frozen-lockfile && pnpm exec esbuild server/_core/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+    # --prod=false ensures esbuild is present even when Render forces NODE_ENV=production
+    buildCommand: corepack enable && corepack prepare pnpm@9.15.4 --activate && pnpm install --frozen-lockfile --prod=false && pnpm run build:server
     startCommand: NODE_ENV=production node dist/index.js
     healthCheckPath: /health
     autoDeployTrigger: commit
