@@ -1,0 +1,377 @@
+/* entrypoints/sidepanel/styles/groot-theme.css */
+/**
+ * Solana GR00T Cyberpunk Theme
+ * Dark cyberpunk aesthetic with Solana brand colors
+ */
+
+:root {
+  /* Solana Brand Colors */
+  --solana-purple: #9945FF;
+  --solana-green: #14F195;
+  
+  /* Cyberpunk Theme Colors */
+  --groot-primary: #14F195;
+  --groot-primary-dark: #0ea5e9;
+  --groot-secondary: #9945FF;
+  --groot-background: #0a0a0f;
+  --groot-surface: #12121a;
+  --groot-surface-elevated: #1a1a25;
+  --groot-border: #2a2a3a;
+  --groot-border-glow: rgba(153, 69, 255, 0.3);
+  --groot-text: #f0f0f5;
+  --groot-text-dimmed: #8888a0;
+  --groot-success: #14F195;
+  --groot-warning: #ffa500;
+  --groot-danger: #ff4444;
+  
+  /* Desktop Agent Colors */
+  --groot-agent-active: #14F195;
+  --groot-agent-inactive: #666666;
+  --groot-agent-pulse: rgba(20, 241, 149, 0.4);
+  
+  /* Cyberpunk Effects */
+  --groot-glow-purple: 0 0 20px rgba(153, 69, 255, 0.5);
+  --groot-glow-green: 0 0 20px rgba(20, 241, 149, 0.5);
+  --groot-glow-combined: 0 0 30px rgba(153, 69, 255, 0.4), 0 0 20px rgba(20, 241, 149, 0.3);
+}
+
+/* Desktop Agent Connection Indicator */
+.desktop-agent-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--groot-surface);
+  border: 1px solid var(--groot-border);
+}
+
+.desktop-agent-indicator.connected {
+  background: rgba(20, 241, 149, 0.1);
+  border-color: var(--groot-agent-active);
+  color: var(--groot-agent-active);
+}
+
+.desktop-agent-indicator.connected::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--groot-agent-active);
+  animation: pulse 2s infinite;
+}
+
+.desktop-agent-indicator.disconnected {
+  color: var(--groot-agent-inactive);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+/* Transaction Card with Desktop Agent Integration */
+.transaction-card {
+  background: var(--groot-surface);
+  border: 1px solid var(--groot-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+.transaction-card:hover {
+  border-color: var(--groot-primary);
+  box-shadow: 0 0 10px rgba(20, 241, 149, 0.1);
+}
+
+.transaction-card.auto-execution {
+  border-color: var(--groot-warning);
+  background: rgba(255, 165, 0, 0.05);
+}
+
+/* Desktop Automation Badge */
+.automation-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background: rgba(20, 241, 149, 0.1);
+  color: var(--groot-agent-active);
+  border: 1px solid rgba(20, 241, 149, 0.3);
+}
+
+/* Risk Indicator */
+.risk-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+
+.risk-indicator.low {
+  background: var(--groot-success);
+}
+
+.risk-indicator.medium {
+  background: var(--groot-warning);
+}
+
+.risk-indicator.high {
+  background: var(--groot-danger);
+  animation: pulse 1s infinite;
+}
+
+/* GR00T Button Styles - Cyberpunk */
+.groot-button {
+  background: linear-gradient(135deg, var(--solana-green) 0%, var(--solana-purple) 100%);
+  border: 1px solid var(--solana-purple);
+  color: var(--groot-background);
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--groot-glow-combined);
+}
+
+.groot-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.groot-button:hover::before {
+  left: 100%;
+}
+
+.groot-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--groot-glow-combined), 0 8px 24px rgba(153, 69, 255, 0.4);
+  border-color: var(--solana-green);
+}
+
+.groot-button:active {
+  transform: translateY(0);
+}
+
+/* Cyberpunk Glow Effects */
+.cyberpunk-glow {
+  box-shadow: var(--groot-glow-combined);
+  border: 1px solid var(--solana-purple);
+}
+
+.cyberpunk-glow-green {
+  box-shadow: var(--groot-glow-green);
+  border: 1px solid var(--solana-green);
+}
+
+.cyberpunk-glow-purple {
+  box-shadow: var(--groot-glow-purple);
+  border: 1px solid var(--solana-purple);
+}
+
+/* Animated Grok Messages */
+.grok-message-container {
+  position: relative;
+  padding: 1rem;
+  background: var(--groot-surface);
+  border: 1px solid var(--groot-border);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.grok-message-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--solana-green), var(--solana-purple));
+  animation: grok-pulse 2s infinite;
+}
+
+.grok-message-container.typing::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--solana-green), transparent);
+  animation: grok-scan 1.5s infinite;
+}
+
+@keyframes grok-pulse {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 10px var(--solana-green);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 20px var(--solana-purple);
+  }
+}
+
+@keyframes grok-scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Cyberpunk Text Effects */
+.cyberpunk-text {
+  background: linear-gradient(135deg, var(--solana-green) 0%, var(--solana-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+  text-shadow: 0 0 30px rgba(153, 69, 255, 0.5);
+}
+
+.cyberpunk-text-glow {
+  text-shadow: 
+    0 0 10px var(--solana-green),
+    0 0 20px var(--solana-green),
+    0 0 30px var(--solana-purple);
+  animation: text-glow-pulse 2s infinite;
+}
+
+@keyframes text-glow-pulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 10px var(--solana-green),
+      0 0 20px var(--solana-green),
+      0 0 30px var(--solana-purple);
+  }
+  50% {
+    text-shadow: 
+      0 0 15px var(--solana-purple),
+      0 0 25px var(--solana-purple),
+      0 0 35px var(--solana-green);
+  }
+}
+
+/* Desktop Agent Status Panel */
+.agent-status-panel {
+  background: var(--groot-surface);
+  border: 1px solid var(--groot-border);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.agent-status-panel.connected {
+  border-color: var(--groot-agent-active);
+  background: rgba(20, 241, 149, 0.05);
+}
+
+/* Auto-execution Warning */
+.auto-execution-warning {
+  background: rgba(255, 165, 0, 0.1);
+  border: 1px solid var(--groot-warning);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  color: var(--groot-warning);
+}
+
+/* Transaction Details Grid */
+.transaction-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.transaction-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.transaction-detail-label {
+  font-size: 0.75rem;
+  color: var(--groot-text-dimmed);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.transaction-detail-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--groot-text);
+  font-family: monospace;
+}
+
+/* Loading States */
+.loading-skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--groot-surface) 0%,
+    var(--groot-border) 50%,
+    var(--groot-surface) 100%
+  );
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 0.25rem;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--groot-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--groot-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--groot-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .transaction-details-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .desktop-agent-indicator {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.5rem;
+  }
+}

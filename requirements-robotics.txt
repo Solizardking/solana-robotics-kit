@@ -1,0 +1,45 @@
+# Solana Robotics Kit Requirements
+# Compatible with NVIDIA Jetson Orin Nano + JetPack 6.1
+
+# Core dependencies
+openai>=1.51.0
+solana>=0.30.0
+solders>=0.18.0
+
+# Computer vision (Jetson-optimized)
+opencv-python>=4.8.0
+Pillow>=10.0.0
+
+# Robotics
+rclpy>=3.0.0  # ROS 2 Python client
+geometry-msgs>=4.0.0
+sensor-msgs>=4.0.0
+nav-msgs>=4.0.0
+
+# NVIDIA acceleration
+pycuda>=2024.1
+tensorrt>=10.6.0
+
+# Async/concurrency
+aiohttp>=3.9.0
+asyncio-mqtt>=0.16.0
+
+# Data handling
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Blockchain utilities
+base58>=2.1.0
+construct>=2.10.0
+
+# Configuration
+python-dotenv>=1.0.0
+pyyaml>=6.0
+
+# Logging
+loguru>=0.7.0
+
+# Optional: ROS 2 additional packages
+# tf2-ros>=0.25.0
+# robot-state-publisher>=3.0.0
+# nav2-msgs>=1.1.0

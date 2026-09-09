@@ -1,0 +1,67 @@
+{
+  "name": "solana-groot-extension",
+  "version": "1.0.0",
+  "description": "AI-powered Solana wallet organizer with RPC-powered tags and trading integration",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "tsc --noEmit",
+    "postinstall": "wxt prepare"
+  },
+  "keywords": [
+    "solana",
+    "trading",
+    "ai",
+    "gr00t",
+    "defi",
+    "chrome-extension",
+    "wallet-standard"
+  ],
+  "author": "8bit & @0rdlibrary",
+  "license": "MIT",
+  "dependencies": {
+    "@mantine/core": "^8.3.3",
+    "@mantine/hooks": "^8.3.3",
+    "@mantine/notifications": "^8.3.4",
+    "@solana/addresses": "^4.0.0",
+    "@solana/codecs-strings": "^4.0.0",
+    "@solana/wallet-standard-chains": "^1.1.0",
+    "@solana/wallet-standard-features": "^1.2.0",
+    "@solana/web3.js": "^1.95.4",
+    "@tabler/icons-react": "^3.35.0",
+    "@wallet-standard/core": "^1.0.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.260",
+    "@types/react": "^18.2.46",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^5.0.4",
+    "dotenv": "^16.4.5",
+    "postcss": "^8.5.6",
+    "postcss-preset-mantine": "^1.18.0",
+    "postcss-simple-vars": "^7.0.1",
+    "typescript": "^5.3.3",
+    "vite": "^7.1.9",
+    "wxt": "^0.20.11"
+  },
+  "pnpm": {
+    "overrides": {
+      "@wxt-dev/storage": "1.2.0"
+    },
+    "onlyBuiltDependencies": [
+      "bufferutil",
+      "esbuild",
+      "spawn-sync",
+      "utf-8-validate"
+    ]
+  }
+}

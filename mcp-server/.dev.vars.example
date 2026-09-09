@@ -1,0 +1,9 @@
+# Local development environment variables
+# Copy this to .dev.vars and fill in your values
+# .dev.vars is gitignored and used by wrangler dev
+
+RPC_URL=https://api.mainnet-beta.solana.com
+SOLANA_PRIVATE_KEY=[1,2,3,...]
+OPENAI_API_KEY=your-openai-api-key
+E2B_API_KEY=your-e2b-api-key
+BROWSER_API_URL=http://localhost:8080

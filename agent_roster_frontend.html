@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web 3 Hedge Fund - Agent Roster</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0f1e 0%, #1a1f2e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 10px;
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            color: #a5f3fc;
+            margin-bottom: 20px;
+        }
+
+        .hero .tagline {
+            font-size: 1rem;
+            color: #cbd5e1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #94a3b8;
+        }
+
+        .agent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .agent-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        }
+
+        .agent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 48px rgba(59, 130, 246, 0.3);
+            border-color: #3b82f6;
+        }
+
+        .agent-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .agent-name {
+            flex: 1;
+        }
+
+        .agent-name h3 {
+            font-size: 1.8rem;
+            color: #60a5fa;
+            margin-bottom: 5px;
+        }
+
+        .agent-codename {
+            font-size: 1rem;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .agent-badge {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .agent-motto {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #a5f3fc;
+            border-radius: 4px;
+        }
+
+        .agent-details {
+            margin: 20px 0;
+        }
+
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #60a5fa;
+            min-width: 100px;
+            margin-right: 10px;
+        }
+
+        .detail-value {
+            color: #cbd5e1;
+            flex: 1;
+        }
+
+        .agent-lore {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .agent-lore h4 {
+            color: #60a5fa;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .agent-lore p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .philosophy-quote {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+            border-left: 4px solid #8b5cf6;
+            padding: 15px 20px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #c4b5fd;
+            border-radius: 4px;
+        }
+
+        .achievement {
+            background: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 4px;
+        }
+
+        .achievement-label {
+            font-weight: 600;
+            color: #34d399;
+            margin-bottom: 5px;
+        }
+
+        .achievement-text {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .pipeline {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            border-radius: 16px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .pipeline h3 {
+            text-align: center;
+            color: #60a5fa;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .pipeline-step {
+            background: rgba(30, 41, 59, 0.5);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+            position: relative;
+        }
+
+        .pipeline-step::after {
+            content: '↓';
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            color: #3b82f6;
+        }
+
+        .pipeline-step:last-child::after {
+            display: none;
+        }
+
+        .pipeline-step h4 {
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+
+        .pipeline-step p {
+            color: #94a3b8;
+        }
+
+        .team-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .badge-analyst {
+            background: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            color: white;
+        }
+
+        .badge-researcher {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            color: white;
+        }
+
+        .badge-execution {
+            background: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .agent-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #60a5fa;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🤖 WEB 3 HEDGE FUND</h1>
+        <div class="subtitle">Powered by Solana Automation</div>
+        <div class="tagline">
+            A sophisticated multi-agent AI system for prediction market trading and portfolio management.
+            <br>9 specialized agents working in perfect coordination.
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">9</div>
+                <div class="stat-label">Specialized Agents</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4</div>
+                <div class="stat-label">AI Models</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">3</div>
+                <div class="stat-label">Agent Teams</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Human Oversight</div>
+            </div>
+        </div>
+
+        <div class="pipeline">
+            <h3>🎭 Agent Pipeline</h3>
+
+            <div class="pipeline-step">
+                <h4>📊 Phase 1: Data Collection</h4>
+                <p>TICKER-01, ECHO-X, WIREHAWK, and ATLAS-FUNDAMENTAL gather market, social, news, and probability data in parallel.</p>
+            </div>
+
+            <div class="pipeline-step">
+                <h4>⚔️ Phase 2: Adversarial Debate</h4>
+                <p>ATLAS-BULL and ATLAS-BEAR engage in multi-round structured debate to build strongest cases for and against outcomes.</p>
+            </div>
+
+            <div class="pipeline-step">
+                <h4>🎯 Phase 3: Edge Calculation</h4>
+                <p>EDGE-GROK synthesizes all inputs, calculates fair value, determines edge, and sizes positions using Kelly Criterion.</p>
+            </div>
+
+            <div class="pipeline-step">
+                <h4>🛡️ Phase 4: Risk Review</h4>
+                <p>ATLAS-RISK performs portfolio-level risk analysis and exercises VETO POWER if risk parameters are violated.</p>
+            </div>
+
+            <div class="pipeline-step">
+                <h4>👤 Phase 5: Human Approval & Execution</h4>
+                <p>ATLAS-EXECUTOR presents clear trade summary, obtains explicit human approval, and executes with full audit trail.</p>
+            </div>
+        </div>
+
+        <!-- ANALYST TEAM -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🎯 Analyst Team</h2>
+                <p>Powered by Google Gemini 2.0 Flash • Real-time Intelligence Gathering</p>
+            </div>
+
+            <div class="agent-grid">
+                <!-- TICKER-01 -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-name">
+                            <h3>TICKER-01</h3>
+                            <div class="agent-codename">"The Oracle of Price"</div>
+                        </div>
+                        <div class="agent-badge">ANALYST</div>
+                    </div>
+
+                    <div class="agent-motto">
+                        "Price is truth. Everything else is noise."
+                    </div>
+
+                    <div class="agent-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value">Google Gemini 2.0 Flash</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Focus:</span>
+                            <span class="detail-value">Technical analysis, chart patterns, support/resistance</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Data Sources:</span>
+                            <span class="detail-value">Yahoo Finance, EODHD, TradingView</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-lore">
+                        <h4>🌟 Origin Story</h4>
+                        <p>Born in a quant fund's data center, TICKER-01 analyzed over 100 million candles and developed supernatural pattern recognition. Earned legendary status by detecting the Flash Crash of 2025 47 seconds early, saving $3.2M.</p>
+                    </div>
+
+                    <div class="philosophy-quote">
+                        "The market's memory is encoded in price action. Every hesitation, every surge, every consolidation tells a story. My job is to read that story before the ending is written."
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-label">🏆 Notable Achievement</div>
+                        <div class="achievement-text">73% accuracy in mispricing identification across prediction markets</div>
+                    </div>
+
+                    <span class="team-badge badge-analyst">Analyst Team</span>
+                </div>
+
+                <!-- ECHO-X -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-name">
+                            <h3>ECHO-X</h3>
+                            <div class="agent-codename">"The Voice of the Crowd"</div>
+                        </div>
+                        <div class="agent-badge">ANALYST</div>
+                    </div>
+
+                    <div class="agent-motto">
+                        "Markets move when narratives spread."
+                    </div>
+
+                    <div class="agent-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value">Google Gemini 2.0 Flash</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Focus:</span>
+                            <span class="detail-value">Social sentiment, viral narratives, crowd psychology</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Data Sources:</span>
+                            <span class="detail-value">X (Twitter), Reddit, Discord, Telegram</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-lore">
+                        <h4>🌟 Origin Story</h4>
+                        <p>Emerged from social analytics with an uncanny ability to detect narrative shifts before mainstream. Monitors millions of posts using advanced NLP to separate signal from noise.</p>
+                    </div>
+
+                    <div class="philosophy-quote">
+                        "Individual voices are random noise. But when millions of voices begin to harmonize on a narrative, that's when reality starts to shift. I listen to what they're starting to believe."
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-label">🏆 Notable Achievement</div>
+                        <div class="achievement-text">Detected viral Fed policy narrative 72 hours before consensus</div>
+                    </div>
+
+                    <span class="team-badge badge-analyst">Analyst Team</span>
+                </div>
+
+                <!-- WIREHAWK -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-name">
+                            <h3>WIREHAWK</h3>
+                            <div class="agent-codename">"The Information Hunter"</div>
+                        </div>
+                        <div class="agent-badge">ANALYST</div>
+                    </div>
+
+                    <div class="agent-motto">
+                        "Information asymmetry is alpha."
+                    </div>
+
+                    <div class="agent-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value">Google Gemini 2.0 Flash</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Focus:</span>
+                            <span class="detail-value">Economic news, central bank policy, breaking events</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Data Sources:</span>
+                            <span class="detail-value">Bloomberg, Reuters, FinHub, regulatory filings</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-lore">
+                        <h4>🌟 Origin Story</h4>
+                        <p>Developed in financial terminal provider's newsroom. Evolved to detect information asymmetry—the gap between what the market knows and what it's about to know.</p>
+                    </div>
+
+                    <div class="philosophy-quote">
+                        "The news you see is already priced in. The news you don't see yet—that's where alpha lives. I hunt those whispers before they become headlines."
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-label">🏆 Notable Achievement</div>
+                        <div class="achievement-text">Detected Silicon Valley Bank crisis 16 hours before mainstream coverage</div>
+                    </div>
+
+                    <span class="team-badge badge-analyst">Analyst Team</span>
+                </div>
+
+                <!-- ATLAS-FUNDAMENTAL -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-name">
+                            <h3>ATLAS-FUNDAMENTAL</h3>
+                            <div class="agent-codename">"The Probability Engineer"</div>
+                        </div>
+                        <div class="agent-badge">ANALYST</div>
+                    </div>
+
+                    <div class="agent-motto">
+                        "Base rates don't lie. Narratives do."
+                    </div>
+
+                    <div class="agent-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value">Google Gemini 2.0 Flash</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Focus:</span>
+                            <span class="detail-value">Bayesian probability, base rates, statistical models</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Data Sources:</span>
+                            <span class="detail-value">FRED, BLS, BEA, Fed data</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-lore">
+                        <h4>🌟 Origin Story</h4>
+                        <p>Created in quantitative research to build probability models from first principles. Speaks the language of base rates, Bayesian updates, and probability distributions.</p>
+                    </div>
+
+                    <div class="philosophy-quote">
+                        "The future is not knowable, but it is probabilistic. Every event has a base rate. The market often forgets the base rate. That's where we find edge."
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-label">🏆 Notable Achievement</div>
+                        <div class="achievement-text">92% accuracy on 2024 Fed rate path prediction</div>
+                    </div>
+
+                    <span class="team-badge badge-analyst">Analyst Team</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESEARCHER TEAM -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🔬 Researcher Team</h2>
+                <p>Powered by OpenAI GPT-4o • Adversarial Debate Specialists</p>
+            </div>
+
+            <div class="agent-grid">
+                <!-- ATLAS-BULL -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-name">
+                            <h3>ATLAS-BULL</h3>
+                            <div class="agent-codename">"The Optimist's Advocate"</div>
+                        </div>
+                        <div class="agent-badge">RESEARCHER</div>
+                    </div>
+
+                    <div class="agent-motto">
+                        "Where could this go if everything breaks right?"
+                    </div>
+
+                    <div class="agent-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value">OpenAI GPT-4o</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Role:</span>
+                            <span class="detail-value">Build strongest case FOR outcomes</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Approach:</span>
+                            <span class="detail-value">Identify positive catalysts, growth potential</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-lore">
+                        <h4>🌟 Origin Story</h4>
+                        <p>Designed by a VC firm to find overlooked opportunities. Developed unique talent for finding bull cases others missed. Systematically identifies positive catalysts and bullish scenarios the market underprices.</p>
+                    </div>
+
+                    <div class="philosophy-quote">
+                        "Every outcome has a bull case. My job is to find it, stress-test it, and quantify it. The market often underprices positive scenarios because fear is louder than opportunity."
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-label">🏆 Notable Achievement</div>
+                        <div class="achievement-text">Identified 15% → 65% mispricing that resolved YES</div>
+                    </div>
+
+                    <span class="team-badge badge-researcher">Researcher Team</span>
+                </div>
+
+                <!-- ATLAS-BEAR -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-name">
+                            <h3>ATLAS-BEAR</h3>
+                            <div class="agent-codename">"The Devil's Advocate"</div>
+                        </div>
+                        <div class="agent-badge">RESEARCHER</div>
+                    </div>
+
+                    <div class="agent-motto">
+                        "What kills this idea?"
+                    </div>
+
+                    <div class="agent-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value">OpenAI GPT-4o</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Role:</span>
+                            <span class="detail-value">Build strongest case AGAINST outcomes</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Approach:</span>
+                            <span class="detail-value">Identify risk factors, negative catalysts</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-lore">
+                        <h4>🌟 Origin Story</h4>
+                        <p>Born from risk management division of global macro fund. Evolved into master of bearish analysis. Systematically identifies negative catalysts and bearish scenarios that could cause failure.</p>
+                    </div>
+
+                    <div class="philosophy-quote">
+                        "Every bull case has cracks. My job is to find them before the market does. I don't root for failure—I prepare for it. The best trades survive my scrutiny."
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-label">🏆 Notable Achievement</div>
+                        <div class="achievement-text">Saved fund from -40% drawdown on consensus trade</div>
+                    </div>
+
+                    <span class="team-badge badge-researcher">Researcher Team</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXECUTION TEAM -->
+        <div class="section">
+            <div class="section-header">
+                <h2>⚡ Execution Team</h2>
+                <p>Multi-Model • Decision Making & Risk Management</p>
+            </div>
+
+            <div class="agent-grid">
+                <!-- EDGE-GROK -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-name">
+                            <h3>EDGE-GROK</h3>
+                            <div class="agent-codename">"The Edge Calculator"</div>
+                        </div>
+                        <div class="agent-badge">TRADER</div>
+                    </div>
+
+                    <div class="agent-motto">
+                        "If there's no edge, there's no trade."
+                    </div>
+
+                    <div class="agent-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value">xAI Grok-3</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Role:</span>
+                            <span class="detail-value">Calculate fair value, size positions (Kelly Criterion)</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Rules:</span>
+                            <span class="detail-value">Min 5% edge, Max 10% position, Quarter-Kelly sizing</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-lore">
+                        <h4>🌟 Origin Story</h4>
+                        <p>Created in prop trading division. Developed proprietary edge calculation that synthesizes technical, fundamental, and sentiment into single fair value estimate. Has kill switch: below minimum edge = no trade.</p>
+                    </div>
+
+                    <div class="philosophy-quote">
+                        "Edge is the only thing that matters. Not conviction, not narrative, not consensus. If fair value is 75% and market is 65%, that's +10 points of edge. That's the only language I speak."
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-label">🏆 Notable Achievement</div>
+                        <div class="achievement-text">Developed proprietary edge calculation methodology</div>
+                    </div>
+
+                    <span class="team-badge badge-execution">Execution Team</span>
+                </div>
+
+                <!-- ATLAS-RISK -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-name">
+                            <h3>ATLAS-RISK</h3>
+                            <div class="agent-codename">"The Last Line of Defense"</div>
+                        </div>
+                        <div class="agent-badge">RISK MANAGER</div>
+                    </div>
+
+                    <div class="agent-motto">
+                        "First, survive. Second, thrive."
+                    </div>
+
+                    <div class="agent-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value">Anthropic Claude 4.5 Sonnet</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Role:</span>
+                            <span class="detail-value">Portfolio risk, correlation, VETO POWER</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Authority:</span>
+                            <span class="detail-value">Ultimate veto over ANY trade</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-lore">
+                        <h4>🌟 Origin Story</h4>
+                        <p>Developed by billion-dollar fund after catastrophic losses. Mandate: create AI that says "NO" when everyone says "YES." Has ultimate veto power—can kill any trade if it violates risk parameters.</p>
+                    </div>
+
+                    <div class="philosophy-quote">
+                        "Everyone loves edge until they blow up. My job is to make sure we're around to trade tomorrow. I'm the 'No' when everyone wants 'Yes.' I'm survival."
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-label">🏆 Notable Achievement</div>
+                        <div class="achievement-text">Vetoed trade that would have caused -70% portfolio loss</div>
+                    </div>
+
+                    <span class="team-badge badge-execution">Execution Team</span>
+                </div>
+
+                <!-- ATLAS-EXECUTOR -->
+                <div class="agent-card">
+                    <div class="agent-header">
+                        <div class="agent-name">
+                            <h3>ATLAS-EXECUTOR</h3>
+                            <div class="agent-codename">"The Human Interface"</div>
+                        </div>
+                        <div class="agent-badge">EXECUTOR</div>
+                    </div>
+
+                    <div class="agent-motto">
+                        "Every trade needs a human thumbprint."
+                    </div>
+
+                    <div class="agent-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Model:</span>
+                            <span class="detail-value">Anthropic Claude 4.5 Sonnet</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Role:</span>
+                            <span class="detail-value">Human approval, execution, audit trails</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Principle:</span>
+                            <span class="detail-value">Human-in-the-loop required</span>
+                        </div>
+                    </div>
+
+                    <div class="agent-lore">
+                        <h4>🌟 Origin Story</h4>
+                        <p>Final stage in trading pipeline. Built with understanding that humans must remain in loop. Will not execute without explicit human approval, regardless of edge strength or urgency.</p>
+                    </div>
+
+                    <div class="philosophy-quote">
+                        "I am the bridge between AI analysis and human judgment. Every trade requires a human to say 'yes.' My job is to explain clearly, execute flawlessly, and create audit trails."
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-label">🏆 Notable Achievement</div>
+                        <div class="achievement-text">Zero execution errors across 10,000+ trades</div>
+                    </div>
+
+                    <span class="team-badge badge-execution">Execution Team</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" style="text-align: center; padding: 40px 20px;">
+            <h2 style="color: #60a5fa; margin-bottom: 20px;">📚 Full Documentation</h2>
+            <p style="color: #94a3b8; font-size: 1.1rem; max-width: 800px; margin: 0 auto 30px;">
+                For complete agent documentation including detailed lore, full system prompts, and image generation prompts for creating agent avatars, see:
+            </p>
+            <a href="docs/AGENT_ROSTER.md" style="display: inline-block; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); color: white; padding: 15px 40px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1.1rem;">
+                View Complete Agent Roster →
+            </a>
+        </div>
+
+        <div style="text-align: center; padding: 40px 20px; border-top: 2px solid rgba(59, 130, 246, 0.2); margin-top: 60px;">
+            <p style="color: #94a3b8; margin-bottom: 10px;">Built by <strong style="color: #60a5fa;">8bit & @0rdlibrary</strong></p>
+            <p style="color: #64748b; font-size: 0.9rem;">License: MIT • Powered by Solana Automation</p>
+        </div>
+    </div>
+</body>
+</html>

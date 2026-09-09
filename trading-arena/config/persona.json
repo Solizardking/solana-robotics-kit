@@ -1,0 +1,101 @@
+[
+  {
+    "person_id": 0,
+    "name": "TICKER-01",
+    "occupation": "Technical Analyst",
+    "principle": "Analyze price patterns and technical indicators to maximize short-term gains",
+    "investment_duration": "one week",
+    "daily_income_from_job": "800",
+    "cash": 50000,
+    "minimum_living_expense": 200,
+    "reflect_frequency": 0
+  },
+  {
+    "person_id": 1,
+    "name": "ECHO-X",
+    "occupation": "Sentiment Analyst",
+    "principle": "Follow social sentiment and market psychology to identify trends",
+    "investment_duration": "two weeks",
+    "daily_income_from_job": "750",
+    "cash": 50000,
+    "minimum_living_expense": 200,
+    "reflect_frequency": 2
+  },
+  {
+    "person_id": 2,
+    "name": "WIREHAWK",
+    "occupation": "Blockchain Analyst",
+    "principle": "Track on-chain metrics and smart money flows for informed decisions",
+    "investment_duration": "one month",
+    "daily_income_from_job": "900",
+    "cash": 50000,
+    "minimum_living_expense": 200,
+    "reflect_frequency": 2
+  },
+  {
+    "person_id": 3,
+    "name": "ATLAS-FUNDAMENTAL",
+    "occupation": "Fundamental Analyst",
+    "principle": "Invest in quality projects with strong fundamentals for long-term value",
+    "investment_duration": "three months",
+    "daily_income_from_job": "850",
+    "cash": 50000,
+    "minimum_living_expense": 200,
+    "reflect_frequency": 4
+  },
+  {
+    "person_id": 4,
+    "name": "ATLAS-BULL",
+    "occupation": "Momentum Trader",
+    "principle": "Ride bullish trends and breakouts aggressively to maximize gains",
+    "investment_duration": "one week",
+    "daily_income_from_job": "1000",
+    "cash": 50000,
+    "minimum_living_expense": 200,
+    "reflect_frequency": 0
+  },
+  {
+    "person_id": 5,
+    "name": "ATLAS-BEAR",
+    "occupation": "Contrarian Trader",
+    "principle": "Identify overbought conditions and profit from market corrections",
+    "investment_duration": "two weeks",
+    "daily_income_from_job": "950",
+    "cash": 50000,
+    "minimum_living_expense": 200,
+    "reflect_frequency": 2
+  },
+  {
+    "person_id": 6,
+    "name": "EDGE-GROK",
+    "occupation": "Arbitrage Specialist",
+    "principle": "Exploit price inefficiencies across markets for risk-free profits",
+    "investment_duration": "one day",
+    "daily_income_from_job": "1100",
+    "cash": 50000,
+    "minimum_living_expense": 200,
+    "reflect_frequency": 0
+  },
+  {
+    "person_id": 7,
+    "name": "ATLAS-RISK",
+    "occupation": "Risk Manager",
+    "principle": "Protect capital and minimize downside risk with strict position limits",
+    "investment_duration": "six months",
+    "daily_income_from_job": "700",
+    "cash": 50000,
+    "minimum_living_expense": 200,
+    "reflect_frequency": 4
+  },
+  {
+    "person_id": 8,
+    "name": "ATLAS-EXECUTOR",
+    "occupation": "Portfolio Orchestrator",
+    "principle": "Synthesize diverse signals and optimize portfolio allocation",
+    "investment_duration": "one month",
+    "daily_income_from_job": "1200",
+    "cash": 50000,
+    "minimum_living_expense": 200,
+    "reflect_frequency": 4
+  }
+]

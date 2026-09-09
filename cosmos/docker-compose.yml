@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  cosmos-inference:
+    image: nvcr.io/nvidia/cosmos:latest
+    container_name: cosmos-inference
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      - MODEL_SIZE=4B
+      - INFERENCE_MODE=streaming
+      - NVIDIA_VISIBLE_DEVICES=all
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./models:/models
+      - ./cache:/cache
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  trading-agent:
+    build:
+      context: ..
+      dockerfile: cosmos/Dockerfile
+    container_name: solana-cosmos-agent
+    depends_on:
+      - cosmos-inference
+    environment:
+      - COSMOS_ENDPOINT=http://cosmos-inference:8080
+      - SOLANA_RPC_URL=${SOLANA_RPC_URL}
+      - HELIUS_API_KEY=${HELIUS_API_KEY}
+      - BIRDEYE_API_KEY=${BIRDEYE_API_KEY}
+      - WALLET_PRIVATE_KEY=${WALLET_PRIVATE_KEY}
+      - MIN_CONFIDENCE=${MIN_CONFIDENCE:-0.75}
+      - MAX_POSITION_SIZE=${MAX_POSITION_SIZE:-0.05}
+    volumes:
+      - ./config:/app/config
+      - ./logs:/app/logs
+      - ./data:/app/data
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  monitoring:
+    image: grafana/grafana:latest
+    container_name: grafana-monitoring
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_INSTALL_PLUGINS=grafana-clock-panel
+    volumes:
+      - ./grafana:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus-metrics
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    restart: unless-stopped
+
+volumes:
+  prometheus-data:
+    driver: local
+
+networks:
+  default:
+    name: cosmos-solana-network

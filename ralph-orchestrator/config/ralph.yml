@@ -1,0 +1,118 @@
+# Ralph Orchestrator Configuration for Solana Hedge Fund
+# Adapted from original Ralph Orchestrator
+
+# Task configuration
+task:
+  max_iterations: 100
+  max_runtime: 14400  # 4 hours in seconds
+  checkpoint_interval: 5  # Create checkpoint every 5 iterations
+
+# Workspace configuration
+workspace:
+  dir: ".agent"
+  scratchpad_file: "scratchpad.md"
+  memory_file: "memory.json"
+  metrics_dir: "metrics"
+  cache_dir: "cache"
+
+# Agent configuration
+agents:
+  # Analysis Team (Google Gemini)
+  TICKER-01:
+    provider: "gemini"
+    model: "gemini-2.0-flash"
+    role: "market_analyst"
+    priority: 1
+
+  ECHO-X:
+    provider: "gemini"
+    model: "gemini-2.0-flash"
+    role: "social_analyst"
+    priority: 1
+
+  WIREHAWK:
+    provider: "gemini"
+    model: "gemini-2.0-flash"
+    role: "news_analyst"
+    priority: 1
+
+  ATLAS-FUNDAMENTAL:
+    provider: "gemini"
+    model: "gemini-2.0-flash"
+    role: "fundamental_analyst"
+    priority: 1
+
+  # Research Team (GPT-4 + Firecrawl)
+  ATLAS-BULL:
+    provider: "openai"
+    model: "gpt-4o"
+    role: "bullish_researcher"
+    priority: 2
+
+  ATLAS-BEAR:
+    provider: "openai"
+    model: "gpt-4o"
+    role: "bearish_researcher"
+    priority: 2
+
+  FIRECRAWL:
+    provider: "firecrawl"
+    api_endpoint: "https://api.firecrawl.dev/v1"
+    role: "web_researcher"
+    priority: 2
+    config:
+      max_depth: 3
+      timeout: 300
+      poll_interval: 2
+
+  # Execution Team (Grok + Claude)
+  EDGE-GROK:
+    provider: "xai"
+    model: "grok-3"
+    role: "trader"
+    priority: 3
+
+  ATLAS-RISK:
+    provider: "anthropic"
+    model: "claude-4.5-sonnet"
+    role: "risk_manager"
+    priority: 4
+    veto_power: true
+
+  ATLAS-EXECUTOR:
+    provider: "anthropic"
+    model: "claude-4.5-sonnet"
+    role: "executor"
+    priority: 5
+    requires_human_approval: true
+
+# API Keys (loaded from environment)
+api_keys:
+  openai: "${OPENAI_API_KEY}"
+  anthropic: "${ANTHROPIC_API_KEY}"
+  xai: "${XAI_API_KEY}"
+  google: "${GOOGLE_API_KEY}"
+  firecrawl: "${FIRECRAWL_API_KEY}"
+
+# Cost tracking
+cost_tracking:
+  enabled: true
+  max_cost: 10.0  # Maximum cost per orchestration run
+  warn_at: 5.0    # Warning threshold
+
+# Retry configuration
+retry:
+  max_retries: 3
+  backoff_factor: 2  # Exponential backoff
+
+# Logging
+logging:
+  level: "INFO"
+  verbose: false
+  log_file: ".agent/orchestrator.log"
+
+# Safety limits
+safety:
+  max_consecutive_failures: 5
+  emergency_stop_on_signal: true
+  graceful_shutdown_timeout: 30  # seconds

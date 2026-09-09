@@ -1,0 +1,96 @@
+{
+  "manifest_version": 3,
+  "name": "Solana GR00T Trading Assistant",
+  "version": "1.0.0",
+  "description": "AI-powered trading assistant with vision, voice, and live code execution for Solana DEXs",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "scripting",
+    "webRequest",
+    "desktopCapture",
+    "tabCapture"
+  ],
+  "host_permissions": [
+    "http://localhost:*/",
+    "https://*.jup.ag/*",
+    "https://*.raydium.io/*",
+    "https://*.orca.so/*",
+    "https://*.meteora.ag/*",
+    "https://*.solana.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.jup.ag/*",
+        "https://*.raydium.io/*",
+        "https://*.orca.so/*",
+        "https://*.meteora.ag/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "vision_overlay.html",
+        "vibe_coder.html",
+        "icons/*",
+        "sounds/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "toggle-voice": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+V",
+        "mac": "Command+Shift+V"
+      },
+      "description": "Toggle voice commands"
+    },
+    "take-screenshot": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Capture chart for analysis"
+    },
+    "open-vibe-coder": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+C",
+        "mac": "Command+Shift+C"
+      },
+      "description": "Open vibe coding panel"
+    },
+    "emergency-stop": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X"
+      },
+      "description": "Emergency stop all trading"
+    }
+  }
+}

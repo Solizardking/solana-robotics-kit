@@ -1,0 +1,44 @@
+# NVIDIA Cosmos World Foundation Models × Solana Integration
+# Requirements for visual chart analysis and autonomous trading
+
+# Core dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+numpy>=1.24.0
+Pillow>=10.0.0
+
+# Cosmos models (when available from NVIDIA)
+# cosmos-tokenizer>=1.0.0
+# cosmos-autoregressive>=1.0.0
+
+# Async and networking
+aiohttp>=3.9.0
+asyncio>=3.4.3
+
+# Solana blockchain
+solana>=0.30.0
+solders>=0.18.0
+
+# Trading and market data
+requests>=2.31.0
+websockets>=12.0
+
+# Configuration and utilities
+python-dotenv>=1.0.0
+pyyaml>=6.0
+loguru>=0.7.0
+
+# Data processing
+pandas>=2.0.0
+
+# Image processing
+opencv-python>=4.8.0
+
+# Optional: GPU acceleration
+# pycuda>=2024.1  # For CUDA acceleration
+# tensorrt>=10.6.0  # For TensorRT inference
+
+# Optional: Model serving
+# tritonclient[all]>=2.40.0  # For NVIDIA Triton inference server
+# fastapi>=0.104.0  # For API endpoints
+# uvicorn>=0.24.0  # For serving

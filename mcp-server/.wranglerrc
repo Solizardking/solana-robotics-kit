@@ -1,0 +1,6 @@
+# Cloudflare Wrangler configuration
+# This file stores authentication tokens (gitignored)
+
+# Set these via environment variables or wrangler login
+# CLOUDFLARE_API_TOKEN=bVbV92OXOrqwWQUdY3M-SxNyzENwxwQgEmJ4-rex
+# CLOUDFLARE_ACCOUNT_ID=2f5db575118d15ec19000e13282201bc

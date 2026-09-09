@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .App {
+    padding: 16px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 12px !important;
+  }
+}

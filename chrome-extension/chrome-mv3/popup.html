@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solana GR00T Assistant</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">
+        <svg width="32" height="32" viewBox="0 0 32 32">
+          <circle cx="16" cy="16" r="14" fill="#14F195" opacity="0.2"/>
+          <circle cx="16" cy="16" r="10" fill="#14F195"/>
+        </svg>
+        <h1>GR00T</h1>
+      </div>
+      <div class="status-indicator" id="status-indicator">
+        <span class="status-dot"></span>
+        <span class="status-text">Disconnected</span>
+      </div>
+    </div>
+
+    <!-- Connection Section -->
+    <div class="section" id="connection-section">
+      <h2>Connection</h2>
+      <div class="input-group">
+        <label for="connection-url">Desktop Agent URL</label>
+        <input
+          type="text"
+          id="connection-url"
+          placeholder="ws://localhost:8765"
+          value="ws://localhost:8765"
+        />
+      </div>
+      <div class="input-group">
+        <label for="api-key">API Key (optional)</label>
+        <input
+          type="password"
+          id="api-key"
+          placeholder="Enter API key..."
+        />
+      </div>
+      <button id="connect-btn" class="btn btn-primary">
+        Connect to Desktop
+      </button>
+    </div>
+
+    <!-- Features Section -->
+    <div class="section" id="features-section" style="display: none;">
+      <h2>Features</h2>
+
+      <div class="feature-toggle">
+        <div class="feature-info">
+          <span class="feature-icon">👁️</span>
+          <div>
+            <strong>Vision Analysis</strong>
+            <p>AI chart analysis</p>
+          </div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="vision-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="feature-toggle">
+        <div class="feature-info">
+          <span class="feature-icon">🎤</span>
+          <div>
+            <strong>Voice Commands</strong>
+            <p>Speak to trade</p>
+          </div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="voice-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="feature-toggle">
+        <div class="feature-info">
+          <span class="feature-icon">⚡</span>
+          <div>
+            <strong>Auto-Execution</strong>
+            <p>AI automated trading</p>
+          </div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="auto-toggle">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="feature-toggle">
+        <div class="feature-info">
+          <span class="feature-icon">⚠️</span>
+          <div>
+            <strong>Risk Alerts</strong>
+            <p>High-risk warnings</p>
+          </div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="alerts-toggle" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section" id="actions-section" style="display: none;">
+      <h2>Quick Actions</h2>
+      <div class="action-buttons">
+        <button class="action-btn" id="analyze-btn">
+          <span class="action-icon">📸</span>
+          Analyze Chart
+        </button>
+        <button class="action-btn" id="vibe-btn">
+          <span class="action-icon">💻</span>
+          Vibe Coder
+        </button>
+        <button class="action-btn" id="positions-btn">
+          <span class="action-icon">📊</span>
+          Positions
+        </button>
+        <button class="action-btn" id="balance-btn">
+          <span class="action-icon">💰</span>
+          Balance
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="section" id="stats-section" style="display: none;">
+      <h2>Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-label">Today's P&L</div>
+          <div class="stat-value" id="stat-pnl">--</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Win Rate</div>
+          <div class="stat-value" id="stat-winrate">--</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Total Trades</div>
+          <div class="stat-value" id="stat-trades">--</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Active Positions</div>
+          <div class="stat-value" id="stat-positions">--</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Emergency Stop -->
+    <div class="section" id="emergency-section" style="display: none;">
+      <button id="emergency-stop-btn" class="btn btn-danger">
+        🛑 Emergency Stop
+      </button>
+      <p class="emergency-note">Stops all trading immediately</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <span>Version 1.0.0</span>
+      <a href="#" id="settings-link">Settings</a>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

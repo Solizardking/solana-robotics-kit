@@ -1,0 +1,15 @@
+name = "pump-mcp"
+main = "src/cloudflare-worker.ts"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+account_id = "2f5db575118d15ec19000e13282201bc"
+
+# KV namespace for storing keypairs (create with: wrangler kv namespace create "PUMP_KEYS")
+# [kv_namespaces]
+# binding = "PUMP_KEYS"
+# id = "your-kv-namespace-id"
+
+# Environment variables (set via wrangler secret put)
+# HELIUS_RPC_URL
+# OPENAI_API_KEY
+# SOLANA_PRIVATE_KEY (optional - JSON array format)

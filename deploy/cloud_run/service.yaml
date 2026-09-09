@@ -1,0 +1,21 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: solana-automation-a2a
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: "20"
+    spec:
+      containers:
+        - image: gcr.io/PROJECT_ID/solana-automation-a2a:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: A2A_AGENT_REGISTRY
+              value: "[]"
+            - name: NIM_BASE_URL
+              value: "https://api.nvidia.com/nim"
+            - name: NIM_MODEL
+              value: "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16"

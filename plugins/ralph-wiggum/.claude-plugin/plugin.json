@@ -1,0 +1,21 @@
+{
+  "name": "ralph-wiggum",
+  "version": "1.0.0",
+  "description": "Interactive self-referential AI loops for iterative development (Ralph Wiggum technique).",
+  "commands": [
+    {
+      "name": "ralph-loop",
+      "description": "Start a Ralph loop in the current session."
+    },
+    {
+      "name": "cancel-ralph",
+      "description": "Cancel the active Ralph loop."
+    }
+  ],
+  "hooks": [
+    {
+      "event": "Stop",
+      "command": "hooks/stop-hook.sh"
+    }
+  ]
+}

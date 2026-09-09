@@ -1,0 +1,12 @@
+name = "solana-trading-mcp"
+main = "src/cloudflare-worker.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+account_id = "2f5db575118d15ec19000e13282201bc"
+
+# Environment variables (set via wrangler secret put)
+# RPC_URL
+# SOLANA_PRIVATE_KEY
+# OPENAI_API_KEY
+# E2B_API_KEY
+# BROWSER_API_URL

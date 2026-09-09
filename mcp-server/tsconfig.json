@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "target": "ES2022",
+    "module": "NodeNext",
+    "lib": ["ES2022"],
+    "moduleResolution": "NodeNext",
+=======
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+    "target": "es2022",
+    "module": "esnext",
+    "lib": ["es2022"],
+    "moduleResolution": "bundler",
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+    "outDir": "./build",
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+    "types": ["node"]
+=======
+    "types": ["@cloudflare/workers-types"]
+>>>>>>> Stashed changes
+=======
+    "types": ["@cloudflare/workers-types"]
+>>>>>>> Stashed changes
+=======
+    "types": ["@cloudflare/workers-types"]
+>>>>>>> Stashed changes
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}

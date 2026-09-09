@@ -1,0 +1,12 @@
+.listitem {
+  padding-left: var(--mantine-spacing-md);
+  padding-right: var(--mantine-spacing-md);
+  margin-left: calc(-1 * var(--mantine-spacing-md));
+  margin-right: calc(-1 * var(--mantine-spacing-md));
+  padding-top: var(--mantine-spacing-sm);
+  padding-bottom: var(--mantine-spacing-md);
+  align-items: flex-start;
+  &:hover {
+    background-color: var(--mantine-color-gray-light-hover);
+  }
+}

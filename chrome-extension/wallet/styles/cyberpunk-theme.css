@@ -1,0 +1,427 @@
+/* wallet/styles/cyberpunk-theme.css */
+/**
+ * Solana GR00T Cyberpunk Theme for Wallet Views
+ * Dark cyberpunk aesthetic with Solana brand colors
+ */
+
+:root {
+  /* Solana Brand Colors */
+  --solana-purple: #9945FF;
+  --solana-green: #14F195;
+  
+  /* Cyberpunk Theme Colors */
+  --cyber-bg: #0a0a0f;
+  --cyber-surface: rgba(26, 26, 37, 0.8);
+  --cyber-surface-elevated: rgba(26, 26, 37, 0.95);
+  --cyber-border: rgba(153, 69, 255, 0.3);
+  --cyber-text: #f0f0f5;
+  --cyber-text-dimmed: #8888a0;
+  
+  /* Cyberpunk Effects */
+  --cyber-glow-purple: 0 0 20px rgba(153, 69, 255, 0.5);
+  --cyber-glow-green: 0 0 20px rgba(20, 241, 149, 0.5);
+  --cyber-glow-combined: 0 0 30px rgba(153, 69, 255, 0.4), 0 0 20px rgba(20, 241, 149, 0.3);
+}
+
+/* Body and Base Styles */
+body {
+  background: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0a0a0f 100%) !important;
+  background-attachment: fixed !important;
+  color: var(--cyber-text) !important;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+}
+
+/* Cyberpunk Grid Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(153, 69, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(153, 69, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Headings with Cyberpunk Gradient */
+h1, h2, h3, h4, h5, h6 {
+  background: linear-gradient(135deg, var(--solana-green) 0%, var(--solana-purple) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 30px rgba(153, 69, 255, 0.5);
+}
+
+/* Buttons - Cyberpunk Style */
+.btn {
+  border: none !important;
+  border-radius: 7px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--solana-green) 0%, var(--solana-purple) 100%) !important;
+  color: #000 !important;
+  border: 1px solid rgba(153, 69, 255, 0.5) !important;
+  box-shadow: var(--cyber-glow-combined) !important;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: var(--cyber-glow-combined), 0 8px 24px rgba(153, 69, 255, 0.4) !important;
+  border-color: var(--solana-green) !important;
+}
+
+.btn-secondary {
+  background: var(--cyber-surface) !important;
+  color: var(--cyber-text) !important;
+  border: 1px solid var(--cyber-border) !important;
+  backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+  background: var(--cyber-surface-elevated) !important;
+  border-color: rgba(153, 69, 255, 0.5) !important;
+  box-shadow: 0 0 15px rgba(153, 69, 255, 0.2) !important;
+}
+
+.btn-danger {
+  background: transparent !important;
+  color: #ff4444 !important;
+  border: 2px solid rgba(255, 68, 68, 0.5) !important;
+}
+
+.btn-danger:hover {
+  background: rgba(255, 68, 68, 0.2) !important;
+  border-color: #ff4444 !important;
+  box-shadow: 0 0 15px rgba(255, 68, 68, 0.4) !important;
+}
+
+/* Form Controls */
+.form-control {
+  background: var(--cyber-surface) !important;
+  border: 1px solid var(--cyber-border) !important;
+  color: var(--cyber-text) !important;
+  border-radius: 6px !important;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  outline: none !important;
+  border-color: var(--solana-purple) !important;
+  box-shadow: 0 0 15px rgba(153, 69, 255, 0.4), inset 0 0 10px rgba(20, 241, 149, 0.1) !important;
+  background: var(--cyber-surface-elevated) !important;
+}
+
+.form-control::placeholder {
+  color: var(--cyber-text-dimmed) !important;
+}
+
+/* PIN Control */
+.form-control.pin-control {
+  background: var(--cyber-surface) !important;
+  border: 2px solid var(--cyber-border) !important;
+  color: var(--cyber-text) !important;
+}
+
+.form-control.pin-control:focus {
+  border-color: var(--solana-green) !important;
+  box-shadow: var(--cyber-glow-green) !important;
+}
+
+/* Cards */
+.card, .token-card, .nft-card-container, .ns-card {
+  background: var(--cyber-surface) !important;
+  border: 1px solid var(--cyber-border) !important;
+  border-radius: 9px !important;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before, .token-card::before, .ns-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--solana-green), var(--solana-purple));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover::before, .token-card:hover::before, .ns-card:hover::before {
+  opacity: 1;
+}
+
+.token-card:hover, .txn-card:hover, .ns-card:hover, .nft-card-container:hover {
+  border-color: var(--solana-green) !important;
+  box-shadow: var(--cyber-glow-combined) !important;
+  transform: translateY(-2px);
+}
+
+.token-card-body, .ns-card-body {
+  color: var(--cyber-text) !important;
+}
+
+/* NFT Cards */
+.nft-card {
+  border: 1px solid var(--cyber-border) !important;
+  transition: all 0.3s ease !important;
+}
+
+.nft-card:hover {
+  box-shadow: var(--cyber-glow-combined) !important;
+  border-color: var(--solana-purple) !important;
+}
+
+.nft-detail {
+  background: rgba(0, 0, 0, 0.85) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Badges */
+.badge {
+  border-radius: 27px !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 0.75rem !important;
+}
+
+.bg-primary {
+  background: linear-gradient(135deg, var(--solana-green), var(--solana-purple)) !important;
+  color: #000 !important;
+  box-shadow: var(--cyber-glow-combined) !important;
+}
+
+.bg-secondary {
+  background: var(--cyber-surface) !important;
+  color: var(--cyber-text) !important;
+  border: 1px solid var(--cyber-border) !important;
+}
+
+.bg-danger {
+  background: rgba(255, 68, 68, 0.3) !important;
+  color: #ff4444 !important;
+  border: 1px solid rgba(255, 68, 68, 0.5) !important;
+  box-shadow: 0 0 10px rgba(255, 68, 68, 0.3) !important;
+}
+
+.bg-warning {
+  background: rgba(255, 165, 0, 0.3) !important;
+  color: #ffa500 !important;
+  border: 1px solid rgba(255, 165, 0, 0.5) !important;
+}
+
+/* Transaction Cards */
+.txn-card {
+  background: var(--cyber-surface) !important;
+  border: 1px solid var(--cyber-border) !important;
+  color: var(--cyber-text) !important;
+}
+
+.txn-card:hover {
+  border-color: var(--solana-green) !important;
+  box-shadow: var(--cyber-glow-green) !important;
+}
+
+/* Top Navigation */
+.topnav {
+  background: var(--cyber-surface) !important;
+  border-bottom: 2px solid var(--cyber-border) !important;
+  backdrop-filter: blur(10px);
+}
+
+/* Footer */
+.footer {
+  background: var(--cyber-surface) !important;
+  border-top: 2px solid var(--cyber-border) !important;
+  color: var(--cyber-text) !important;
+}
+
+.footer-link {
+  color: var(--cyber-text-dimmed) !important;
+  transition: all 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--solana-green) !important;
+  text-shadow: 0 0 10px rgba(20, 241, 149, 0.6);
+}
+
+/* Token Container */
+.token-container {
+  background: transparent !important;
+}
+
+/* Login Container */
+.login-container {
+  background: transparent !important;
+}
+
+/* Select Indicator */
+.select-indicator {
+  background: var(--solana-green) !important;
+  border: 2px solid var(--solana-purple) !important;
+  box-shadow: var(--cyber-glow-green) !important;
+}
+
+/* Progress Bar */
+#progress {
+  background: linear-gradient(90deg, var(--solana-green), var(--solana-purple)) !important;
+  box-shadow: var(--cyber-glow-combined) !important;
+}
+
+/* Text Colors */
+.text-danger {
+  color: #ff4444 !important;
+  text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
+}
+
+.text-success {
+  color: var(--solana-green) !important;
+  text-shadow: 0 0 10px rgba(20, 241, 149, 0.5);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cyber-bg);
+  border-left: 1px solid rgba(153, 69, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--solana-green), var(--solana-purple));
+  border-radius: 5px;
+  border: 1px solid rgba(153, 69, 255, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--solana-purple), var(--solana-green));
+  box-shadow: 0 0 10px rgba(153, 69, 255, 0.5);
+}
+
+/* Loading Animation */
+.lds-ellipsis div {
+  background: var(--solana-green) !important;
+  box-shadow: 0 0 10px rgba(20, 241, 149, 0.6);
+}
+
+/* Connection Status */
+.connection_status {
+  color: var(--solana-green) !important;
+  text-shadow: 0 0 10px rgba(20, 241, 149, 0.6);
+}
+
+/* Wallet Address */
+#wallet_addr {
+  color: var(--cyber-text) !important;
+  transition: all 0.3s ease;
+}
+
+#wallet_addr:hover {
+  color: var(--solana-green) !important;
+  text-shadow: 0 0 10px rgba(20, 241, 149, 0.6);
+}
+
+/* Settings Buttons */
+.btn-settings {
+  background: var(--cyber-surface) !important;
+  border: 1px solid var(--cyber-border) !important;
+  color: var(--cyber-text) !important;
+}
+
+.btn-settings:hover {
+  border-color: var(--solana-purple) !important;
+  box-shadow: 0 0 15px rgba(153, 69, 255, 0.3) !important;
+}
+
+/* Trait Cards */
+.trait {
+  border: 1px solid var(--cyber-border) !important;
+  background: var(--cyber-surface) !important;
+  color: var(--cyber-text) !important;
+}
+
+/* Active Card */
+.card.active {
+  box-shadow: var(--cyber-glow-green) !important;
+  border-color: var(--solana-green) !important;
+}
+
+/* Cyberpunk Glow Animations */
+@keyframes cyber-glow-pulse {
+  0%, 100% {
+    box-shadow: var(--cyber-glow-green);
+  }
+  50% {
+    box-shadow: var(--cyber-glow-purple);
+  }
+}
+
+.cyberpunk-glow {
+  animation: cyber-glow-pulse 2s infinite;
+}
+
+/* Image Styling */
+.img-fluid {
+  border: 1px solid var(--cyber-border) !important;
+  border-radius: 9px !important;
+  transition: all 0.3s ease;
+}
+
+.img-fluid:hover {
+  box-shadow: var(--cyber-glow-combined) !important;
+}
+
+/* Small Text */
+.small {
+  color: var(--cyber-text-dimmed) !important;
+}
+
+/* Code/Address Styling */
+code.address {
+  color: var(--solana-green) !important;
+  font-family: monospace;
+  text-shadow: 0 0 10px rgba(20, 241, 149, 0.3);
+}
+
+/* Twitter Link */
+.twitter-link {
+  color: var(--solana-purple) !important;
+  transition: all 0.3s ease;
+}
+
+.twitter-link:hover {
+  color: var(--solana-green) !important;
+  text-shadow: 0 0 10px rgba(20, 241, 149, 0.6);
+}

@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "solana-trading": {
+      "command": "node",
+      "args": [
+        "/Users/8bit/Downloads/SolanaAutomation/mcp-server/build/index.js"
+      ],
+      "env": {
+        "RPC_URL": "https://ancient-burned-friday.solana-mainnet.quiknode.pro/bc8308dfa6d609f531f014aeee4ca28e16934efb/",
+        "SOLANA_RPC_URL": "https://ancient-burned-friday.solana-mainnet.quiknode.pro/bc8308dfa6d609f531f014aeee4ca28e16934efb/"
+      }
+    }
+  }
+}

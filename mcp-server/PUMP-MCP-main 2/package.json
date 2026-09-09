@@ -1,0 +1,54 @@
+{
+  "name": "pump-mpc-template",
+  "version": "1.0.0",
+  "description": "A template for creating and managing Solana tokens on Pump.fun using Claude Desktop and MCP",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && chmod 755 build/index.js",
+    "start:http": "node build/index-http.js",
+    "dev:http": "tsc && node build/index-http.js",
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/pump-mpc-template.git"
+  },
+  "bin": {
+    "pump-mpc": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "keywords": [
+    "solana",
+    "pump.fun",
+    "mcp",
+    "claude",
+    "token"
+  ],
+  "author": "Your Name",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/yourusername/pump-mpc-template/issues"
+  },
+  "homepage": "https://github.com/yourusername/pump-mpc-template#readme",
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.29.0",
+    "@modelcontextprotocol/sdk": "^1.7.0",
+    "@solana/spl-token": "^0.4.1",
+    "@solana/web3.js": "^1.91.0",
+    "bs58": "^6.0.0",
+    "dotenv": "^16.4.5",
+    "openai": "^4.104.0",
+    "pumpdotfun-sdk": "github:rckprtr/pumpdotfun-sdk",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@cloudflare/workers-types": "^4.20241106.0",
+    "typescript": "^5.8.2",
+    "wrangler": "^3.0.0"
+  }
+}

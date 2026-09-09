@@ -1,0 +1,129 @@
+/* Solana GR00T Cyberpunk Global Styles */
+
+/* Remove default link styling */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:visited {
+  color: inherit;
+}
+
+body {
+  background: linear-gradient(135deg, #0a0a0f 0%, #12121a 50%, #0a0a0f 100%);
+  background-attachment: fixed;
+  color: #f0f0f5;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+}
+
+/* Cyberpunk Grid Background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(153, 69, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(153, 69, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Typing Indicator */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Cyberpunk Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+  border-left: 1px solid rgba(153, 69, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #14F195, #9945FF);
+  border-radius: 5px;
+  border: 1px solid rgba(153, 69, 255, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #9945FF, #14F195);
+  box-shadow: 0 0 10px rgba(153, 69, 255, 0.5);
+}
+
+/* Cyberpunk Selection */
+::selection {
+  background: rgba(153, 69, 255, 0.3);
+  color: #14F195;
+}
+
+::-moz-selection {
+  background: rgba(153, 69, 255, 0.3);
+  color: #14F195;
+}
+
+/* Cyberpunk Focus States */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #9945FF;
+  box-shadow: 0 0 15px rgba(153, 69, 255, 0.4);
+}
+
+/* Animated Grok Status Indicator */
+.grok-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(20, 241, 149, 0.1);
+  border: 1px solid #14F195;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.grok-status::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(20, 241, 149, 0.2), transparent);
+  animation: grok-scan 2s infinite;
+}
+
+.grok-status.active {
+  animation: grok-pulse-border 2s infinite;
+}
+
+@keyframes grok-pulse-border {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(20, 241, 149, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(153, 69, 255, 0.5);
+  }
+}
