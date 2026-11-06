@@ -937,7 +937,7 @@ export const appRouter = router({
       return {
         SOL: TOKENS.SOL,
         USDC: TOKENS.USDC,
-        KIT: TOKENS.KIT,
+        CLAWD: TOKENS.CLAWD,
       };
     }),
 
