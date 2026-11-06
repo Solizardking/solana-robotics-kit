@@ -1,0 +1,108 @@
+{
+  "name": "Solana Patrol Bot",
+  "id": "patrol_bot",
+  "version": "1.0.0",
+  "description": "Rugged tracked robot for outdoor patrol, security, and surveillance operations",
+  "category": "mobile_tracked",
+  "dimensions": {
+    "width": 0.45,
+    "height": 0.35,
+    "depth": 0.40,
+    "unit": "meters"
+  },
+  "capabilities": ["navigation", "patrol", "surveillance", "all_terrain", "object_detection"],
+  "workflow": [
+    {
+      "step": 1,
+      "name": "Initialize Outdoor Scene",
+      "prompt": "Set up an outdoor environment scene:\n\n1. Clear all default objects\n2. Set Metric units\n3. Create collections: 'Robot', 'Terrain', 'Environment', 'Lights'\n\n4. Create terrain:\n   - Ground plane 10m x 10m\n   - Add subdivision (4 levels)\n   - Apply displacement for uneven terrain\n   - Mix of grass/dirt/gravel textures\n\n5. Lighting:\n   - Use HDRI sky (outdoor/overcast)\n   - Or create sun lamp at 30° elevation\n   - Warm golden hour color temperature\n\n6. Camera:\n   - Position for dramatic low angle\n   - Or wide establishing shot\n\n7. Atmospheric:\n   - Subtle distance fog\n   - Volumetric light rays (optional)"
+    },
+    {
+      "step": 2,
+      "name": "Create Tracked Chassis",
+      "prompt": "Create the tracked robot chassis:\n\n1. Main hull:\n   - Elongated box: 0.40m x 0.35m x 0.10m\n   - Angled front (15° slope)\n   - Flat rear for access\n   - Position at (0, 0, 0.10)\n\n2. Track housings:\n   - Two side pontoons\n   - Each: 0.38m x 0.08m x 0.12m\n   - Extend slightly beyond hull\n   - Curved top profile\n\n3. Track wells:\n   - Open bottom for track contact\n   - Internal structure visible\n\n4. Top deck:\n   - Flat sensor mounting area\n   - Ventilation grilles\n   - Access hatches\n\n5. Armor details:\n   - Bolt heads along seams\n   - Reinforced corners\n   - Lifting handles\n\n6. Apply material:\n   - 'mat_military_green' or 'mat_tactical_black'\n   - Color RGB(0.15, 0.18, 0.12) for green\n   - Weathered/scratched appearance\n\n7. Name: 'patrol_chassis'\n8. Add to 'Robot' collection"
+    },
+    {
+      "step": 3,
+      "name": "Create Track System",
+      "prompt": "Create tank-style track system (both sides):\n\n1. Drive sprocket (rear):\n   - Toothed wheel: 0.08m diameter\n   - 12 teeth around circumference\n   - Shaft hole center\n   - Position at rear of track housing\n\n2. Idler wheel (front):\n   - Smooth wheel: 0.07m diameter\n   - Tensioning mechanism\n   - Position at front\n\n3. Road wheels (5 per side):\n   - Rubber-rimmed wheels: 0.06m diameter\n   - Evenly spaced between sprockets\n   - Suspension mounts visible\n\n4. Track segments:\n   - Create single track link:\n     - Rubber pad: 0.04m x 0.08m x 0.015m\n     - Metal connector pins\n   - Array along track path\n   - Wrap around all wheels\n   - Or use simple band with texture\n\n5. Track tensioner:\n   - Spring mechanism at idler\n   - Adjustment bolt\n\n6. Apply materials:\n   - Sprockets: mat_steel_painted\n   - Road wheels: mat_rubber_wheel\n   - Track: mat_rubber_track\n\n7. Name: 'patrol_track_left', 'patrol_track_right'\n8. Parent to chassis"
+    },
+    {
+      "step": 4,
+      "name": "Create Sensor Tower",
+      "prompt": "Create elevated sensor mast/tower:\n\n1. Mast base:\n   - Cylinder: 0.06m diameter, 0.15m height\n   - Reinforced mounting to hull\n   - Cable pass-through\n\n2. Pan-tilt head:\n   - Pan mechanism (horizontal rotation)\n   - Tilt mechanism (vertical angle)\n   - Smooth servo housings\n\n3. Sensor payload platform:\n   - Flat plate for mounting\n   - 0.15m x 0.10m\n   - Quick-release mounts\n\n4. Protective housing:\n   - Weather-resistant enclosure\n   - Hinged or removable\n   - Ventilation slots\n\n5. Cable management:\n   - Spiral wrap along mast\n   - Strain relief at connections\n\n6. Materials:\n   - Mast: mat_aluminum_anodized_black\n   - Housing: mat_plastic_tactical\n\n7. Name: 'patrol_sensor_tower'\n8. Parent to chassis"
+    },
+    {
+      "step": 5,
+      "name": "Create 3D LiDAR System",
+      "prompt": "Create high-performance 3D LiDAR:\n\n1. LiDAR unit:\n   - Velodyne/Ouster style\n   - 100mm diameter, 150mm height\n   - Mount on sensor tower\n   - Position at top of mast\n\n2. Features:\n   - 64-channel appearance\n   - Rotating head visible\n   - Optical windows array\n   - Cooling fins\n\n3. Protective dome (optional):\n   - Clear polycarbonate cover\n   - Weather protection\n   - De-icing heater (implied)\n\n4. Mount:\n   - Vibration-dampening base\n   - Quick-disconnect\n   - Leveling adjustment\n\n5. Materials:\n   - Unit: mat_lidar_black\n   - Dome: mat_polycarbonate_clear\n\n6. Name: 'patrol_lidar_3d'\n7. Parent to sensor tower"
+    },
+    {
+      "step": 6,
+      "name": "Create Camera Array",
+      "prompt": "Create 360-degree camera system:\n\n1. Front camera:\n   - Main RGB + depth combo\n   - 0° forward facing\n   - High resolution\n\n2. Side cameras (2x):\n   - Wide-angle RGB\n   - ±90° (left and right)\n   - Weather sealed\n\n3. Rear camera:\n   - 180° rearward\n   - For reversing/coverage\n\n4. All cameras share:\n   - Ruggedized housing\n   - IR illuminator option\n   - Lens wiper/heater\n   - Anti-glare hood\n\n5. Arrangement:\n   - Mount around sensor tower base\n   - Or integrate into hull\n   - Overlapping fields of view\n\n6. Thermal camera (optional):\n   - FLIR-style unit\n   - Separate mounting position\n\n7. Materials:\n   - Housing: mat_camera_housing_black\n   - Lens: mat_glass_coated\n\n8. Name: 'patrol_camera_front', etc.\n9. Parent appropriately"
+    },
+    {
+      "step": 7,
+      "name": "Create Power System",
+      "prompt": "Create dual battery and power system:\n\n1. Battery compartment:\n   - Two large LiPo packs\n   - 6S 10000mAh each\n   - Position in hull center\n   - Easy access hatch above\n\n2. Battery packs:\n   - 0.18m x 0.08m x 0.04m each\n   - Side by side or stacked\n   - Quick-disconnect connectors\n\n3. Solar panel (optional):\n   - Fold-out panel on top\n   - 0.20m x 0.15m\n   - Trickle charge capability\n\n4. Power distribution:\n   - Main fuse box\n   - Voltage regulators\n   - Power switch with key\n\n5. Charging port:\n   - External weatherproof port\n   - Quick-charge compatible\n   - Status indicator LEDs\n\n6. Materials:\n   - Batteries: mat_battery_black\n   - Solar: mat_solar_cell (dark blue)\n\n7. Name components appropriately\n8. Parent to chassis"
+    },
+    {
+      "step": 8,
+      "name": "Create Communication Systems",
+      "prompt": "Create communication and antenna array:\n\n1. Main antenna mast:\n   - Telescoping or fixed\n   - Height: 0.30m extended\n   - Multi-band capability\n\n2. WiFi/Mesh antennas:\n   - 2x paddle antennas\n   - Articulating mounts\n   - 2.4GHz + 5GHz\n\n3. 4G/LTE antenna:\n   - Cellular modem antenna\n   - Blade or whip style\n   - Position for best signal\n\n4. GPS antenna:\n   - Puck style on top\n   - Clear sky view\n   - RTK-capable (optional)\n\n5. Radio antenna (optional):\n   - Long-range telemetry\n   - 900MHz band\n\n6. Antenna routing:\n   - Protected cable runs\n   - Lightning protection\n\n7. Materials:\n   - Antennas: mat_antenna_black\n   - Mounts: mat_aluminum\n\n8. Name and parent appropriately"
+    },
+    {
+      "step": 9,
+      "name": "Create Lighting System",
+      "prompt": "Create illumination and warning lights:\n\n1. Headlights (front):\n   - 2x high-intensity LEDs\n   - Adjustable aim\n   - High/low beam modes\n\n2. Rear lights:\n   - Red tail/brake lights\n   - White reverse lights\n   - Turn signals\n\n3. Work lights:\n   - 4x auxiliary spots\n   - 360° coverage\n   - Individually controllable\n\n4. Warning beacon:\n   - Rotating/flashing amber\n   - Top of sensor tower\n   - High visibility\n\n5. IR illuminators:\n   - For night vision cameras\n   - 850nm or 940nm LEDs\n   - Not visible to eye\n\n6. Underglow (optional):\n   - Ground illumination\n   - Status indication\n   - Solana colors\n\n7. Apply emissive materials:\n   - Headlights: mat_led_white (strength 10)\n   - Beacon: mat_led_amber (strength 8)\n   - IR: mat_led_ir (slight red, low emission)\n\n8. Name: 'patrol_light_*'"
+    },
+    {
+      "step": 10,
+      "name": "Create Speaker/Siren System",
+      "prompt": "Create audio alert system:\n\n1. Main speaker:\n   - PA horn style\n   - Forward facing\n   - Weatherproof housing\n   - 50W output\n\n2. Siren unit:\n   - Dual-tone siren\n   - 120dB output\n   - Protected grille\n\n3. Positioning:\n   - Front of hull\n   - Visible deterrent\n   - Clear projection path\n\n4. Microphone (optional):\n   - For two-way communication\n   - Wind noise reduction\n   - Array configuration\n\n5. Materials:\n   - Housing: mat_speaker_black\n   - Grille: mat_perforated_steel\n\n6. Name: 'patrol_speaker', 'patrol_siren'"
+    },
+    {
+      "step": 11,
+      "name": "Add Weatherproofing Details",
+      "prompt": "Add weather protection and ruggedness:\n\n1. Seals and gaskets:\n   - Rubber seals on all hatches\n   - IP67 rating appearance\n\n2. Drain holes:\n   - At low points\n   - Prevent water pooling\n\n3. Protective covers:\n   - Over connectors\n   - Flip-up style\n   - Tethered caps\n\n4. Mudguards:\n   - Over track openings\n   - Reduce splash\n   - Flexible rubber\n\n5. Skid plates:\n   - Underside protection\n   - Smooth bottom\n   - Replaceable wear strips\n\n6. Lifting points:\n   - Rated recovery hooks\n   - Front and rear\n   - Painted yellow\n\n7. Apply weathered materials:\n   - Add dirt/mud in track area\n   - Slight rust hints on metal\n   - Scratches on high-wear areas"
+    },
+    {
+      "step": 12,
+      "name": "Final Branding and Details",
+      "prompt": "Complete with branding and identification:\n\n1. Solana branding:\n   - Logo on both sides\n   - Gradient purple-cyan\n   - 0.08m diameter\n\n2. Unit identification:\n   - 'PATROL-001' designation\n   - Reflective lettering\n   - Front and rear\n\n3. Warning labels:\n   - 'AUTONOMOUS VEHICLE'\n   - 'CAUTION: MOVING PARTS'\n   - International symbols\n\n4. QR code:\n   - For identification\n   - Links to status page\n\n5. Reflective strips:\n   - High-visibility tape\n   - On all sides\n   - Orange/white pattern\n\n6. Final checks:\n   - All parenting correct\n   - Materials complete\n   - No overlapping geometry\n   - Origins set for animation\n\n7. Save as 'solana_patrol_bot.blend'"
+    }
+  ],
+  "materials": {
+    "mat_tactical_black": {
+      "base_color": [0.08, 0.08, 0.10, 1.0],
+      "metallic": 0.4,
+      "roughness": 0.6
+    },
+    "mat_military_green": {
+      "base_color": [0.15, 0.18, 0.12, 1.0],
+      "metallic": 0.3,
+      "roughness": 0.7
+    },
+    "mat_rubber_track": {
+      "base_color": [0.05, 0.05, 0.05, 1.0],
+      "metallic": 0.0,
+      "roughness": 0.85
+    },
+    "mat_steel_painted": {
+      "base_color": [0.2, 0.2, 0.22, 1.0],
+      "metallic": 0.7,
+      "roughness": 0.5
+    },
+    "mat_led_amber": {
+      "base_color": [1.0, 0.6, 0.0, 1.0],
+      "emission_strength": 8.0
+    }
+  },
+  "export_settings": {
+    "glb": {
+      "format": "GLB",
+      "export_draco_mesh_compression": true
+    }
+  }
+}

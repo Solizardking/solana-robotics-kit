@@ -1,0 +1,123 @@
+{
+  "name": "Solana Delivery Bot",
+  "id": "delivery_bot",
+  "version": "1.0.0",
+  "description": "Autonomous delivery robot for warehouse and last-mile delivery operations",
+  "category": "mobile_wheeled",
+  "dimensions": {
+    "width": 0.35,
+    "height": 0.20,
+    "depth": 0.30,
+    "unit": "meters"
+  },
+  "capabilities": ["navigation", "delivery", "object_detection", "mapping"],
+  "workflow": [
+    {
+      "step": 1,
+      "name": "Initialize Scene",
+      "prompt": "Clear the Blender scene and set up for robot creation:\n\n1. Delete all default objects (cube, camera, light)\n2. Set units to Metric with scale 1.0\n3. Create collections: 'Robot', 'Environment', 'Lights', 'Camera'\n4. Add a ground plane (5m x 5m) at Z=0 with gray material\n5. Set up three-point lighting:\n   - Key light: Area light, 1000W at position (2, -2, 3)\n   - Fill light: Area light, 500W at position (-2, -1, 2)\n   - Rim light: Area light, 300W at position (0, 3, 2)\n6. Add camera at (1.5, -1.5, 0.8) pointing at origin\n7. Set render engine to Cycles with GPU if available\n8. Set resolution to 1920x1080"
+    },
+    {
+      "step": 2,
+      "name": "Create Chassis",
+      "prompt": "Create the main robot chassis:\n\n1. Add a cube and scale to 0.30m x 0.25m x 0.08m (width x depth x height)\n2. Position at (0, 0, 0.05) so bottom is near ground\n3. Add Bevel modifier with 0.005m width and 3 segments\n4. Create wheel wells:\n   - Add two cylinders (radius 0.045m, depth 0.03m) at X = ±0.12m\n   - Boolean difference to create wheel cutouts\n5. Add mounting hole pattern on top:\n   - Grid of 6x4 small cylinders (radius 0.003m)\n   - Boolean difference for holes\n6. Create front sensor bracket:\n   - Small extruded rectangle at front (0.08m x 0.02m x 0.015m)\n7. Apply material:\n   - Name: 'mat_chassis_dark_aluminum'\n   - Base Color: RGB(0.15, 0.15, 0.18)\n   - Metallic: 0.8\n   - Roughness: 0.3\n8. Name object: 'robot_chassis'\n9. Move to 'Robot' collection"
+    },
+    {
+      "step": 3,
+      "name": "Create Drive Wheels",
+      "prompt": "Create the two main drive wheels:\n\nFor each wheel (left at X=-0.12m, right at X=0.12m):\n\n1. Create tire:\n   - Cylinder with radius 0.04m, depth 0.025m\n   - Rotate 90° on Y axis\n   - Position at (±0.12, 0, 0.04)\n   - Add subdivision surface modifier (level 2)\n\n2. Create tread pattern:\n   - Add small cubes (0.008m x 0.003m x 0.005m)\n   - Array modifier: 24 copies around circumference\n   - Boolean union with tire\n\n3. Create hub:\n   - Cylinder radius 0.016m, depth 0.027m\n   - Same position as tire\n   - Add 5 curved spokes connecting to tire inner edge\n\n4. Apply materials:\n   - Tire: 'mat_rubber_black' - Color RGB(0.02, 0.02, 0.02), Metallic 0, Roughness 0.8\n   - Hub: 'mat_aluminum_brushed' - Color RGB(0.6, 0.6, 0.62), Metallic 0.9, Roughness 0.4\n\n5. Name objects: 'robot_wheel_left', 'robot_wheel_right'\n6. Parent both wheels to 'robot_chassis'"
+    },
+    {
+      "step": 4,
+      "name": "Create Caster Wheels",
+      "prompt": "Create front and rear caster wheels for stability:\n\nFor each caster (front at Y=0.10m, rear at Y=-0.10m):\n\n1. Create ball:\n   - UV Sphere with radius 0.015m\n   - Position at (0, ±0.10, 0.015)\n   - Smooth shading\n\n2. Create housing bracket:\n   - Cube scaled to 0.025m x 0.02m x 0.025m\n   - Position above ball\n   - Add rounded edges\n\n3. Create swivel mount:\n   - Small cylinder connecting bracket to chassis\n   - Radius 0.008m, height 0.015m\n\n4. Apply materials:\n   - Ball: 'mat_nylon_white' - Color RGB(0.9, 0.9, 0.92), Roughness 0.3\n   - Bracket: 'mat_plastic_gray' - Color RGB(0.3, 0.3, 0.32), Roughness 0.5\n\n5. Name objects: 'robot_caster_front', 'robot_caster_rear'\n6. Parent to 'robot_chassis'"
+    },
+    {
+      "step": 5,
+      "name": "Create Depth Camera",
+      "prompt": "Create Intel RealSense style depth camera:\n\n1. Create main housing:\n   - Cube scaled to 0.09m x 0.025m x 0.025m\n   - Position at (0, 0.13, 0.10)\n   - Add slight bevel on edges\n\n2. Create stereo camera lenses (left and right):\n   - Two cylinders, radius 0.006m, depth 0.003m\n   - Position at X = ±0.03m on front face\n   - Add glass material for lens surface\n\n3. Create IR projector:\n   - Small dome/hemisphere in center\n   - Radius 0.004m\n   - Slight red tint material\n\n4. Create RGB camera:\n   - Small cylinder between stereo lenses\n   - Radius 0.004m\n\n5. Create mounting bracket:\n   - L-shaped bracket on bottom\n   - Screw hole details\n\n6. Apply materials:\n   - Housing: 'mat_realsense_silver' - Color RGB(0.7, 0.7, 0.72), Metallic 0.3, Roughness 0.25\n   - Lenses: 'mat_glass_dark' - Transmission 0.9, Color RGB(0.1, 0.1, 0.15)\n\n7. Name object: 'robot_camera_depth'\n8. Parent to 'robot_chassis'"
+    },
+    {
+      "step": 6,
+      "name": "Create 2D LiDAR",
+      "prompt": "Create a 2D LiDAR scanner (puck style):\n\n1. Create main housing:\n   - Cylinder with radius 0.035m, height 0.05m\n   - Position at (0, 0, 0.12)\n   - This sits on top of chassis\n\n2. Create rotating head:\n   - Slightly smaller cylinder on top\n   - Radius 0.033m, height 0.015m\n   - Add visible seam line between base and head\n\n3. Create optical window:\n   - Thin cylinder band around head\n   - Height 0.008m\n   - Glossy black material for laser window\n\n4. Create base details:\n   - Cable exit port (small cylinder on side)\n   - Mounting screw heads (4 small circles on bottom)\n   - Status LED indicators (2 small dots)\n\n5. Apply materials:\n   - Housing: 'mat_lidar_black' - Color RGB(0.05, 0.05, 0.08), Metallic 0.1, Roughness 0.3\n   - Window: 'mat_glass_black' - Color RGB(0.02, 0.02, 0.02), Roughness 0.1\n   - LEDs: 'mat_led_green' - Emission strength 3.0, Color RGB(0, 1, 0.3)\n\n6. Name object: 'robot_lidar_2d'\n7. Parent to 'robot_chassis'"
+    },
+    {
+      "step": 7,
+      "name": "Create Ultrasonic Sensors",
+      "prompt": "Create two ultrasonic distance sensors at front corners:\n\nFor each sensor (left at X=-0.10m, right at X=0.10m):\n\n1. Create PCB base:\n   - Cube scaled to 0.045m x 0.02m x 0.002m\n   - Position at (±0.10, 0.12, 0.06)\n   - Green PCB material\n\n2. Create transducers:\n   - Two cylinders, radius 0.008m, depth 0.012m\n   - Spaced 0.025m apart on PCB\n   - Silver mesh material on front face\n\n3. Add details:\n   - Small components on PCB (rectangles for resistors)\n   - Header pins on back edge\n   - Mounting holes at corners\n\n4. Apply materials:\n   - PCB: 'mat_pcb_green' - Color RGB(0, 0.4, 0.2), Roughness 0.6\n   - Transducers: 'mat_aluminum_mesh' - Color RGB(0.7, 0.7, 0.72), Metallic 0.8\n\n5. Name objects: 'robot_ultrasonic_left', 'robot_ultrasonic_right'\n6. Parent to 'robot_chassis'"
+    },
+    {
+      "step": 8,
+      "name": "Create Jetson Orin Nano",
+      "prompt": "Create NVIDIA Jetson Orin Nano control unit:\n\n1. Create carrier board PCB:\n   - Cube scaled to 0.10m x 0.08m x 0.005m\n   - Position at (0, -0.05, 0.09)\n   - Inside chassis area\n\n2. Create Jetson module:\n   - Black rectangle on PCB: 0.07m x 0.045m x 0.008m\n   - Centered on carrier board\n\n3. Create heatsink:\n   - On top of module: 0.065m x 0.04m x 0.015m\n   - Add cooling fin detail (parallel ridges)\n   - Add NVIDIA logo indent on top\n\n4. Create ports along edges:\n   - USB ports: 4 small rectangles (stacked pairs)\n   - Ethernet RJ45: cube with clip detail\n   - HDMI port: trapezoidal shape\n   - Power barrel jack: cylinder\n\n5. Create GPIO header:\n   - 40-pin header (2 rows of 20)\n   - Position on one edge\n\n6. Apply materials:\n   - PCB: 'mat_pcb_green' - Color RGB(0.05, 0.3, 0.1)\n   - Module: 'mat_plastic_black' - Color RGB(0.05, 0.05, 0.05)\n   - Heatsink: 'mat_aluminum_silver' - Metallic 0.85, Roughness 0.3\n   - Ports: various colors (USB blue, HDMI black, etc.)\n\n7. Name object: 'robot_jetson_orin'\n8. Parent to 'robot_chassis'"
+    },
+    {
+      "step": 9,
+      "name": "Create Battery Pack",
+      "prompt": "Create LiPo battery pack:\n\n1. Create battery housing:\n   - Cube with rounded corners: 0.15m x 0.05m x 0.025m\n   - Position at (0, 0.02, 0.09)\n   - Add safety radius on all edges\n\n2. Create connectors:\n   - Main discharge connector (XT60 style):\n     - Yellow plastic housing\n     - Position on one end\n   - Balance connector:\n     - Small white multi-pin connector\n     - Position next to main connector\n\n3. Create label area:\n   - Slightly recessed rectangle on top\n   - Add text: '22.2V 6S 5000mAh 50C'\n   - Warning symbols\n\n4. Create LED charge indicator:\n   - Strip of 4 small LEDs\n   - On side of battery\n\n5. Apply materials:\n   - Housing: 'mat_battery_shrink' - Color RGB(0.05, 0.05, 0.08), Roughness 0.4\n   - XT60: 'mat_plastic_yellow' - Color RGB(0.9, 0.7, 0.1)\n   - Balance: 'mat_plastic_white'\n\n6. Name object: 'robot_battery_lipo'\n7. Parent to 'robot_chassis'"
+    },
+    {
+      "step": 10,
+      "name": "Create LED Status Ring",
+      "prompt": "Create RGB LED status ring:\n\n1. Create ring shape:\n   - Torus with major radius 0.03m, minor radius 0.004m\n   - Position at (0, 0, 0.15)\n   - On top of LiDAR\n\n2. Create LED segments:\n   - 12 individual LED positions around ring\n   - Small rectangular shapes\n   - Slight gaps between segments\n\n3. Create diffuser cover:\n   - Slightly larger torus\n   - Translucent white material\n   - Covers LED segments\n\n4. Create mounting base:\n   - Thin disc below ring\n   - Mounting holes\n\n5. Apply materials:\n   - LEDs: 'mat_led_cyan' - Emission strength 5.0, Color RGB(0, 0.7, 1.0)\n   - Diffuser: 'mat_plastic_frosted' - Color RGB(0.95, 0.95, 0.98), Transmission 0.3\n   - Base: 'mat_plastic_black'\n\n6. Name object: 'robot_led_ring'\n7. Parent to 'robot_chassis'"
+    },
+    {
+      "step": 11,
+      "name": "Create WiFi Antenna",
+      "prompt": "Create WiFi/Bluetooth antenna:\n\n1. Create antenna paddle:\n   - Flattened cube: 0.015m x 0.08m x 0.006m\n   - Rounded top edge\n   - Position at (0.08, -0.08, 0.10)\n   - Rotate 15° outward\n\n2. Create articulating base:\n   - Small cylinder for pivot joint\n   - Allows antenna to fold\n\n3. Create SMA connector:\n   - Gold-colored threaded cylinder\n   - At bottom of antenna\n\n4. Create internal element:\n   - Visible through housing (slightly)\n   - Thin wire pattern inside\n\n5. Apply materials:\n   - Paddle: 'mat_rubber_black' - Color RGB(0.1, 0.1, 0.1), Roughness 0.6\n   - SMA: 'mat_gold' - Color RGB(0.83, 0.69, 0.22), Metallic 1.0\n\n6. Name object: 'robot_antenna_wifi'\n7. Parent to 'robot_chassis'"
+    },
+    {
+      "step": 12,
+      "name": "Add Branding and Details",
+      "prompt": "Add final branding and cosmetic details:\n\n1. Add Solana logo on chassis sides:\n   - Create gradient circle with Solana colors\n   - Purple to cyan gradient\n   - Position on both left and right sides\n   - Size: 0.04m diameter\n\n2. Add 'SOLANA ROBOTICS' text:\n   - Embossed or decal on top of chassis\n   - Font: Bold sans-serif\n   - Color: Light gray or white\n\n3. Add reflective safety strips:\n   - Thin strips around base perimeter\n   - Reflective orange/yellow material\n   - Emission strength 0.5 for visibility\n\n4. Add rubber bumper:\n   - Thin rubber strip around chassis edge\n   - Height 0.01m\n   - Protects from collisions\n\n5. Add charging port:\n   - Small rectangular recess at rear\n   - Barrel jack or USB-C port visible\n   - Rubber cover flap\n\n6. Add serial number plate:\n   - Small metal plate\n   - 'SRK-001' engraved\n\n7. Apply final materials and check all normals\n8. Ensure all objects are properly parented to chassis"
+    },
+    {
+      "step": 13,
+      "name": "Final Assembly Check",
+      "prompt": "Perform final assembly verification:\n\n1. Select all robot objects:\n   - Verify all are in 'Robot' collection\n   - Check parent hierarchy (all parented to chassis)\n\n2. Check object origins:\n   - Chassis origin at center bottom\n   - Wheels origin at center for rotation\n   - Set origins appropriately for animation\n\n3. Apply transformations:\n   - Select all robot objects\n   - Apply rotation and scale (Ctrl+A)\n\n4. Verify materials:\n   - Check all objects have materials assigned\n   - No missing textures or broken links\n\n5. Check geometry:\n   - No overlapping faces\n   - No inverted normals\n   - Clean mesh topology\n\n6. Position robot:\n   - Wheels touching ground plane\n   - Centered at origin\n\n7. Create render preview:\n   - Frame robot in camera\n   - Test render at low samples\n   - Verify lighting and shadows look correct\n\n8. Save Blender file:\n   - File > Save As\n   - Name: 'solana_delivery_bot.blend'"
+    }
+  ],
+  "export_settings": {
+    "glb": {
+      "format": "GLB",
+      "use_selection": true,
+      "export_apply": true,
+      "export_animations": false,
+      "export_draco_mesh_compression": true
+    },
+    "fbx": {
+      "use_selection": true,
+      "apply_scale_options": "FBX_SCALE_ALL",
+      "bake_space_transform": true,
+      "path_mode": "COPY",
+      "embed_textures": true
+    }
+  },
+  "materials": {
+    "mat_chassis_dark_aluminum": {
+      "base_color": [0.15, 0.15, 0.18, 1.0],
+      "metallic": 0.8,
+      "roughness": 0.3
+    },
+    "mat_rubber_black": {
+      "base_color": [0.02, 0.02, 0.02, 1.0],
+      "metallic": 0.0,
+      "roughness": 0.8
+    },
+    "mat_aluminum_brushed": {
+      "base_color": [0.6, 0.6, 0.62, 1.0],
+      "metallic": 0.9,
+      "roughness": 0.4
+    },
+    "mat_pcb_green": {
+      "base_color": [0.0, 0.4, 0.2, 1.0],
+      "metallic": 0.0,
+      "roughness": 0.6
+    },
+    "mat_led_cyan": {
+      "base_color": [0.0, 0.7, 1.0, 1.0],
+      "emission_strength": 5.0
+    }
+  }
+}

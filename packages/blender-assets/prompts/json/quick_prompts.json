@@ -1,0 +1,74 @@
+{
+  "name": "Quick Start Prompts",
+  "version": "1.0.0",
+  "description": "Simple, ready-to-paste prompts for immediate use with Claude + Blender MCP",
+  "usage": "Copy any prompt below and paste directly to Claude with Blender MCP connected",
+  "prompts": {
+    "scene_setup": {
+      "initialize_robot_scene": "Initialize a new Blender scene for robot creation: Clear all default objects, set units to Metric, create collections named 'Robot', 'Environment', 'Lights', and 'Camera'. Add a 5m x 5m ground plane at Z=0 with gray material. Set up three-point lighting with a key light (1000W) at position (2, -2, 3), fill light (500W) at (-2, -1, 2), and rim light (300W) at (0, 3, 2). Add a camera at (1.5, -1.5, 0.8) pointing at the origin. Set render engine to Cycles.",
+
+      "studio_setup": "Create a product photography studio in Blender: Add a seamless white cyclorama backdrop curving from floor to wall. Set up soft studio lighting with a large key light softbox from the left, fill light from the right, and rim light from behind. Add a reflective floor plane. Position camera for a 3/4 hero shot of a small robot. Enable Cycles with denoising.",
+
+      "warehouse_setup": "Create a warehouse environment: Add industrial concrete floor with painted lane markings (yellow safety lines). Create simple pallet racking shelves on both sides. Add high bay industrial pendant lights. Include some cardboard boxes and a pallet. Set up HDRI lighting or create procedural industrial lighting. Position camera for a wide establishing shot."
+    },
+
+    "complete_robots": {
+      "delivery_bot_quick": "Create a complete autonomous delivery robot with these components: 1) A rectangular chassis (30cm x 25cm x 8cm) with dark anodized aluminum finish. 2) Two rubber drive wheels (8cm diameter) on the sides. 3) Two small caster wheels at front and rear. 4) A depth camera (RealSense style) mounted on the front. 5) A 2D LiDAR puck on top. 6) An LED status ring on the very top glowing cyan. 7) A small antenna at the rear. Parent all components to the chassis. Add a Solana logo on the side.",
+
+      "warehouse_robot_quick": "Create a warehouse robot: Start with a larger chassis (45cm x 40cm x 10cm). Add four mecanum wheels at the corners - these have angled rollers for omnidirectional movement. Mount a 3D LiDAR on an elevated post. Add a simple 2-segment robot arm with a parallel gripper attached. Include an emergency stop button (red mushroom style) and yellow/black warning stripes on the edges. Add industrial gray finish.",
+
+      "hexapod_quick": "Create a six-legged walking robot: Make a hexagonal body plate (25cm across, 4cm thick) with carbon fiber material. Create one leg with 3 segments (coxa, femur, tibia) using small servo motors at each joint. The leg should be about 15cm total when extended. Duplicate and position 6 legs around the hexagon, 60 degrees apart. Add a small camera dome on top. Set the robot in a standing pose with all feet touching the ground.",
+
+      "robot_arm_quick": "Create a 6-DOF robot arm: Start with a heavy base (10cm diameter, 8cm tall). Add the first arm segment (15cm) going up with a shoulder joint. Add a second segment (12cm) with an elbow joint. Create a wrist with two rotation axes. Attach a parallel jaw gripper at the end. Paint the arm white/silver with black servo housings. Mount the whole assembly on a small base plate."
+    },
+
+    "individual_components": {
+      "create_wheel": "Create a robot wheel: Make a rubber tire (8cm diameter, 2.5cm wide) with a tread pattern. Add an aluminum hub in the center with 5 spokes. Include a center hole for the motor shaft. Apply black rubber material to the tire and brushed aluminum to the hub.",
+
+      "create_lidar": "Create a 2D LiDAR sensor: Make a cylindrical puck shape (7cm diameter, 5cm tall) with a rotating head section on top. Add a glossy black optical window band around the head. Include a cable connector on the base and two small green status LEDs. Apply matte black material to the housing.",
+
+      "create_camera": "Create a depth camera: Make an elongated housing (9cm x 2.5cm x 2.5cm) with a metallic silver finish. Add two stereo camera lenses at the left and right ends, plus a small IR projector dome in the center. Include a mounting bracket on the bottom.",
+
+      "create_gripper": "Create a parallel jaw gripper: Make a rectangular housing (8cm x 4cm x 4cm). Add two L-shaped finger assemblies that slide on rails. Include rubber grip pads on the fingertips. The fingers should be able to open to 6cm apart. Add a mounting flange on top.",
+
+      "create_jetson": "Create an NVIDIA Jetson Orin Nano: Make a green PCB (10cm x 8cm). Add the black Jetson module in the center with an aluminum heatsink with fins on top. Add USB ports (4x) and Ethernet jack along one edge, HDMI ports on another edge, and a 40-pin GPIO header. Include the NVIDIA logo on the heatsink."
+    },
+
+    "materials": {
+      "apply_robot_materials": "Apply professional materials to all robot parts: Use dark anodized aluminum (RGB 0.15, 0.15, 0.18, metallic 0.8) for the chassis. Apply black rubber (RGB 0.02, 0.02, 0.02, roughness 0.8) to wheels and bumpers. Use glossy black plastic for sensor housings. Make PCBs green with visible copper traces. Add cyan emissive material to any LED indicators.",
+
+      "solana_branding": "Add Solana branding to the robot: Create a circular Solana logo (gradient from purple RGB(0.6, 0.2, 0.8) to cyan RGB(0, 0.8, 1)) and place it on both sides of the chassis. Add 'SOLANA ROBOTICS' text in white on the front. Include subtle gradient accent lines using the Solana color scheme."
+    },
+
+    "export": {
+      "export_glb": "Export the robot model: Select all objects in the Robot collection. Export to GLB format with the following settings: Apply modifiers, include materials, embed textures, use Draco compression. Save as 'solana_robot.glb' in the exports folder.",
+
+      "render_turntable": "Create a turntable render: Frame the robot in camera view. Create an empty at the robot's center and parent the camera to it. Animate the empty rotating 360 degrees over 120 frames. Set render resolution to 1920x1080, 128 samples with denoising. Render the animation as a PNG sequence, then also export as MP4 video."
+    },
+
+    "animations": {
+      "wheel_spin": "Animate the wheels: Select both drive wheels. Add rotation keyframes: at frame 1 set Y rotation to 0, at frame 60 set Y rotation to 720 degrees (2 full rotations). Use linear interpolation for constant speed. This simulates forward motion.",
+
+      "led_pulse": "Animate the LED ring: Create a pulsing glow animation. At frame 1 set emission strength to 2, at frame 30 set to 5, at frame 60 back to 2. Use smooth interpolation for a breathing effect. Set the animation to loop."
+    }
+  },
+
+  "conversation_starters": {
+    "getting_started": "I want to create 3D robot models using Blender MCP. Let's start by setting up a clean scene for robot creation with proper lighting and camera.",
+
+    "create_delivery_robot": "Using Blender MCP, create a Solana delivery robot. It should have a rectangular chassis, two drive wheels, caster wheels, a depth camera, LiDAR sensor, and LED status ring. Make it look professional with dark anodized aluminum finish.",
+
+    "create_warehouse_robot": "Create a heavy-duty warehouse robot in Blender. It needs mecanum wheels for omnidirectional movement, a robot arm with gripper, 3D LiDAR, and industrial safety features like emergency stop and warning stripes.",
+
+    "create_walking_robot": "Build a hexapod walking robot in Blender. Six legs arranged around a hexagonal body, each leg with 3 joints. Add a camera sensor head and LED status indicators. Use carbon fiber material for the body.",
+
+    "render_product_shot": "Set up a professional product photography scene in Blender for the robot I just created. Use studio lighting with soft shadows, a reflective floor, and render a high-quality hero shot."
+  },
+
+  "tips": {
+    "workflow": "Best workflow: 1) Initialize scene first, 2) Create chassis/body, 3) Add locomotion (wheels/legs), 4) Add sensors, 5) Add electronics, 6) Apply materials, 7) Add branding, 8) Export",
+    "parenting": "Always parent components to the main chassis so they move together. Set origins at logical points (wheel center, joint pivots) for proper animation.",
+    "materials": "Apply materials after geometry is complete. Use Principled BSDF for all materials. Set metallic=0.8-0.9 for metals, roughness=0.7-0.8 for rubber.",
+    "export": "For web use, export GLB with Draco compression. For Unity/Unreal, export FBX. Always apply modifiers before export."
+  }
+}

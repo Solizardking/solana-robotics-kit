@@ -1,0 +1,114 @@
+{
+  "name": "Robot Components Library",
+  "version": "1.0.0",
+  "description": "Individual component prompts for mix-and-match robot building",
+  "components": {
+    "sensors": {
+      "rgb_camera": {
+        "name": "RGB Camera Module",
+        "dimensions": {"width": 0.035, "height": 0.035, "depth": 0.025},
+        "prompt": "Create an RGB camera module:\n\n1. Housing:\n   - Cube 35mm x 35mm x 25mm\n   - Rounded corners (2mm radius)\n   - Matte black plastic\n\n2. Lens assembly:\n   - Cylindrical barrel, 12mm diameter\n   - Protrudes 5mm from front face\n   - Multiple lens elements visible\n   - Glass front element (reflective)\n\n3. Details:\n   - IR cut filter ring (red tint)\n   - Focus ring texture\n   - LED indicator (small red dot)\n   - Mounting bracket on bottom\n   - Ribbon cable connector on back\n\n4. Materials:\n   - Housing: mat_plastic_black\n   - Lens barrel: mat_aluminum_anodized\n   - Glass: mat_lens_glass (slight blue coating)\n\nName: 'component_camera_rgb'"
+      },
+      "depth_camera": {
+        "name": "Intel RealSense Style Depth Camera",
+        "dimensions": {"width": 0.09, "height": 0.025, "depth": 0.025},
+        "prompt": "Create a stereo depth camera (RealSense D400 style):\n\n1. Main housing:\n   - Elongated rectangle: 90mm x 25mm x 25mm\n   - Angular industrial design\n   - Silver/gray metallic finish\n\n2. Stereo cameras:\n   - Two identical lenses at left/right ends\n   - 8mm diameter each\n   - Spacing: 50mm baseline\n   - Slight recess in housing\n\n3. IR projector:\n   - Center of housing\n   - Small dome shape\n   - Dot pattern projector look\n\n4. RGB camera (optional):\n   - Small lens between stereo pair\n   - 4mm diameter\n\n5. Details:\n   - Intel logo indent\n   - USB-C port on side\n   - Mounting threads (1/4-20)\n   - Status LED strip\n\n6. Materials:\n   - Housing: mat_realsense_silver (metallic gray)\n   - Lenses: mat_glass_dark\n   - IR dome: mat_glass_ir_tint\n\nName: 'component_camera_depth'"
+      },
+      "lidar_2d": {
+        "name": "2D LiDAR Scanner (RPLIDAR Style)",
+        "dimensions": {"width": 0.07, "height": 0.05, "depth": 0.07},
+        "prompt": "Create a 2D scanning LiDAR:\n\n1. Base housing:\n   - Cylinder 70mm diameter, 35mm height\n   - Flat top for rotating assembly\n   - Matte black finish\n\n2. Rotating head:\n   - Slightly smaller cylinder on top\n   - 65mm diameter, 15mm height\n   - Visible seam line at junction\n\n3. Optical window:\n   - Band around rotating head\n   - 10mm height\n   - Glossy black material\n   - Transmits IR laser\n\n4. Base details:\n   - Data cable exit (side)\n   - Mounting holes (3x, 120° apart)\n   - Status LEDs (2x green)\n   - Rubber feet\n\n5. Materials:\n   - Housing: mat_lidar_black (RGB 0.05, 0.05, 0.08)\n   - Window: mat_glass_black (glossy)\n   - LEDs: mat_led_green (emissive)\n\nName: 'component_lidar_2d'"
+      },
+      "lidar_3d": {
+        "name": "3D LiDAR (Velodyne/Ouster Style)",
+        "dimensions": {"width": 0.10, "height": 0.15, "depth": 0.10},
+        "prompt": "Create a multi-beam 3D LiDAR:\n\n1. Main body:\n   - Cylinder 100mm diameter\n   - Height 120mm\n   - Domed top\n\n2. Sensor head:\n   - Multi-faceted drum shape\n   - 16/32/64 channel appearance\n   - Visible optical windows in rows\n\n3. Optical apertures:\n   - Array of small windows\n   - Stacked vertically\n   - 16 rows for 16-channel look\n   - Each 5mm x 3mm\n\n4. Base section:\n   - Connector panel\n   - Power input\n   - Ethernet port\n   - GPS/PPS connector\n\n5. Cooling:\n   - Ventilation slots\n   - Heatsink fins (optional)\n\n6. Materials:\n   - Body: mat_lidar_black\n   - Windows: mat_glass_ir_dark\n   - Connectors: various metals\n\nName: 'component_lidar_3d'"
+      },
+      "ultrasonic": {
+        "name": "Ultrasonic Distance Sensor (HC-SR04)",
+        "dimensions": {"width": 0.045, "height": 0.02, "depth": 0.015},
+        "prompt": "Create an HC-SR04 ultrasonic sensor:\n\n1. PCB base:\n   - Rectangle 45mm x 20mm x 2mm\n   - Green solder mask color\n   - Visible copper traces\n\n2. Transducers (2x):\n   - Cylindrical cans: 16mm diameter, 12mm height\n   - Silver aluminum body\n   - Mesh front face\n   - Spacing: 25mm center-to-center\n\n3. PCB components:\n   - Crystal oscillator (small silver can)\n   - IC chip (black rectangle)\n   - Resistors/capacitors (small SMD)\n   - 'HC-SR04' silkscreen text\n\n4. Connections:\n   - 4-pin header (VCC, Trig, Echo, GND)\n   - Mounting holes at corners\n\n5. Materials:\n   - PCB: mat_pcb_green\n   - Transducers: mat_aluminum_mesh\n   - Components: various\n\nName: 'component_ultrasonic'"
+      },
+      "imu": {
+        "name": "9-DOF IMU Module",
+        "dimensions": {"width": 0.025, "height": 0.025, "depth": 0.003},
+        "prompt": "Create a 9-axis IMU breakout board:\n\n1. PCB:\n   - Square 25mm x 25mm x 1.5mm\n   - Blue solder mask (or purple)\n   - Gold-plated pads\n\n2. Main IC:\n   - QFN package center\n   - 4mm x 4mm black chip\n   - Tiny pin markings\n\n3. Support components:\n   - Decoupling capacitors (4x tiny)\n   - Pull-up resistors\n   - Voltage regulator (small)\n\n4. Markings:\n   - Axis arrows (X, Y, Z)\n   - Pin labels\n   - Board name\n   - Adafruit/SparkFun style\n\n5. Connections:\n   - Header pin holes along edge\n   - I2C/SPI interface\n   - Interrupt pins\n\n6. Materials:\n   - PCB: mat_pcb_blue\n   - Pads: mat_gold\n   - Chips: mat_ic_black\n\nName: 'component_imu'"
+      }
+    },
+    "actuators": {
+      "wheel_standard": {
+        "name": "Standard Drive Wheel",
+        "dimensions": {"diameter": 0.08, "width": 0.025},
+        "prompt": "Create a standard robot wheel:\n\n1. Tire:\n   - Torus/cylinder: 80mm diameter, 25mm width\n   - Rounded profile\n   - Rubber material with tread pattern\n\n2. Tread pattern:\n   - Circumferential grooves (3-4)\n   - Or block tread pattern\n   - 3mm depth\n\n3. Hub:\n   - Center disc: 30mm diameter\n   - 5 curved spokes\n   - Central bore for shaft (6mm)\n   - Set screw detail\n\n4. Hub cap (optional):\n   - Covers center\n   - Logo placement area\n\n5. Materials:\n   - Tire: mat_rubber_black (roughness 0.8)\n   - Hub: mat_aluminum_brushed\n   - Spokes: mat_aluminum_anodized\n\nName: 'component_wheel_standard'"
+      },
+      "wheel_mecanum": {
+        "name": "Mecanum Wheel",
+        "dimensions": {"diameter": 0.10, "width": 0.05},
+        "prompt": "Create a mecanum omnidirectional wheel:\n\n1. Hub structure:\n   - Two parallel discs: 60mm diameter\n   - Connected by central shaft\n   - Mounting plate on inner side\n\n2. Roller array:\n   - 9-12 barrel-shaped rollers\n   - Each roller: 25mm long, 15mm diameter\n   - Angled 45° to wheel axis\n   - Free-spinning on pins\n\n3. Roller pins:\n   - Steel axles through rollers\n   - Mounted between hub discs\n   - Equally spaced around circumference\n\n4. Roller detail:\n   - Slight barrel curve (convex)\n   - Rubber outer surface\n   - Bearing ends visible\n\n5. Hub details:\n   - Motor mounting pattern\n   - Keyway or set screw\n\n6. Materials:\n   - Hub: mat_aluminum_anodized_black\n   - Rollers: mat_rubber_gray\n   - Pins: mat_steel\n\nNote: Wheel orientation matters!\n- Left wheels: rollers angle one way\n- Right wheels: rollers angle opposite\n\nName: 'component_wheel_mecanum'"
+      },
+      "servo_standard": {
+        "name": "Standard Hobby Servo",
+        "dimensions": {"width": 0.04, "height": 0.038, "depth": 0.02},
+        "prompt": "Create a standard hobby servo:\n\n1. Body:\n   - Rectangular: 40mm x 20mm x 38mm\n   - Mounting ears on sides\n   - 4 mounting holes (M3)\n\n2. Output shaft:\n   - Top center\n   - Splined shaft: 5mm diameter\n   - Brass insert visible\n\n3. Wire:\n   - 3-wire cable exiting body\n   - Orange/red/brown colors\n   - JR/Futaba connector\n\n4. Details:\n   - Screw heads on case\n   - Label area with specs\n   - Gear train visible through case (hint)\n\n5. Horn (optional):\n   - Cross or disc horn\n   - Attaches to output\n   - Mounting screw hole\n\n6. Materials:\n   - Body: mat_plastic_black or mat_plastic_blue\n   - Output: mat_brass\n   - Wire: colored plastics\n\nName: 'component_servo_standard'"
+      },
+      "servo_dynamixel": {
+        "name": "Smart Servo (Dynamixel Style)",
+        "dimensions": {"width": 0.04, "height": 0.05, "depth": 0.036},
+        "prompt": "Create a Dynamixel-style smart servo:\n\n1. Body:\n   - Compact rectangle: 40mm x 36mm x 50mm\n   - Mounting frames on both ends\n   - Multiple mounting hole patterns\n\n2. Output:\n   - Centered on one face\n   - Splined output hub\n   - Position sensor built-in\n\n3. Connectors:\n   - 2x TTL/RS485 ports (daisy chain)\n   - Molex-style connectors\n   - On back face\n\n4. Features:\n   - Metal gear train (implied)\n   - Aluminum heat sink integrated\n   - ID display area\n   - LED indicator window\n\n5. Frame details:\n   - Idler bearing on opposite end\n   - Quick-connect frame system\n\n6. Materials:\n   - Body: mat_dynamixel_black\n   - Frame: mat_aluminum_black\n   - Output: mat_steel\n\nName: 'component_servo_dynamixel'"
+      },
+      "motor_brushless": {
+        "name": "Brushless DC Motor",
+        "dimensions": {"diameter": 0.04, "height": 0.05},
+        "prompt": "Create a brushless DC motor:\n\n1. Motor body:\n   - Cylinder: 40mm diameter, 50mm length\n   - Mounting face with bolt pattern\n   - Cooling fins around body (optional)\n\n2. Output shaft:\n   - Steel shaft: 5mm diameter\n   - Extends 15mm from front\n   - Flat for set screw\n\n3. Encoder:\n   - Rear housing extension\n   - Glass disc encoder (implied)\n   - Connector on back\n\n4. Wiring:\n   - 3-phase wires (A, B, C)\n   - Color coded: black, red, blue\n   - Exiting from side or rear\n\n5. Details:\n   - Manufacturer label\n   - Specs printed (KV rating)\n   - Front bearing visible\n\n6. Materials:\n   - Body: mat_motor_aluminum\n   - End caps: mat_aluminum_black\n   - Shaft: mat_steel\n\nName: 'component_motor_bldc'"
+      },
+      "gripper_parallel": {
+        "name": "Parallel Jaw Gripper",
+        "dimensions": {"width": 0.08, "height": 0.06, "depth": 0.04},
+        "prompt": "Create a parallel jaw gripper:\n\n1. Body/housing:\n   - Main block: 80mm x 40mm x 40mm\n   - Contains linear actuator\n   - Mounting flange on top\n\n2. Guide rails:\n   - Two parallel rails\n   - Fingers slide along these\n   - Visible ball bearings/slides\n\n3. Fingers (2x):\n   - L-shaped profile\n   - Base: 25mm x 30mm x 10mm\n   - Tip extending down: 40mm\n   - Move symmetrically\n\n4. Finger tips:\n   - Interchangeable pads\n   - Rubber gripping surface\n   - Serrated or textured\n\n5. Sensors:\n   - Force sensor in each finger\n   - Position encoder\n   - Object detection (optional)\n\n6. Connections:\n   - Air line (pneumatic) or\n   - Electrical connector\n   - Signal/sensor cable\n\n7. Materials:\n   - Body: mat_aluminum_anodized_gray\n   - Fingers: mat_aluminum_machined\n   - Pads: mat_rubber_grip\n\nName: 'component_gripper_parallel'"
+      }
+    },
+    "control_units": {
+      "jetson_orin_nano": {
+        "name": "NVIDIA Jetson Orin Nano Developer Kit",
+        "dimensions": {"width": 0.10, "height": 0.035, "depth": 0.08},
+        "prompt": "Create NVIDIA Jetson Orin Nano:\n\n1. Carrier board:\n   - PCB: 100mm x 80mm x 2mm\n   - Green solder mask\n   - Dense component placement\n\n2. Jetson module:\n   - Black rectangle on PCB\n   - 70mm x 45mm x 8mm\n   - 260-pin connector underneath\n\n3. Heatsink:\n   - Aluminum finned heatsink\n   - 65mm x 40mm x 15mm\n   - NVIDIA logo embossed\n   - Optional fan mount\n\n4. Ports (along edges):\n   - USB: 4x Type-A (2 stacks of 2)\n   - Ethernet: 1x RJ45\n   - Display: HDMI + DisplayPort\n   - Power: Barrel jack DC\n   - GPIO: 40-pin header\n   - Camera: 2x CSI connectors\n\n5. Other connectors:\n   - M.2 slot (with SSD option)\n   - MicroSD slot\n   - Debug UART header\n\n6. Materials:\n   - PCB: mat_pcb_green_nvidia\n   - Module: mat_plastic_black\n   - Heatsink: mat_aluminum_silver\n   - Ports: standard colors\n\nName: 'component_jetson_orin'"
+      },
+      "raspberry_pi": {
+        "name": "Raspberry Pi 5",
+        "dimensions": {"width": 0.085, "height": 0.02, "depth": 0.056},
+        "prompt": "Create Raspberry Pi 5:\n\n1. Main PCB:\n   - Size: 85mm x 56mm (credit card)\n   - Green PCB (classic Pi color)\n   - Dense double-sided components\n\n2. Main SoC:\n   - BCM2712 chip center\n   - Small heatsink on top\n   - Silver thermal pad visible\n\n3. Ports (organized by edge):\n   USB side:\n   - 2x USB 3.0 (blue)\n   - 2x USB 2.0 (black)\n   - Gigabit Ethernet (with LEDs)\n\n   Video side:\n   - 2x micro HDMI\n\n   Power side:\n   - USB-C power input\n   - Power button (new in Pi 5)\n\n   Other side:\n   - 3.5mm audio jack\n   - MIPI CSI camera connector\n   - MIPI DSI display connector\n\n4. GPIO:\n   - 40-pin header\n   - Gold pins, black housing\n   - Standard Pi pinout\n\n5. Other:\n   - MicroSD slot on bottom\n   - PCIe connector (new)\n   - PoE header\n   - Raspberry Pi logo\n\n6. Materials:\n   - PCB: mat_pcb_raspberry_green\n   - Chips: mat_ic_packages\n   - Ports: standard colors\n\nName: 'component_raspberry_pi_5'"
+      }
+    },
+    "power": {
+      "battery_lipo": {
+        "name": "LiPo Battery Pack",
+        "dimensions": {"width": 0.15, "height": 0.03, "depth": 0.05},
+        "prompt": "Create a LiPo battery pack:\n\n1. Main body:\n   - Soft rectangle: 150mm x 50mm x 30mm\n   - Rounded edges (safety)\n   - Shrink wrap texture\n\n2. Main connector:\n   - XT60 style (yellow)\n   - Or EC3/Deans\n   - Positive/negative markings\n\n3. Balance connector:\n   - JST-XH multi-pin\n   - White housing\n   - Wire leads\n\n4. Label:\n   - Specifications printed:\n     - Voltage: 22.2V (6S)\n     - Capacity: 5000mAh\n     - Discharge: 50C\n   - Warning symbols\n   - Manufacturer branding\n\n5. Charge indicator (optional):\n   - 4-LED strip on side\n   - Check button\n\n6. Materials:\n   - Body: mat_battery_wrap (black matte)\n   - XT60: mat_plastic_yellow\n   - Balance: mat_plastic_white\n\nName: 'component_battery_lipo'"
+      }
+    },
+    "indicators": {
+      "led_ring": {
+        "name": "RGB LED Status Ring",
+        "dimensions": {"outer_diameter": 0.06, "inner_diameter": 0.04, "height": 0.005},
+        "prompt": "Create an addressable LED ring:\n\n1. PCB ring:\n   - Torus shape: 60mm outer, 40mm inner\n   - 3mm thick\n   - Black PCB (for contrast)\n\n2. LED chips:\n   - 12x WS2812B (or 16, 24)\n   - Evenly spaced around ring\n   - 5mm x 5mm each\n   - White/clear lens on each\n\n3. Connections:\n   - 3-pin input (5V, GND, Data)\n   - Optional output for chaining\n   - Solder pads or JST\n\n4. Diffuser (optional):\n   - Frosted cover over LEDs\n   - Softens light output\n   - Translucent white material\n\n5. Mounting:\n   - Screw holes (3x)\n   - Or adhesive backing\n\n6. Materials:\n   - PCB: mat_pcb_black\n   - LED lens: mat_plastic_clear\n   - Emission: mat_led_rgb (adjustable)\n\n7. Default emission:\n   - Cyan color: RGB(0, 0.8, 1.0)\n   - Strength: 5.0\n\nName: 'component_led_ring'"
+      },
+      "antenna_wifi": {
+        "name": "WiFi/BT Antenna",
+        "dimensions": {"width": 0.015, "height": 0.08, "depth": 0.008},
+        "prompt": "Create a WiFi/Bluetooth antenna:\n\n1. Antenna body:\n   - Flat paddle shape\n   - 15mm x 80mm x 8mm\n   - Rounded top\n   - Rubber/plastic coating\n\n2. Hinge/swivel:\n   - Articulating base\n   - Allows angle adjustment\n   - Knurled grip ring\n\n3. Connector:\n   - SMA or RP-SMA\n   - Gold-plated threads\n   - Center pin visible\n\n4. Internal element (hint):\n   - Wire pattern visible through housing\n   - PCB antenna inside\n\n5. Markings:\n   - WiFi symbol\n   - Frequency bands (2.4/5GHz)\n   - Gain rating (optional)\n\n6. Materials:\n   - Body: mat_rubber_black\n   - Connector: mat_gold_plated\n   - Base: mat_plastic_black\n\nName: 'component_antenna_wifi'"
+      }
+    }
+  },
+  "material_presets": {
+    "mat_plastic_black": {"base_color": [0.05, 0.05, 0.05, 1], "metallic": 0, "roughness": 0.4},
+    "mat_rubber_black": {"base_color": [0.02, 0.02, 0.02, 1], "metallic": 0, "roughness": 0.8},
+    "mat_aluminum_brushed": {"base_color": [0.6, 0.6, 0.62, 1], "metallic": 0.9, "roughness": 0.4},
+    "mat_aluminum_anodized": {"base_color": [0.15, 0.15, 0.18, 1], "metallic": 0.8, "roughness": 0.3},
+    "mat_pcb_green": {"base_color": [0.0, 0.4, 0.2, 1], "metallic": 0, "roughness": 0.6},
+    "mat_pcb_blue": {"base_color": [0.1, 0.15, 0.4, 1], "metallic": 0, "roughness": 0.5},
+    "mat_steel": {"base_color": [0.5, 0.5, 0.52, 1], "metallic": 0.95, "roughness": 0.35},
+    "mat_gold_plated": {"base_color": [0.83, 0.69, 0.22, 1], "metallic": 1.0, "roughness": 0.2},
+    "mat_glass_dark": {"base_color": [0.05, 0.05, 0.1, 1], "metallic": 0.3, "roughness": 0.1},
+    "mat_led_emissive": {"base_color": [0, 0.8, 1, 1], "emission_strength": 5.0}
+  }
+}
