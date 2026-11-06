@@ -84,6 +84,11 @@ export default function ClawdBrain() {
         </form>
       </section>
     </div>
+    <section className="soltron-gallery" aria-label="SOLtron in the lab">
+      <figure><img src="/images/soltron-rover.jpg" alt="SOLtron rover with its Solana backpack in the Solana Robotics lab" loading="lazy" /><figcaption>SOLTRON ROVER · LAB UNIT 001</figcaption></figure>
+      <figure><img src="/images/soltron-humanoid.jpg" alt="SOLtron humanoid in purple armor with its Solana-green pixel smile" loading="lazy" /><figcaption>SOLTRON HUMANOID · GENESIS FINISH</figcaption></figure>
+      <figure><img src="/images/soltron-workbench.jpg" alt="SOLtron on the workbench beside the purple CLAWD modular gripper kit — built on Solana, powered by $CLAWD" loading="lazy" /><figcaption>ON THE BENCH · WITH THE $CLAWD GRIPPER KIT</figcaption></figure>
+    </section>
     {notice && <p role="status" className="soltron-notice">{notice}</p>}
     {status.error && <p role="alert" className="soltron-notice">Provider status could not be loaded.</p>}
     <section className="soltron-foundation"><div><Cpu size={22}/><h2>A personality on screen.<br/>A path to physical AI.</h2><p>The companion brings your ideas to life. NVIDIA GR00T is the separate vision-language-action foundation for robot policy development.</p></div><div className="soltron-checkpoint"><span>SELECTED CHECKPOINT</span><h3>GR00T N1.7 / 3B</h3><p>ordlibrary · Hugging Face bucket</p><a href="https://huggingface.co/buckets/ordlibrary/GR00T-N1.7-3B-bucket" target="_blank" rel="noreferrer">Explore model files <ExternalLink size={14}/></a><small>Policy runtime not connected. ASV-1 embodiment validation required before hardware use.</small></div></section>
