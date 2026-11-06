@@ -11,8 +11,6 @@ export const TOKENS = {
   SOL: 'So11111111111111111111111111111111111111112',
   USDC: 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v',
   CLAWD: process.env.TOKEN_ADDRESS || process.env.CLAWD_TOKEN_ADDRESS || '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump',
-  /** @deprecated use CLAWD */
-  KIT: process.env.TOKEN_ADDRESS || process.env.CLAWD_TOKEN_ADDRESS || '8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump',
 };
 
 export interface QuoteParams {
@@ -208,7 +206,7 @@ export function parseTradeIntent(message: string): TradeIntent | null {
     return {
       action: 'buy',
       inputToken: 'SOL',
-      outputToken: outputToken === 'CLAWD' || outputToken === 'KIT' ? TOKENS.CLAWD : TOKENS[outputToken as keyof typeof TOKENS] || outputToken,
+      outputToken: outputToken === 'CLAWD' ? TOKENS.CLAWD : TOKENS[outputToken as keyof typeof TOKENS] || outputToken,
       amount,
       amountType: 'input',
     };
@@ -222,7 +220,7 @@ export function parseTradeIntent(message: string): TradeIntent | null {
     
     return {
       action: 'sell',
-      inputToken: inputToken === 'CLAWD' || inputToken === 'KIT' ? TOKENS.CLAWD : TOKENS[inputToken as keyof typeof TOKENS] || inputToken,
+      inputToken: inputToken === 'CLAWD' ? TOKENS.CLAWD : TOKENS[inputToken as keyof typeof TOKENS] || inputToken,
       outputToken: 'SOL',
       amount,
       amountType: 'input',
@@ -236,8 +234,8 @@ export function parseTradeIntent(message: string): TradeIntent | null {
     let inputToken = swapMatch[2].toUpperCase();
     let outputToken = swapMatch[3].toUpperCase();
     
-    inputToken = inputToken === 'CLAWD' || inputToken === 'KIT' ? TOKENS.CLAWD : TOKENS[inputToken as keyof typeof TOKENS] || inputToken;
-    outputToken = outputToken === 'CLAWD' || outputToken === 'KIT' ? TOKENS.CLAWD : TOKENS[outputToken as keyof typeof TOKENS] || outputToken;
+    inputToken = inputToken === 'CLAWD' ? TOKENS.CLAWD : TOKENS[inputToken as keyof typeof TOKENS] || inputToken;
+    outputToken = outputToken === 'CLAWD' ? TOKENS.CLAWD : TOKENS[outputToken as keyof typeof TOKENS] || outputToken;
     
     return {
       action: 'swap',

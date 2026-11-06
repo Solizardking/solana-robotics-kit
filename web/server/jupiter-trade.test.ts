@@ -145,11 +145,11 @@ describe("Jupiter Trade Execution", () => {
 
 describe("Trade Intent Parser (Unit Tests)", () => {
   it("parses various buy formats", () => {
-    expect(parseTradeIntent("buy 0.5 SOL worth of KIT")).toMatchObject({
+    expect(parseTradeIntent("buy 0.5 SOL worth of CLAWD")).toMatchObject({
       action: "buy",
       amount: 0.5,
     });
-    expect(parseTradeIntent("buy 1 sol $kit")).toMatchObject({
+    expect(parseTradeIntent("buy 1 sol $clawd")).toMatchObject({
       action: "buy",
       amount: 1,
     });

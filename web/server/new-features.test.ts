@@ -156,7 +156,7 @@ describe("Cloudflare R2 Assets", () => {
 });
 
 describe("Token Info", () => {
-  it("getTokenInfo returns KIT token details", async () => {
+  it("getTokenInfo returns CLAWD token details", async () => {
     const ctx = createMockContext();
     const caller = appRouter.createCaller(ctx);
     
