@@ -1,10 +1,10 @@
 """
-$KIT Token Governance Module
+$CLAWD Token Governance Module
 
 Enables decentralized governance for the Solana Robotics platform.
-$KIT holders can create and vote on proposals.
+$CLAWD holders can create and vote on proposals.
 
-Token Address: DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+Token Address: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 """
 
 import logging
@@ -13,8 +13,8 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
 
-from kit.constants import (
-    KIT_TOKEN_ADDRESS,
+from clawd.constants import (
+    CLAWD_TOKEN_ADDRESS,
     MIN_PROPOSAL_STAKE,
     VOTING_PERIOD_DAYS,
     QUORUM_PERCENTAGE,
@@ -49,7 +49,7 @@ class Vote:
     voter: str
     proposal_id: str
     vote: bool  # True = For, False = Against
-    weight: float  # $KIT balance at time of vote
+    weight: float  # $CLAWD balance at time of vote
     timestamp: datetime
 
 
@@ -106,20 +106,20 @@ class GovernanceResult:
     error: Optional[str] = None
 
 
-class KitGovernance:
+class ClawdGovernance:
     """
-    $KIT Token Governance Client.
+    $CLAWD Token Governance Client.
 
     Enables decentralized governance for the Solana Robotics platform.
 
     Features:
-    - Create proposals (requires 1,000 $KIT minimum)
-    - Vote on proposals (weight = $KIT balance)
+    - Create proposals (requires 1,000 $CLAWD minimum)
+    - Vote on proposals (weight = $CLAWD balance)
     - 7-day voting period
     - 10% quorum requirement
 
     Example:
-        governance = KitGovernance()
+        governance = ClawdGovernance()
 
         # Create proposal
         result = await governance.create_proposal(
@@ -146,7 +146,7 @@ class KitGovernance:
         rpc_url: Optional[str] = None,
     ):
         """
-        Initialize KitGovernance client.
+        Initialize ClawdGovernance client.
 
         Args:
             network: Solana network
@@ -154,7 +154,7 @@ class KitGovernance:
         """
         self.network = network
         self.rpc_url = rpc_url
-        self.token_address = KIT_TOKEN_ADDRESS
+        self.token_address = CLAWD_TOKEN_ADDRESS
         self._proposals: Dict[str, Proposal] = {}  # In-memory for demo
         self._votes: List[Vote] = []
 
@@ -229,7 +229,7 @@ class KitGovernance:
             voter: Voting wallet
             proposal_id: Proposal to vote on
             vote: True = For, False = Against
-            weight: Vote weight (defaults to $KIT balance)
+            weight: Vote weight (defaults to $CLAWD balance)
 
         Returns:
             GovernanceResult with success status
@@ -255,7 +255,7 @@ class KitGovernance:
             )
 
         try:
-            # In production, get actual $KIT balance
+            # In production, get actual $CLAWD balance
             vote_weight = weight or 100.0  # Demo default
 
             # Record vote

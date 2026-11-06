@@ -1,11 +1,13 @@
 """
-$KIT Token Client
+$CLAWD Token Client
 
-Handles all $KIT token operations including balance queries, transfers,
+Handles all $CLAWD token operations including balance queries, transfers,
 and integration with the Solana Robotics platform.
 
-Token Address: DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+Token Address: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 """
+
+from __future__ import annotations
 
 import os
 import logging
@@ -24,10 +26,10 @@ try:
 except ImportError:
     SOLANA_AVAILABLE = False
 
-from kit.constants import (
-    KIT_TOKEN_ADDRESS,
-    KIT_DECIMALS,
-    KIT_SYMBOL,
+from clawd.constants import (
+    CLAWD_TOKEN_ADDRESS,
+    CLAWD_DECIMALS,
+    CLAWD_SYMBOL,
     NETWORKS,
     TIER_FREE,
     TIER_STARTER,
@@ -58,20 +60,20 @@ class BalanceResult:
     error: Optional[str] = None
 
 
-class KitToken:
+class ClawdToken:
     """
-    $KIT Token Client for Solana Robotics.
+    $CLAWD Token Client for Solana Robotics.
 
-    Provides methods to interact with the $KIT token including:
+    Provides methods to interact with the $CLAWD token including:
     - Balance queries
     - Token transfers
     - Tier determination
     - Fee calculations
 
     Example:
-        kit = KitToken()
-        balance = await kit.get_balance("YourWalletAddress")
-        print(f"Balance: {balance.balance} $KIT")
+        clawd = ClawdToken()
+        balance = await clawd.get_balance("YourWalletAddress")
+        print(f"Balance: {balance.balance} $CLAWD")
         print(f"Tier: {balance.tier}")
     """
 
@@ -82,7 +84,7 @@ class KitToken:
         keypair: Optional[Any] = None,
     ):
         """
-        Initialize KitToken client.
+        Initialize ClawdToken client.
 
         Args:
             network: Solana network (mainnet-beta, devnet, testnet)
@@ -91,9 +93,9 @@ class KitToken:
         """
         self.network = network
         self.rpc_url = rpc_url or os.getenv("SOLANA_RPC_URL") or NETWORKS[network]["rpc"]
-        self.token_address = KIT_TOKEN_ADDRESS
-        self.decimals = KIT_DECIMALS
-        self.symbol = KIT_SYMBOL
+        self.token_address = CLAWD_TOKEN_ADDRESS
+        self.decimals = CLAWD_DECIMALS
+        self.symbol = CLAWD_SYMBOL
         self._keypair = keypair
         self._client: Optional[AsyncClient] = None
 
@@ -116,7 +118,7 @@ class KitToken:
             self._client = None
 
     def _determine_tier(self, balance: float) -> str:
-        """Determine user tier based on $KIT balance."""
+        """Determine user tier based on $CLAWD balance."""
         if balance >= TIER_ENTERPRISE:
             return "enterprise"
         elif balance >= TIER_PRO:
@@ -127,7 +129,7 @@ class KitToken:
 
     async def get_balance(self, wallet_address: str) -> BalanceResult:
         """
-        Get $KIT token balance for a wallet.
+        Get $CLAWD token balance for a wallet.
 
         Args:
             wallet_address: Solana wallet address
@@ -183,11 +185,11 @@ class KitToken:
         memo: Optional[str] = None,
     ) -> TransactionResult:
         """
-        Transfer $KIT tokens to a recipient.
+        Transfer $CLAWD tokens to a recipient.
 
         Args:
             recipient: Recipient wallet address
-            amount: Amount of $KIT to transfer
+            amount: Amount of $CLAWD to transfer
             memo: Optional memo for the transaction
 
         Returns:
@@ -237,7 +239,7 @@ class KitToken:
                 amount=raw_amount
             )
 
-            logger.info(f"Transferred {amount} $KIT to {recipient}: {signature}")
+            logger.info(f"Transferred {amount} $CLAWD to {recipient}: {signature}")
 
             return TransactionResult(
                 success=True,
@@ -277,16 +279,16 @@ class KitToken:
 
     def calculate_fee(self, operation: str, amount: float = 1.0) -> float:
         """
-        Calculate $KIT fee for an operation.
+        Calculate $CLAWD fee for an operation.
 
         Args:
             operation: Type of operation
             amount: Multiplier for the fee
 
         Returns:
-            Fee amount in $KIT
+            Fee amount in $CLAWD
         """
-        from kit.constants import (
+        from clawd.constants import (
             FEE_AGENT_EXECUTION,
             FEE_ROBOT_PAYMENT,
             FEE_PREMIUM_ANALYSIS,
@@ -304,8 +306,8 @@ class KitToken:
         return base_fee * amount
 
     def get_token_info(self) -> Dict[str, Any]:
-        """Get $KIT token information."""
-        from kit.constants import (
+        """Get $CLAWD token information."""
+        from clawd.constants import (
             SOLSCAN_URL,
             JUPITER_SWAP_URL,
             BIRDEYE_URL,
@@ -333,4 +335,4 @@ class KitToken:
         }
 
     def __repr__(self) -> str:
-        return f"KitToken(address={self.token_address}, network={self.network})"
+        return f"ClawdToken(address={self.token_address}, network={self.network})"

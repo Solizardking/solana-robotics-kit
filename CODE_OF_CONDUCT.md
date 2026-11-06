@@ -117,7 +117,7 @@ As a Web3 and blockchain project, we have additional guidelines:
 
 ### Token Discussions
 
-- Discussions about $KIT token should be factual
+- Discussions about $CLAWD token should be factual
 - No price manipulation or coordinated trading discussions
 - No "pump and dump" schemes
 - Respect exchange and platform rules
@@ -138,4 +138,4 @@ For answers to common questions about this code of conduct, see the FAQ at https
 
 Website: [solanarobotics.org](https://solanarobotics.org)
 
-$KIT Token: `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS`
+$CLAWD Token: `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`

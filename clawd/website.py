@@ -4,15 +4,15 @@ Solana Robotics Website Integration
 Provides integration with solanarobotics.org for the platform.
 
 Website: https://solanarobotics.org
-Token: $KIT (DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS)
+Token: $CLAWD (8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
 """
 
 import logging
 from typing import Optional, Dict, Any, List
 from dataclasses import dataclass
 
-from kit.constants import (
-    KIT_TOKEN_ADDRESS,
+from clawd.constants import (
+    CLAWD_TOKEN_ADDRESS,
     SOLANA_ROBOTICS_URL,
     SOLSCAN_URL,
     JUPITER_SWAP_URL,
@@ -26,7 +26,7 @@ logger = logging.getLogger(__name__)
 class PlatformConfig:
     """Configuration for Solana Robotics platform."""
     website_url: str = SOLANA_ROBOTICS_URL
-    token_address: str = KIT_TOKEN_ADDRESS
+    token_address: str = CLAWD_TOKEN_ADDRESS
     api_base_url: str = f"{SOLANA_ROBOTICS_URL}/api/v1"
     docs_url: str = f"{SOLANA_ROBOTICS_URL}/docs"
     discord_url: str = "https://discord.gg/solanarobotics"
@@ -49,7 +49,7 @@ class SolanaRoboticsAPI:
         # Get agent leaderboard
         leaderboard = await api.get_agent_leaderboard()
 
-        # Get $KIT token info
+        # Get $CLAWD token info
         token_info = await api.get_token_info()
     """
 
@@ -70,7 +70,7 @@ class SolanaRoboticsAPI:
             "platform": "Solana Robotics",
             "website": self.config.website_url,
             "token": {
-                "symbol": "KIT",
+                "symbol": "CLAWD",
                 "address": self.config.token_address,
             },
             "stats": {
@@ -89,11 +89,11 @@ class SolanaRoboticsAPI:
         }
 
     async def get_token_info(self) -> Dict[str, Any]:
-        """Get $KIT token information."""
+        """Get $CLAWD token information."""
         return {
             "name": "Solana Robotics Kit",
-            "symbol": "KIT",
-            "address": KIT_TOKEN_ADDRESS,
+            "symbol": "CLAWD",
+            "address": CLAWD_TOKEN_ADDRESS,
             "decimals": 9,
             "links": {
                 "solscan": SOLSCAN_URL,
@@ -192,7 +192,7 @@ class SolanaRoboticsAPI:
             "agents": f"{base}/agents",
             "defi_tools": f"{base}/tools",
             "robotics": f"{base}/robotics",
-            "kit_token": f"{base}/kit-token",
+            "clawd_token": f"{base}/clawd-token",
             "api_reference": f"{base}/api",
             "contributing": f"{base}/contributing",
         }
@@ -228,7 +228,7 @@ def get_platform_banner() -> str:
 ║   ╚═╝  ╚═╝ ╚═════╝ ╚═════╝  ╚═════╝    ╚═╝   ╚═╝ ╚═════╝╚══════╝          ║
 ║                                                                           ║
 ║   Website: https://solanarobotics.org                                     ║
-║   $KIT Token: DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS               ║
+║   $CLAWD Token: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump               ║
 ║                                                                           ║
 ╚═══════════════════════════════════════════════════════════════════════════╝
 """
@@ -239,6 +239,6 @@ def print_welcome():
     print(get_platform_banner())
     print("\nWelcome to Solana Robotics!")
     print(f"Website: {SOLANA_ROBOTICS_URL}")
-    print(f"$KIT Token: {KIT_TOKEN_ADDRESS}")
+    print(f"$CLAWD Token: {CLAWD_TOKEN_ADDRESS}")
     print("\nGet started: https://solanarobotics.org/docs/quickstart")
     print("Join community: https://discord.gg/solanarobotics")

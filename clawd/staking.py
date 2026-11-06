@@ -1,10 +1,10 @@
 """
-$KIT Token Staking Module
+$CLAWD Token Staking Module
 
-Provides staking functionality for $KIT tokens to earn rewards
+Provides staking functionality for $CLAWD tokens to earn rewards
 and unlock premium platform features.
 
-Token Address: DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+Token Address: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 """
 
 import logging
@@ -13,8 +13,8 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 from enum import Enum
 
-from kit.constants import (
-    KIT_TOKEN_ADDRESS,
+from clawd.constants import (
+    CLAWD_TOKEN_ADDRESS,
     MIN_STAKE_AMOUNT,
     STAKE_PERIODS,
     STAKE_APY,
@@ -84,11 +84,11 @@ class StakeResult:
     error: Optional[str] = None
 
 
-class KitStaking:
+class ClawdStaking:
     """
-    $KIT Token Staking Client.
+    $CLAWD Token Staking Client.
 
-    Allows users to stake $KIT tokens for rewards and premium features.
+    Allows users to stake $CLAWD tokens for rewards and premium features.
 
     Staking tiers:
     - 7 days: 5% APY
@@ -99,7 +99,7 @@ class KitStaking:
     - 365 days: 25% APY
 
     Example:
-        staking = KitStaking()
+        staking = ClawdStaking()
 
         # Stake tokens
         result = await staking.stake(
@@ -121,7 +121,7 @@ class KitStaking:
         rpc_url: Optional[str] = None,
     ):
         """
-        Initialize KitStaking client.
+        Initialize ClawdStaking client.
 
         Args:
             network: Solana network
@@ -129,7 +129,7 @@ class KitStaking:
         """
         self.network = network
         self.rpc_url = rpc_url
-        self.token_address = KIT_TOKEN_ADDRESS
+        self.token_address = CLAWD_TOKEN_ADDRESS
         self._positions: Dict[str, StakePosition] = {}  # In-memory for demo
 
     def get_apy(self, lock_period: int) -> float:
@@ -162,7 +162,7 @@ class KitStaking:
         lock_period: int = 30,
     ) -> StakeResult:
         """
-        Stake $KIT tokens.
+        Stake $CLAWD tokens.
 
         Args:
             wallet: Wallet address
@@ -176,7 +176,7 @@ class KitStaking:
         if amount < MIN_STAKE_AMOUNT:
             return StakeResult(
                 success=False,
-                error=f"Minimum stake amount is {MIN_STAKE_AMOUNT} $KIT"
+                error=f"Minimum stake amount is {MIN_STAKE_AMOUNT} $CLAWD"
             )
 
         if lock_period not in STAKE_PERIODS:
@@ -210,7 +210,7 @@ class KitStaking:
             self._positions[position_id] = position
 
             logger.info(
-                f"Staked {amount} $KIT for {lock_period} days. "
+                f"Staked {amount} $CLAWD for {lock_period} days. "
                 f"Position ID: {position_id}"
             )
 
@@ -228,7 +228,7 @@ class KitStaking:
 
     async def unstake(self, position_id: str) -> StakeResult:
         """
-        Unstake $KIT tokens.
+        Unstake $CLAWD tokens.
 
         Args:
             position_id: Staking position ID
@@ -299,7 +299,7 @@ class KitStaking:
             position.rewards_claimed += pending
             position.rewards_earned += pending
 
-            logger.info(f"Claimed {pending:.4f} $KIT rewards")
+            logger.info(f"Claimed {pending:.4f} $CLAWD rewards")
 
             return StakeResult(
                 success=True,

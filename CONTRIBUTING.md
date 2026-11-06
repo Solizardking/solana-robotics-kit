@@ -232,7 +232,7 @@ Then create a Pull Request on GitHub with:
 def transfer_tokens(
     recipient: str,
     amount: float,
-    token_mint: str = KIT_TOKEN_ADDRESS
+    token_mint: str = CLAWD_TOKEN_ADDRESS
 ) -> TransactionResult:
     """
     Transfer tokens to a recipient.
@@ -240,7 +240,7 @@ def transfer_tokens(
     Args:
         recipient: Destination wallet address
         amount: Amount to transfer
-        token_mint: Token mint address (defaults to $KIT)
+        token_mint: Token mint address (defaults to $CLAWD)
 
     Returns:
         TransactionResult with signature and status
@@ -344,23 +344,23 @@ pytest tests/test_trading.py::test_jupiter_swap
 
 ```python
 import pytest
-from kit import KitToken
+from clawd import ClawdToken
 
 @pytest.fixture
-def kit_token():
-    """Fixture for $KIT token instance."""
-    return KitToken(network="devnet")
+def clawd_token():
+    """Fixture for $CLAWD token instance."""
+    return ClawdToken(network="devnet")
 
 @pytest.mark.asyncio
-async def test_kit_balance(kit_token):
-    """Test fetching $KIT balance."""
-    balance = await kit_token.get_balance(TEST_WALLET)
+async def test_kit_balance(clawd_token):
+    """Test fetching $CLAWD balance."""
+    balance = await clawd_token.get_balance(TEST_WALLET)
     assert balance >= 0
 
 @pytest.mark.asyncio
-async def test_kit_transfer(kit_token):
-    """Test $KIT token transfer."""
-    result = await kit_token.transfer(
+async def test_kit_transfer(clawd_token):
+    """Test $CLAWD token transfer."""
+    result = await clawd_token.transfer(
         recipient=TEST_WALLET_2,
         amount=1.0
     )
@@ -391,18 +391,18 @@ async def test_kit_transfer(kit_token):
 ```python
 def create_agent(
     character: str,
-    kit_stake: float = 0.0,
+    clawd_stake: float = 0.0,
     config: Optional[AgentConfig] = None
 ) -> SolanaAgent:
     """
     Create a new AI trading agent.
 
     This function initializes an AI agent with the specified character
-    personality and optional $KIT token stake for premium features.
+    personality and optional $CLAWD token stake for premium features.
 
     Args:
         character: Agent personality (e.g., "warren_buffett", "cathie_wood")
-        kit_stake: Amount of $KIT tokens to stake (enables premium features)
+        clawd_stake: Amount of $CLAWD tokens to stake (enables premium features)
         config: Optional configuration override
 
     Returns:
@@ -410,15 +410,15 @@ def create_agent(
 
     Raises:
         ValueError: If character is not found
-        InsufficientBalanceError: If kit_stake exceeds wallet balance
+        InsufficientBalanceError: If clawd_stake exceeds wallet balance
 
     Example:
-        >>> agent = create_agent("warren_buffett", kit_stake=100)
+        >>> agent = create_agent("warren_buffett", clawd_stake=100)
         >>> analysis = await agent.analyze("SOL/USDC")
 
     See Also:
         - Agent personalities: characters/
-        - $KIT token: kit/
+        - $CLAWD token: clawd/
     """
     pass
 ```
@@ -440,9 +440,9 @@ Contributors are recognized in:
 - Release notes
 - Community shoutouts
 
-### $KIT Rewards
+### $CLAWD Rewards
 
-Active contributors may receive $KIT token rewards for:
+Active contributors may receive $CLAWD token rewards for:
 - Significant feature contributions
 - Critical bug fixes
 - Extensive documentation improvements
@@ -488,6 +488,6 @@ Thank you for contributing to Solana Robotics! Together we're building the futur
 
 ---
 
-**$KIT Token:** `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS`
+**$CLAWD Token:** `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`
 
 **Website:** [solanarobotics.org](https://solanarobotics.org)

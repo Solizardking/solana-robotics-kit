@@ -3,7 +3,7 @@
 Welcome to Solana Robotics! This guide will help you get up and running quickly.
 
 **Website:** [solanarobotics.org](https://solanarobotics.org)
-**$KIT Token:** `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS`
+**$CLAWD Token:** `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`
 
 ---
 
@@ -53,7 +53,7 @@ BIRDEYE_API_KEY=your_birdeye_key
 # my_first_agent.py
 import asyncio
 from agent.solana_ai_agent import SolanaAIAgent
-from kit import KitToken
+from clawd import ClawdToken
 
 async def main():
     # Initialize agent with Warren Buffett personality
@@ -63,10 +63,10 @@ async def main():
     analysis = await agent.analyze_market("SOL/USDC")
     print(f"Analysis: {analysis}")
 
-    # Check your $KIT balance
-    kit = KitToken()
-    balance = await kit.get_balance("YourWalletAddress")
-    print(f"$KIT Balance: {balance.balance}")
+    # Check your $CLAWD balance
+    clawd = ClawdToken()
+    balance = await clawd.get_balance("YourWalletAddress")
+    print(f"$CLAWD Balance: {balance.balance}")
     print(f"Tier: {balance.tier}")
 
 if __name__ == "__main__":
@@ -126,23 +126,23 @@ token = await deploy_spl_token(
 )
 ```
 
-### $KIT Token
+### $CLAWD Token
 
 ```python
-from kit import KitToken, KitStaking, KitGovernance
+from clawd import ClawdToken, ClawdStaking, ClawdGovernance
 
 # Token operations
-kit = KitToken()
-balance = await kit.get_balance(wallet)
-await kit.transfer(recipient, amount)
+clawd = ClawdToken()
+balance = await clawd.get_balance(wallet)
+await clawd.transfer(recipient, amount)
 
 # Staking
-staking = KitStaking()
+staking = ClawdStaking()
 await staking.stake(amount=100, lock_period=30)
 positions = await staking.get_positions(wallet)
 
 # Governance
-governance = KitGovernance()
+governance = ClawdGovernance()
 await governance.create_proposal(
     proposer=wallet,
     title="Add New Agent",
@@ -155,19 +155,19 @@ await governance.vote(voter=wallet, proposal_id="abc123", vote=True)
 
 ```python
 from solana_groot import SolanaRobot
-from kit import KitToken
+from clawd import ClawdToken
 
 # Initialize robot
 robot = SolanaRobot(
     vision_model="cosmos-reason2-8b",
-    payment_token=KitToken()
+    payment_token=ClawdToken()
 )
 
 # Execute task
 await robot.execute_task(
     task="navigate_to",
     destination="point_b",
-    payment_amount=5  # $KIT
+    payment_amount=5  # $CLAWD
 )
 ```
 
@@ -182,7 +182,7 @@ SolanaAutomation/
 ├── browser/            # Browser automation
 ├── characters/         # Agent personalities (JSON)
 ├── chrome-extension/   # Wallet extension
-├── kit/                # $KIT token module
+├── clawd/                # $CLAWD token module
 │   ├── __init__.py
 │   ├── token.py        # Token operations
 │   ├── staking.py      # Staking functions
@@ -277,16 +277,16 @@ async def execute_newprotocol_action(params):
 
 2. Register in agent toolkit.
 
-### Integrate with $KIT
+### Integrate with $CLAWD
 
 ```python
-from kit import KitToken
-from kit.constants import TIER_PRO
+from clawd import ClawdToken
+from clawd.constants import TIER_PRO
 
-kit = KitToken()
+clawd = ClawdToken()
 
 # Check if user has Pro tier
-has_pro = await kit.check_tier(wallet, "pro")
+has_pro = await clawd.check_tier(wallet, "pro")
 
 if has_pro:
     # Enable premium features
@@ -302,7 +302,7 @@ if has_pro:
 pytest tests/
 
 # Run specific test
-pytest tests/test_kit_token.py
+pytest tests/test_clawd_token.py
 
 # Run with coverage
 pytest tests/ --cov=. --cov-report=html
@@ -334,20 +334,20 @@ python -c "from tools.get_balance import get_balance; import asyncio; print(asyn
 
 ---
 
-## $KIT Token Quick Reference
+## $CLAWD Token Quick Reference
 
 | Feature | Requirement |
 |---------|-------------|
 | Basic agents | Free |
-| All agents | 100 $KIT (Starter) |
-| Priority execution | 1,000 $KIT (Pro) |
-| Custom agents | 10,000 $KIT (Enterprise) |
-| Create proposal | 1,000 $KIT |
-| Minimum stake | 10 $KIT |
+| All agents | 100 $CLAWD (Starter) |
+| Priority execution | 1,000 $CLAWD (Pro) |
+| Custom agents | 10,000 $CLAWD (Enterprise) |
+| Create proposal | 1,000 $CLAWD |
+| Minimum stake | 10 $CLAWD |
 
-**Token Address:** `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS`
+**Token Address:** `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`
 
-**Trade:** [Jupiter](https://jup.ag/swap/SOL-DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS)
+**Trade:** [Jupiter](https://jup.ag/swap/SOL-8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
 
 ---
 

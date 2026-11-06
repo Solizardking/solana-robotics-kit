@@ -37,7 +37,7 @@ The following are in scope:
 - Solana programs (`programs/`)
 - Chrome extension (`chrome-extension/`)
 - API endpoints (`api/`)
-- $KIT token integration (`kit/`)
+- $CLAWD token integration (`clawd/`)
 
 The following are out of scope:
 
@@ -63,7 +63,7 @@ We will not pursue legal action against researchers who:
 
 1. **Never share your private keys or seed phrases**
 2. **Verify contract addresses before transactions**
-   - $KIT Token: `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS`
+   - $CLAWD Token: `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`
 3. **Use hardware wallets for large holdings**
 4. **Verify URLs before connecting wallets**
    - Official site: `https://solanarobotics.org`
@@ -148,6 +148,6 @@ We are planning a bug bounty program. Details will be announced at:
 
 ---
 
-**$KIT Token:** `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS`
+**$CLAWD Token:** `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`
 
 **Website:** [solanarobotics.org](https://solanarobotics.org)

@@ -19,7 +19,7 @@
 <div align="center">
 
 [![Website](https://img.shields.io/badge/Website-solanarobotics.org-9945FF?style=for-the-badge&logo=solana)](https://solanarobotics.org)
-[![$KIT Token](https://img.shields.io/badge/$KIT-DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS-14F195?style=for-the-badge&logo=solana)](https://solscan.io/token/DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS)
+[![$CLAWD Token](https://img.shields.io/badge/$CLAWD-8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump-14F195?style=for-the-badge&logo=solana)](https://solscan.io/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://typescriptlang.org)
@@ -37,7 +37,7 @@
 
 ## What is Solana Robotics?
 
-**Solana Robotics** is an open-source platform combining AI agents, blockchain automation, and physical robotics—all powered by the Solana blockchain and the **$KIT** token.
+**Solana Robotics** is an open-source platform combining AI agents, blockchain automation, and physical robotics—all powered by the Solana blockchain and the **$CLAWD** token.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -51,7 +51,7 @@
 │   • 21 AI personas      • Smart execution        • ROS 2 Integration        │
 │   • Prediction mkts     • Cross-chain ops        • Physical robots          │
 │                                                                              │
-│                         💎 $KIT TOKEN                                        │
+│                         💎 $CLAWD TOKEN                                        │
 │                         ─────────────                                        │
 │                                 │
 │                                                                              │
@@ -71,7 +71,7 @@ The **** token is the native utility token powering the entire Solana Robotics e
 |----------|-------------|
 | **Agent Fees** | Pay for AI agent execution and compute |
 | **Robot Payments** | Enable autonomous robot-to-robot transactions |
-| **Staking Rewards** | Stake $KIT to earn from platform revenue |
+| **Staking Rewards** | Stake $CLAWD to earn from platform revenue |
 | **Governance** | Vote on protocol upgrades and agent additions |
 | **Premium Features** | Access advanced trading strategies and robotics APIs |
 
@@ -79,10 +79,10 @@ The **** token is the native utility token powering the entire Solana Robotics e
 
 ```bash
 # View on Solscan
-https://solscan.io/token/DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+https://solscan.io/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 
 # Trade on Jupiter
-https://jup.ag/swap/SOL-DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS
+https://jup.ag/swap/SOL-8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
 ```
 
 ---
@@ -170,7 +170,7 @@ SolanaAutomation/
 ├── tools/                    # 30+ DeFi integration tools
 ├── trading-arena/            # AI trading competition
 ├── utils/                    # Utility modules
-└── kit/                      # $KIT token integration
+└── clawd/                      # $CLAWD token integration
 ```
 
 ---
@@ -183,12 +183,12 @@ Deploy specialized AI agents that analyze markets, debate strategies, and execut
 
 ```python
 from agent.solana_ai_agent import SolanaAIAgent
-from kit import KitToken
+from clawd import ClawdToken
 
-# Initialize with $KIT integration
+# Initialize with $CLAWD integration
 agent = SolanaAIAgent(
     character="warren_buffett",
-    kit_token=KitToken()
+    clawd_token=ClawdToken()
 )
 
 # Run analysis
@@ -240,19 +240,19 @@ Build autonomous robots powered by NVIDIA Jetson and Solana:
 
 ```python
 from solana_groot import SolanaRobot
-from kit import KitToken
+from clawd import ClawdToken
 
-# Initialize robot with $KIT payments
+# Initialize robot with $CLAWD payments
 robot = SolanaRobot(
     vision_model="cosmos-reason2-8b",
-    payment_token=KitToken()
+    payment_token=ClawdToken()
 )
 
 # Autonomous task execution
 await robot.execute_task(
     task="deliver_package",
     destination="warehouse_b",
-    payment_amount=10  # $KIT
+    payment_amount=10  # $CLAWD
 )
 ```
 
@@ -260,7 +260,7 @@ await robot.execute_task(
 - NVIDIA Cosmos vision models
 - Nemotron reasoning engine
 - ROS 2 middleware integration
-- Autonomous payments in $KIT
+- Autonomous payments in $CLAWD
 - Real-time trajectory prediction
 
 ### 4. Prediction Markets
@@ -302,40 +302,40 @@ await browser.execute_swap("SOL", "USDC", 1.0)
 
 ---
 
-## $KIT Token Integration
+## $CLAWD Token Integration
 
 ### Token Configuration
 
 ```python
-# kit/__init__.py
-from kit.token import KitToken
-from kit.staking import KitStaking
-from kit.governance import KitGovernance
+# clawd/__init__.py
+from clawd.token import ClawdToken
+from clawd.staking import ClawdStaking
+from clawd.governance import ClawdGovernance
 
 # Token address
-KIT_TOKEN_ADDRESS = "DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS"
+CLAWD_TOKEN_ADDRESS = "8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump"
 
 # Initialize
-kit = KitToken()
+clawd = ClawdToken()
 
 # Check balance
-balance = await kit.get_balance(wallet_address)
+balance = await clawd.get_balance(wallet_address)
 
-# Transfer $KIT
-await kit.transfer(recipient, amount)
+# Transfer $CLAWD
+await clawd.transfer(recipient, amount)
 
 # Stake for rewards
-staking = KitStaking()
+staking = ClawdStaking()
 await staking.stake(amount, lock_period=30)  # 30 days
 
 # Governance voting
-governance = KitGovernance()
+governance = ClawdGovernance()
 await governance.vote(proposal_id, vote=True)
 ```
 
 ### Agent Fee Structure
 
-| Tier | $KIT Required | Benefits |
+| Tier | $CLAWD Required | Benefits |
 |------|---------------|----------|
 | Free | 0 | Basic agents, rate limited |
 | Starter | 100 | All agents, standard limits |
@@ -373,7 +373,7 @@ await governance.vote(proposal_id, vote=True)
 ┌────────────────────────────────▼────────────────────────────────────────────┐
 │  BLOCKCHAIN LAYER                                                            │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │
-│  │ Solana RPC   │  │ $KIT Token   │  │ Anchor       │  │ DeFi         │    │
+│  │ Solana RPC   │  │ $CLAWD Token   │  │ Anchor       │  │ DeFi         │    │
 │  │ (Helius)     │  │ Payments     │  │ Programs     │  │ Protocols    │    │
 │  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘    │
 └─────────────────────────────────────────────────────────────────────────────┘
@@ -424,9 +424,9 @@ pytest tests/
 
 ### Token Links
 
-- **Solscan**: [View $KIT](https://solscan.io/token/DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS)
-- **Jupiter**: [Trade $KIT](https://jup.ag/swap/SOL-DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS)
-- **Birdeye**: [Analytics](https://birdeye.so/token/DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS)
+- **Solscan**: [View $CLAWD](https://solscan.io/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
+- **Jupiter**: [Trade $CLAWD](https://jup.ag/swap/SOL-8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
+- **Birdeye**: [Analytics](https://birdeye.so/token/8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump)
 
 ---
 
@@ -451,6 +451,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 [![Star on GitHub](https://img.shields.io/github/stars/8bitsats/SolanaAutomation?style=social)](https://github.com/8bitsats/SolanaAutomation)
 
-**$KIT Token: `DZbPqtV5jrCaT7NY4D7BDwje3r8kw3t7JB43AXZZBAGS`**
+**$CLAWD Token: `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`**
 
 </div>
