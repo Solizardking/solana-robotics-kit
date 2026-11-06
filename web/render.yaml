@@ -1,0 +1,100 @@
+# Solana Robotics — Render Blueprint
+# Deploy: render blueprints apply  (or connect this repo in Render Dashboard)
+# Docs: https://render.com/docs/blueprint-spec
+
+previewsEnabled: false
+
+services:
+  # ── Node tRPC / Express backend ───────────────────────────────────────────
+  - type: web
+    runtime: node
+    name: solana-robotics-api
+    plan: free
+    region: oregon
+    rootDir: .
+    # --prod=false ensures esbuild is present even when Render forces NODE_ENV=production
+    buildCommand: corepack enable && corepack prepare pnpm@9.15.4 --activate && pnpm install --frozen-lockfile --prod=false && pnpm run build:server
+    startCommand: NODE_ENV=production node dist/index.js
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: NODE_VERSION
+        value: "20.18.0"
+      - key: NODE_ENV
+        value: production
+      - key: CLAWD_TOKEN_ADDRESS
+        value: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
+      - key: TOKEN_ADDRESS
+        value: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false
+      - key: HELIUS_API_KEY
+        sync: false
+      - key: HELIUS_RPC_URL
+        sync: false
+      - key: BIRDEYE_API_KEY
+        sync: false
+      - key: XAI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      # Moonshot / Kimi K3 — SOL GPT default when set (set in Render Dashboard; never commit)
+      - key: MOONSHOT_API_KEY
+        sync: false
+      - key: KIMI_API_KEY
+        sync: false
+      - key: MOONSHOT_MODEL
+        value: kimi-k3
+      - key: MOONSHOT_BASE_URL
+        value: https://api.moonshot.ai/v1
+      - key: SOL_GPT_PROVIDER
+        value: auto
+      - key: ADMIN_WALLET
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"
+
+  # ── Python Meta Mesh / Solana robot harness API ───────────────────────────
+  - type: web
+    runtime: python
+    name: meta-mesh-brain-api
+    plan: free
+    region: oregon
+    rootDir: brain
+    buildCommand: pip install -r requirements-api.txt
+    startCommand: uvicorn solana_robot_harness.api:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.10"
+      - key: META_MESH_API_NAME
+        value: Meta Mesh for the Brain
+      - key: SOLANA_CLUSTER
+        value: mainnet
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"
+      - key: CLAWD_TOKEN_ADDRESS
+        value: 8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump
+      - key: HELIUS_API_KEY
+        sync: false
+      - key: HELIUS_RPC_URL
+        sync: false
+      - key: BIRDEYE_API_KEY
+        sync: false
+      - key: XAI_API_KEY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: MOONSHOT_API_KEY
+        sync: false
+      - key: KIMI_API_KEY
+        sync: false
+      - key: MOONSHOT_MODEL
+        value: kimi-k3
+      - key: RPC_URL
+        sync: false

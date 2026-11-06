@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1768492415706,
+      "tag": "0000_third_ultimatum",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1768492569540,
+      "tag": "0001_tan_guardian",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1768599304350,
+      "tag": "0002_bent_captain_cross",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1768602813441,
+      "tag": "0003_careless_adam_destine",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1768670597982,
+      "tag": "0004_volatile_next_avengers",
+      "breakpoints": true
+    }
+  ]
+}
