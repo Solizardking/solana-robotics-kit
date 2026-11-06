@@ -134,6 +134,44 @@ export default function Asimov() {
           </p>
         </header>
 
+        {/* CLAWD ASV-1 posters */}
+        <section className="space-y-4">
+          <div className="space-y-2">
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-300 via-fuchsia-300 to-emerald-300 bg-clip-text text-transparent">
+              CLAWD ASV-1 — Open Source Humanoid Robotics Kit
+            </h2>
+            <p className="text-muted-foreground max-w-3xl">
+              The CLAWD ASV-1 program: Solana-native bodywork, the modular CLAWD gripper system, and
+              on-chain robot identity on the Asimov platform. AI. Robotics. Solana. Built together —
+              powered by $CLAWD. Click either poster for the full-size version.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-2 gap-6 items-start">
+            <a href="/images/clawd-asv1-vision.png" target="_blank" rel="noreferrer" className="block group">
+              <img
+                src="/images/clawd-asv1-vision.png"
+                alt="CLAWD ASV-1 vision poster — the kit, the modular CLAWD gripper, the roadmap, and the funding breakdown"
+                className="w-full rounded-xl border border-purple-500/30 shadow-lg shadow-purple-950/40 transition group-hover:border-purple-400/60"
+                loading="lazy"
+              />
+              <p className="text-sm text-muted-foreground mt-2 group-hover:text-purple-300">
+                The Vision — kit overview, gripper, roadmap &amp; funding
+              </p>
+            </a>
+            <a href="/images/clawd-asv1-blueprint.png" target="_blank" rel="noreferrer" className="block group">
+              <img
+                src="/images/clawd-asv1-blueprint.png"
+                alt="CLAWD ASV-1 blueprint poster — key specifications, detailed views, and the exploded modular parts view"
+                className="w-full rounded-xl border border-cyan-500/30 shadow-lg shadow-cyan-950/40 transition group-hover:border-cyan-400/60"
+                loading="lazy"
+              />
+              <p className="text-sm text-muted-foreground mt-2 group-hover:text-cyan-300">
+                The Blueprint — key specifications, detailed views &amp; exploded parts
+              </p>
+            </a>
+          </div>
+        </section>
+
         {/* Viewer + Specs */}
         <div className="grid lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
