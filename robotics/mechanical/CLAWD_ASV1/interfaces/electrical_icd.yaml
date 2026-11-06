@@ -1,0 +1,7 @@
+# CLAWD ASV-1 — electrical ICD (DRAFT, Rev 0.1). See spec section 6.
+domains:
+  motion_control: { role: "joint control, limits, watchdogs, state estimation", safety: "must enter safe state with no network/AI" }
+  onboard_compute: { role: "Jetson / Pi 5 - perception, planning, task validation", may_bypass_safety_chain: false }
+  offboard: { role: "Eliza / GR00T / Solana / x402 - identity, tasks, authorization, payments" }
+safety_chain: [physical_estop, drive_power_isolation, protective_fault_handling]
+gripper_bus: { supply_v: 24, comms: "CAN or local MCU", status: "subject to power design; 491 Wh base battery is a reference, not a budget guarantee" }

@@ -1,0 +1,16 @@
+# CLAWD ASV-1 — Wrist Interface Control Document (DRAFT, Rev 0.1)
+# STATUS: UNVERIFIED — every dimension below must be extracted from the upstream
+# Asimov source CAD (assembly 300/400 wrist parts) before any adapter is designed.
+# Do NOT fabricate against these placeholders.
+interface: ASV1 wrist -> CLAWD1_350 wrist adapter (bolted, fixed; quick-change is a later revision)
+to_extract_from_cad:
+  mounting_face: null        # plane + diameter from ASV1_3xx wrist STEP
+  bolt_circle_mm: null
+  hole_locations: null
+  fastener_size: null
+  cable_clearance_mm: null
+  wrist_torque_rating_nm: null
+design_rules:
+  - Bolted fixed adapter for prototypes (fewer failure modes, lower mass).
+  - No friction-only coupling for any future quick-change variant.
+  - Gripper permissible load = f(wrist torque, moment arm, acceleration, stability) — the 5 kg arm figure is NOT a wrist rating.

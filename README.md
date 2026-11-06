@@ -454,3 +454,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **$CLAWD Token: `8cHzQHUS2s2h8TzCmfqPKYiM4dSt4roa3n7MyRLApump`**
 
 </div>
+
+## CLAWD ASV-1 humanoid program
+
+CLAWD ASV-1 (Rev 0.1) — modular open-source humanoid kit on the Asimov V1 platform: spec + CAD roadmap in [docs/CLAWD_ASV1_SPEC.md](docs/CLAWD_ASV1_SPEC.md), verified baseline audit in [robotics/mechanical/CLAWD_ASV1/bom/BASELINE_AUDIT.md](robotics/mechanical/CLAWD_ASV1/bom/BASELINE_AUDIT.md). First product: the modular CLAWD gripper (CLAWD1_350).

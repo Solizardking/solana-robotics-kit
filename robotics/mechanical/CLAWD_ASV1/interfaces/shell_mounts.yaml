@@ -1,0 +1,9 @@
+# CLAWD ASV-1 — shell mount points (DRAFT, Rev 0.1) — extract from upstream CAD before use.
+shells:
+  torso_front_chest: { part: CLAWD1_100_01C, material: PA12 MJF, mounts: null }  # use original frame points where feasible
+  torso_rear_panel:  { part: CLAWD1_100_02C, material: PA12 MJF, mounts: null }
+  torso_abdomen:     { part: CLAWD1_100_03C, material: PA12 MJF, mounts: null }
+  head_housing:      { part: CLAWD1_700_01C, material: PA12 MJF, mounts: null }
+rules:
+  - Heat-set inserts only in nonstructural printed parts.
+  - Exterior covers removable without disassembling joints.
