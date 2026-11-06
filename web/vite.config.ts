@@ -32,8 +32,13 @@ export default defineConfig({
         manualChunks(id) {
           if (!id.includes("node_modules")) return;
           if (id.includes("three") || id.includes("@react-three")) return "three";
-          if (id.includes("@metaplex-foundation")) return "metaplex";
+          // Metaplex + Solana + bn.js MUST share one chunk: splitting them
+          // creates a circular cross-chunk CJS interop where requireBn assigns
+          // onto an uninitialized exports object ("Cannot set properties of
+          // undefined (setting 'BN')") and the whole app renders blank.
+          if (id.includes("@metaplex-foundation")) return "solana";
           if (id.includes("@solana") || id.includes("@phantom") || id.includes("jupiverse")) return "solana";
+          if (id.includes("/bn.js/") || id.includes("/buffer/")) return "solana";
           if (id.includes("@radix-ui")) return "radix";
           if (id.includes("recharts") || id.includes("d3-")) return "charts";
           if (id.includes("@trpc") || id.includes("@tanstack/react-query")) return "trpc";
