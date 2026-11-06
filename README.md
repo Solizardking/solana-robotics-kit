@@ -65,7 +65,7 @@
 
 ## Why $?
 
-The **** token is the native utility token powering the entire Solana Robotics ecosystem:
+The $CLAWD token is the native utility token powering the entire Solana Robotics ecosystem:
 
 | Use Case | Description |
 |----------|-------------|
