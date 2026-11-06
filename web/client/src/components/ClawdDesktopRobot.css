@@ -1,0 +1,4 @@
+.clawd-robot-stage {background: radial-gradient(ellipse at 50% 45%, #35205566, transparent 65%), #0c0d14;}
+.clawd-robot-grid {background-image:linear-gradient(#8c75d010 1px,transparent 1px),linear-gradient(90deg,#8c75d010 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(transparent,#000 35%,#000 75%,transparent);}
+.clawd-robot-stage button:focus-visible {outline:2px solid #14f195;outline-offset:4px;}
+@media (prefers-reduced-motion:reduce) {.clawd-robot-stage *, .clawd-robot-stage *::before {animation:none!important;transition:none!important;}}

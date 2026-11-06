@@ -94,8 +94,10 @@ import {
   getTokenAccountRent,
   isValidPublicKey as isValidBurnPublicKey,
 } from "./burn-accounts";
+import { clawdBrainRouter } from "./clawd-brain-router";
 
 export const appRouter = router({
+  clawdBrain: clawdBrainRouter,
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),

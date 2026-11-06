@@ -1,3 +1,4 @@
+import ClawdBrain from "./pages/ClawdBrain";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
@@ -39,6 +40,8 @@ import ElevenLabsWidget from "./components/ElevenLabsWidget";
 function Router() {
   return (
     <Switch>
+      <Route path="/clawd-brain" component={ClawdBrain} />
+      <Route path="/soltron-companion" component={ClawdBrain} />
       <Route path="/" component={Home} />
       <Route path="/robots" component={RobotRegistry} />
       <Route path="/avatar" component={AvatarGenerator} />
