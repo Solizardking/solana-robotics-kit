@@ -10,7 +10,7 @@ interface ElevenLabsWidgetProps {
  * ElevenLabs ConvAI Voice Widget
  * Provides voice AI assistant on every page
  */
-export function ElevenLabsWidget({ agentId = 'agent_0001kcf3a94bfcm9kj51ss02gnv0' }: ElevenLabsWidgetProps) {
+export function ElevenLabsWidget({ agentId = 'agent_4701kr0frds8eqb9nbbt4a4tdnsy' }: ElevenLabsWidgetProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
