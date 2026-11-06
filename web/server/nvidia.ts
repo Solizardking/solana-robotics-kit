@@ -19,7 +19,7 @@ interface NvidiaResponse {
 }
 
 /**
- * Invoke NVIDIA NIM API with Nemotron-3-Nano-30B model
+ * Invoke NVIDIA NIM API with Nemotron-3-Nano-Omni-30B model
  * Used for AI agent reasoning and decision-making
  */
 export async function invokeNvidiaLLM(options: NvidiaCompletionOptions): Promise<NvidiaResponse> {
@@ -49,7 +49,7 @@ export async function invokeNvidiaLLM(options: NvidiaCompletionOptions): Promise
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        model: 'nvidia/nemotron-3-nano-30b-a3b',
+        model: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning',
         messages,
         temperature,
         top_p: 1,
@@ -72,7 +72,7 @@ export async function invokeNvidiaLLM(options: NvidiaCompletionOptions): Promise
     return {
       content: choice?.message?.content || '',
       reasoning: choice?.message?.reasoning_content,
-      model: 'nvidia/nemotron-3-nano-30b-a3b',
+      model: 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning',
     };
   } catch (error) {
     console.error('[NVIDIA] Request failed:', error);
@@ -324,7 +324,7 @@ export function getSOLtronStatus() {
   return {
     online: true,
     aiEnabled: !!apiKey,
-    model: apiKey ? 'nvidia/nemotron-3-nano-30b-a3b' : 'fallback',
+    model: apiKey ? 'nvidia/nemotron-3-nano-omni-30b-a3b-reasoning' : 'fallback',
     capabilities: [
       'chat',
       'trading_analysis',

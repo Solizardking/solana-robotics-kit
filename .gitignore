@@ -1,0 +1,22 @@
+# secrets / local env
+.env
+.env.*
+!.env.example
+*.keypair.json
+*-key.json
+
+# deps / builds
+node_modules/
+dist/
+.next/
+__pycache__/
+*.pyc
+venv/
+venv_avatar/
+
+# os / editor
+.DS_Store
+
+# model weights (fetched from the HF bucket — see models/README.md)
+models/GR00T-N1.7-3B/
+*.safetensors
