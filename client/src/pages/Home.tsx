@@ -104,9 +104,9 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 justify-center mb-16">
               <Button asChild size="lg" className="btn-cyber gap-2 text-lg px-8">
-                <Link href="/robots">
+                <Link href="/soltron-companion">
                   <Bot className="w-5 h-5" />
-                  Register Robot
+                  Meet SOLtron
                   <ArrowRight className="w-5 h-5" />
                 </Link>
               </Button>

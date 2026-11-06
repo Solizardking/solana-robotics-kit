@@ -3,7 +3,7 @@
 import { ReactNode, useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/_core/hooks/useAuth';
-import { getLoginUrl } from '@/const';
+import { getLoginUrl, isLoginConfigured } from '@/const';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { PhantomWalletButton } from '@/components/PhantomWalletButton';
@@ -67,6 +67,7 @@ const navItems = [
   { href: '/', label: 'Home', icon: Home },
   { href: '/gate', label: 'Token Gate', icon: Shield },
   { href: '/robots', label: 'Robot Registry', icon: Bot },
+  { href: '/soltron-companion', label: 'SOLtron Companion', icon: Cpu },
   { href: '/asimov', label: 'Asimov v1', icon: Cpu },
   { href: '/avatar', label: 'GR00T Avatar', icon: Sparkles },
   { href: '/arena', label: 'Agent Arena', icon: Swords },
@@ -369,6 +370,10 @@ function UserButton({ user, isAuthenticated, logout, loading }: UserButtonProps)
         </DropdownMenuContent>
       </DropdownMenu>
     );
+  }
+
+  if (!isLoginConfigured()) {
+    return <Button disabled variant="outline" size="sm" title="Site sign-in is not configured">Sign-in unavailable</Button>;
   }
 
   return (
