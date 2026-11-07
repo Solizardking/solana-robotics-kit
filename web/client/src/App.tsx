@@ -35,7 +35,6 @@ import Burn from "./pages/Burn";
 import Asimov from "./pages/Asimov";
 import MainLayout from "./components/MainLayout";
 import GrokAgent from "./components/GrokAgent";
-import ElevenLabsWidget from "./components/ElevenLabsWidget";
 
 function Router() {
   return (
@@ -85,7 +84,6 @@ function App() {
             <MainLayout>
               <Router />
               <GrokAgent />
-              <ElevenLabsWidget />
             </MainLayout>
           </TooltipProvider>
         </PhantomProvider>
